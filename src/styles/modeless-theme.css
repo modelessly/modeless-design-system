@@ -1,0 +1,913 @@
+:root,
+.modeless-theme {
+  --off-black: 0 0% 3%;
+  --panel-black: 0 0% 6%;
+  --graphite: 0 0% 10%;
+  --steel: 213 4% 28%;
+  --concrete: 0 0% 55%;
+  --bone: 43 52% 87%;
+  --xerox-white: 39 52% 94%;
+  --acid-lime: 76 100% 58%;
+  --electric-purple: 266 100% 59%;
+  --radar-blue: 220 100% 59%;
+  --warning-orange: 15 100% 56%;
+  --signal-pink: 326 100% 62%;
+
+  --background: var(--off-black);
+  --foreground: var(--bone);
+  --card: var(--panel-black);
+  --card-foreground: var(--bone);
+  --popover: var(--graphite);
+  --popover-foreground: var(--xerox-white);
+  --primary: var(--acid-lime);
+  --primary-foreground: var(--off-black);
+  --secondary: var(--graphite);
+  --secondary-foreground: var(--bone);
+  --muted: var(--graphite);
+  --muted-foreground: var(--concrete);
+  --accent: var(--electric-purple);
+  --accent-foreground: var(--xerox-white);
+  --destructive: var(--warning-orange);
+  --destructive-foreground: var(--off-black);
+  --border: 0 0% 22%;
+  --input: 0 0% 16%;
+  --ring: var(--acid-lime);
+
+  --signal: var(--acid-lime);
+  --signal-foreground: var(--off-black);
+  --terminal: 0 0% 4%;
+  --terminal-foreground: var(--acid-lime);
+  --artifact: 42 29% 84%;
+  --artifact-foreground: var(--off-black);
+  --grid-line: 0 0% 18%;
+  --scanline: 76 100% 58% / 0.08;
+  --noise: 0 0% 100% / 0.07;
+  --warning: var(--warning-orange);
+  --success: var(--acid-lime);
+  --experimental: var(--electric-purple);
+  --archived: var(--steel);
+  --product-privacy: var(--radar-blue);
+  --product-finance: var(--acid-lime);
+  --product-design: var(--electric-purple);
+  --product-workflow: var(--warning-orange);
+  --product-experimental: var(--signal-pink);
+  --product-infrastructure: var(--bone);
+
+  --radius: 0.375rem;
+  --angle-cut: 18px;
+  --font-display: "Arial Narrow", "Helvetica Neue Condensed", Impact, system-ui, sans-serif;
+  --font-ui: Inter, Geist, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", "JetBrains Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+
+.artifact-angle {
+  position: relative;
+  clip-path: polygon(
+    var(--angle-cut) 0,
+    100% 0,
+    100% calc(100% - var(--angle-cut)),
+    calc(100% - var(--angle-cut)) 100%,
+    0 100%,
+    0 var(--angle-cut)
+  );
+}
+
+.artifact-angle-sm {
+  --angle-cut: 10px;
+}
+
+.artifact-angle-lg {
+  --angle-cut: 28px;
+}
+
+.artifact-angle-frame {
+  position: relative;
+  --artifact-frame-color: currentColor;
+  border-width: 0 !important;
+}
+
+.artifact-angle-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--artifact-frame-color), var(--artifact-frame-color)),
+    linear-gradient(var(--artifact-frame-color), var(--artifact-frame-color)),
+    linear-gradient(var(--artifact-frame-color), var(--artifact-frame-color)),
+    linear-gradient(var(--artifact-frame-color), var(--artifact-frame-color)),
+    linear-gradient(135deg, transparent calc(50% - 0.75px), var(--artifact-frame-color) calc(50% - 0.75px), var(--artifact-frame-color) calc(50% + 0.75px), transparent calc(50% + 0.75px)),
+    linear-gradient(135deg, transparent calc(50% - 0.75px), var(--artifact-frame-color) calc(50% - 0.75px), var(--artifact-frame-color) calc(50% + 0.75px), transparent calc(50% + 0.75px));
+  background-position:
+    var(--angle-cut) 0,
+    100% 0,
+    0 100%,
+    0 var(--angle-cut),
+    0 0,
+    100% 100%;
+  background-size:
+    calc(100% - var(--angle-cut)) 1px,
+    1px calc(100% - var(--angle-cut)),
+    calc(100% - var(--angle-cut)) 1px,
+    1px calc(100% - var(--angle-cut)),
+    var(--angle-cut) var(--angle-cut),
+    var(--angle-cut) var(--angle-cut);
+  background-repeat: no-repeat;
+}
+
+.artifact-angle-frame.border-border {
+  --artifact-frame-color: hsl(var(--border));
+}
+
+.artifact-angle-frame.border-primary,
+.artifact-angle-frame.hover\:border-primary:hover {
+  --artifact-frame-color: hsl(var(--primary));
+}
+
+.artifact-angle-frame.border-warning {
+  --artifact-frame-color: hsl(var(--warning));
+}
+
+.artifact-angle-frame.border-artifact {
+  --artifact-frame-color: hsl(var(--artifact));
+}
+
+.artifact-angle-frame[class*="border-terminal-foreground"] {
+  --artifact-frame-color: hsl(var(--terminal-foreground) / 0.3);
+}
+
+.bg-grid-thin {
+  background-image:
+    linear-gradient(to right, hsl(var(--grid-line) / 0.72) 1px, transparent 1px),
+    linear-gradient(to bottom, hsl(var(--grid-line) / 0.72) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.bg-grid-dotted {
+  background-image: radial-gradient(hsl(var(--grid-line) / 0.85) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+.bg-grid-animated {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background-image:
+    linear-gradient(to right, hsl(var(--grid-line) / 0.72) 1px, transparent 1px),
+    linear-gradient(to bottom, hsl(var(--grid-line) / 0.72) 1px, transparent 1px);
+  background-position:
+    0 0,
+    0 0;
+  background-size:
+    24px 24px,
+    24px 24px;
+}
+
+.bg-grid-isometric {
+  background-image:
+    linear-gradient(30deg, hsl(var(--grid-line) / 0.75) 1px, transparent 1px),
+    linear-gradient(150deg, hsl(var(--grid-line) / 0.75) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(var(--grid-line) / 0.38) 1px, transparent 1px);
+  background-size:
+    32px 56px,
+    32px 56px,
+    32px 56px;
+  background-position:
+    0 0,
+    0 0,
+    0 0;
+}
+
+.bg-grid-isometric.motion-grid {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.bg-grid-ascii {
+  background-color: hsl(var(--background));
+  background-image:
+    linear-gradient(
+      115deg,
+      transparent 0%,
+      transparent 43%,
+      hsl(var(--grid-line) / 0.12) 50%,
+      transparent 57%,
+      transparent 100%
+    ),
+    linear-gradient(to right, hsl(var(--grid-line) / 0.52) 1px, transparent 1px),
+    linear-gradient(to bottom, hsl(var(--grid-line) / 0.52) 1px, transparent 1px);
+  background-position:
+    180% 50%,
+    0 0,
+    0 0;
+  background-size:
+    260% 260%,
+    18px 18px,
+    18px 18px;
+}
+
+.bg-grid-ascii::before {
+  content: "+ 01 ++ // :: X M R 07 ++ // 01 + MODELESS // SIGNAL //";
+  position: absolute;
+  inset: -20% -5%;
+  pointer-events: none;
+  color: hsl(var(--foreground) / 0.13);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.4rem;
+  line-height: 2.2;
+  overflow-wrap: anywhere;
+  transform: rotate(-7deg);
+}
+
+.bg-grid-visualizer {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      hsl(var(--signal) / 0.15) 0 2px,
+      transparent 2px 20px
+    ),
+    linear-gradient(to right, hsl(var(--grid-line) / 0.48) 1px, transparent 1px),
+    linear-gradient(to bottom, hsl(var(--grid-line) / 0.48) 1px, transparent 1px);
+  background-position:
+    0 0,
+    0 0,
+    0 0;
+  background-size:
+    20px 100%,
+    40px 40px,
+    40px 40px;
+}
+
+.motion-grid {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.bg-grid-animated > *,
+.bg-grid-isometric.motion-grid > *,
+.bg-grid-visualizer.motion-grid > *,
+.motion-grid:not(.bg-grid-ascii) > * {
+  position: relative;
+  z-index: 1;
+}
+
+.bg-grid-animated::before,
+.bg-grid-isometric.motion-grid::before,
+.bg-grid-visualizer.motion-grid::before,
+.motion-grid:not(.bg-grid-ascii)::before {
+  content: "";
+  position: absolute;
+  inset: -45%;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 28% 48%, hsl(var(--background) / 0.72) 0 8%, hsl(var(--background) / 0.34) 18%, transparent 38%),
+    radial-gradient(ellipse at 62% 56%, hsl(var(--off-black) / 0.58) 0 10%, hsl(var(--off-black) / 0.26) 24%, transparent 48%),
+    radial-gradient(ellipse at 48% 28%, hsl(var(--graphite) / 0.3) 0 8%, transparent 34%);
+  filter: blur(38px);
+  mix-blend-mode: multiply;
+  opacity: 0.72;
+  transform: translate3d(32%, -12%, 0) scale(0.82) rotate(-8deg);
+  animation: modeless-grid-gravity-shadow 60s ease-in-out infinite;
+}
+
+.bg-grid-animated::after,
+.bg-grid-isometric.motion-grid::after,
+.bg-grid-visualizer.motion-grid::after,
+.motion-grid:not(.bg-grid-ascii)::after {
+  content: "";
+  position: absolute;
+  inset: -16%;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, hsl(var(--grid-line) / 0.8) 1px, transparent 1px),
+    linear-gradient(to bottom, hsl(var(--grid-line) / 0.8) 1px, transparent 1px);
+  background-size: 24px 24px;
+  background-position: 0 0;
+  opacity: 0.28;
+  mask-image: radial-gradient(ellipse at 50% 50%, black 0 14%, rgb(0 0 0 / 0.55) 28%, transparent 58%);
+  transform: translate3d(30%, -10%, 0) scale(1.035) skew(-2deg, 1deg) rotate(-0.7deg);
+  animation: modeless-grid-gravity-lens 60s ease-in-out infinite;
+}
+
+.grid-perspective {
+  transform: perspective(700px) rotateX(58deg) rotateZ(-34deg) translateY(-18%);
+  transform-origin: center;
+}
+
+.bg-hatch {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    hsl(var(--grid-line) / 0.75) 0,
+    hsl(var(--grid-line) / 0.75) 1px,
+    transparent 1px,
+    transparent 9px
+  );
+}
+
+  .scanline-overlay {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .scanline-overlay::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      to bottom,
+      hsl(var(--scanline)) 0,
+      hsl(var(--scanline)) 1px,
+      transparent 1px,
+      transparent 4px
+    );
+    mix-blend-mode: screen;
+  }
+
+  .noise-overlay {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .noise-overlay::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.55;
+    background-image:
+      radial-gradient(hsl(var(--noise)) 0.8px, transparent 0.8px),
+      radial-gradient(hsl(var(--noise)) 0.8px, transparent 0.8px);
+    background-position:
+      0 0,
+      6px 6px;
+    background-size: 12px 12px;
+    mix-blend-mode: screen;
+  }
+
+.crosshair-corners {
+  background-image:
+    linear-gradient(hsl(var(--border)), hsl(var(--border))),
+    linear-gradient(hsl(var(--border)), hsl(var(--border))),
+    linear-gradient(hsl(var(--border)), hsl(var(--border))),
+    linear-gradient(hsl(var(--border)), hsl(var(--border))),
+    linear-gradient(hsl(var(--border)), hsl(var(--border))),
+    linear-gradient(hsl(var(--border)), hsl(var(--border))),
+    linear-gradient(hsl(var(--border)), hsl(var(--border))),
+    linear-gradient(hsl(var(--border)), hsl(var(--border)));
+  background-position:
+    left top,
+    left top,
+    right top,
+    right top,
+    left bottom,
+    left bottom,
+    right bottom,
+    right bottom;
+  background-size:
+    18px 1px,
+    1px 18px,
+    18px 1px,
+    1px 18px,
+    18px 1px,
+    1px 18px,
+    18px 1px,
+    1px 18px;
+  background-repeat: no-repeat;
+  }
+
+  .panel-dividers {
+    background-image: linear-gradient(to right, transparent, hsl(var(--border)), transparent);
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: 100% 1px;
+  }
+
+  .terminal-glow {
+    box-shadow:
+      0 0 0 1px hsl(var(--terminal-foreground) / 0.18),
+      0 0 24px hsl(var(--terminal-foreground) / 0.08);
+  }
+
+  .artifact-label-strip {
+    background:
+      linear-gradient(90deg, hsl(var(--artifact)) 0 72%, hsl(var(--signal)) 72% 78%, hsl(var(--warning)) 78% 100%);
+    color: hsl(var(--artifact-foreground));
+  }
+
+  .glitch-offset {
+    text-shadow:
+      1px 0 hsl(var(--signal-pink)),
+      -1px 0 hsl(var(--radar-blue));
+  }
+
+  .surface-print {
+    background: hsl(var(--artifact));
+    color: hsl(var(--artifact-foreground));
+  }
+
+  .live-surface {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .modeless-motion-off,
+  .modeless-motion-subtle,
+  .modeless-motion-live,
+  .modeless-motion-high {
+    --motion-surface-opacity: 0.32;
+  }
+
+  .modeless-motion-off {
+    --motion-surface-opacity: 0;
+  }
+
+  .modeless-motion-live {
+    --motion-surface-opacity: 0.48;
+  }
+
+  .modeless-motion-high {
+    --motion-surface-opacity: 0.62;
+  }
+
+  .modeless-motion-off,
+  .modeless-motion-off *,
+  .modeless-motion-off::before,
+  .modeless-motion-off::after,
+  .modeless-motion-off *::before,
+  .modeless-motion-off *::after {
+    animation: none !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .live-surface::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse at 24% 18%, hsl(var(--signal) / 0.08), transparent 34%),
+      linear-gradient(115deg, transparent 0 42%, hsl(var(--foreground) / 0.035) 49%, transparent 56% 100%);
+    opacity: var(--motion-surface-opacity, 0.32);
+    mix-blend-mode: screen;
+    animation: modeless-live-surface 28s ease-in-out infinite;
+  }
+
+  .live-surface > * {
+    position: relative;
+  }
+
+  .live-data-field svg {
+    filter: drop-shadow(0 0 18px hsl(var(--signal) / 0.08));
+  }
+
+  .motion-data-node {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: modeless-data-node 11s ease-in-out infinite;
+    animation-delay: calc(var(--motion-index, 0) * -0.43s);
+  }
+
+  .modeless-motion-subtle .motion-data-node,
+  .modeless-motion-subtle.motion-data-node {
+    animation-duration: 18s;
+  }
+
+  .modeless-motion-live .motion-data-node,
+  .modeless-motion-live.motion-data-node {
+    animation-duration: 11s;
+  }
+
+  .modeless-motion-high .motion-data-node,
+  .modeless-motion-high.motion-data-node {
+    animation-duration: 7s;
+  }
+
+  .motion-data-cell {
+    animation: modeless-data-cell 14s ease-in-out infinite;
+    animation-delay: calc(var(--motion-index, 0) * -1.7s);
+  }
+
+  .modeless-motion-subtle .motion-data-cell,
+  .modeless-motion-subtle.motion-data-cell {
+    animation-duration: 20s;
+  }
+
+  .modeless-motion-live .motion-data-cell,
+  .modeless-motion-live.motion-data-cell {
+    animation-duration: 14s;
+  }
+
+  .modeless-motion-high .motion-data-cell,
+  .modeless-motion-high.motion-data-cell {
+    animation-duration: 9s;
+  }
+
+  .motion-data-text {
+    animation: modeless-data-text 18s ease-in-out infinite;
+    animation-delay: calc(var(--motion-index, 0) * -0.31s);
+  }
+
+  .modeless-motion-subtle .motion-data-text,
+  .modeless-motion-subtle.motion-data-text {
+    animation-duration: 26s;
+  }
+
+  .modeless-motion-live .motion-data-text,
+  .modeless-motion-live.motion-data-text {
+    animation-duration: 18s;
+  }
+
+  .modeless-motion-high .motion-data-text,
+  .modeless-motion-high.motion-data-text {
+    animation-duration: 12s;
+  }
+
+  .motion-connection {
+    animation: modeless-connection 16s ease-in-out infinite;
+  }
+
+  .modeless-motion-subtle .motion-connection,
+  .modeless-motion-subtle.motion-connection {
+    animation-duration: 24s;
+  }
+
+  .modeless-motion-live .motion-connection,
+  .modeless-motion-live.motion-connection {
+    animation-duration: 16s;
+  }
+
+  .modeless-motion-high .motion-connection,
+  .modeless-motion-high.motion-connection {
+    animation-duration: 11s;
+  }
+
+  .motion-trace-draw {
+    stroke-dasharray: 720;
+    stroke-dashoffset: 720;
+    animation: modeless-trace-draw 22s ease-in-out infinite;
+  }
+
+  .modeless-motion-subtle .motion-trace-draw,
+  .modeless-motion-subtle.motion-trace-draw {
+    animation-duration: 32s;
+  }
+
+  .modeless-motion-live .motion-trace-draw,
+  .modeless-motion-live.motion-trace-draw {
+    animation-duration: 22s;
+  }
+
+  .modeless-motion-high .motion-trace-draw,
+  .modeless-motion-high.motion-trace-draw {
+    animation-duration: 14s;
+  }
+
+  .motion-wave-trace {
+    stroke-dasharray: 520 260;
+    stroke-dashoffset: 0;
+    animation: modeless-wave-trace 32s ease-in-out infinite;
+    animation-delay: calc(var(--motion-index, 0) * -2.8s);
+  }
+
+  .modeless-motion-subtle .motion-wave-trace,
+  .modeless-motion-subtle.motion-wave-trace {
+    animation-duration: 44s;
+  }
+
+  .modeless-motion-live .motion-wave-trace,
+  .modeless-motion-live.motion-wave-trace {
+    animation-duration: 32s;
+  }
+
+  .modeless-motion-high .motion-wave-trace,
+  .modeless-motion-high.motion-wave-trace {
+    animation-duration: 22s;
+  }
+
+  .motion-pulse {
+    transform-box: fill-box;
+    transform-origin: bottom center;
+    animation: modeless-pulse 9s ease-in-out infinite;
+    animation-delay: calc(var(--motion-index, 0) * -0.72s);
+  }
+
+  .modeless-motion-subtle .motion-pulse,
+  .modeless-motion-subtle.motion-pulse {
+    animation-duration: 14s;
+  }
+
+  .modeless-motion-live .motion-pulse,
+  .modeless-motion-live.motion-pulse {
+    animation-duration: 9s;
+  }
+
+  .modeless-motion-high .motion-pulse,
+  .modeless-motion-high.motion-pulse {
+    animation-duration: 6s;
+  }
+
+  .motion-drift {
+    animation: modeless-drift 24s ease-in-out infinite;
+  }
+
+  .modeless-motion-subtle .motion-drift,
+  .modeless-motion-subtle.motion-drift {
+    animation-duration: 36s;
+  }
+
+  .modeless-motion-live .motion-drift,
+  .modeless-motion-live.motion-drift {
+    animation-duration: 24s;
+  }
+
+  .modeless-motion-high .motion-drift,
+  .modeless-motion-high.motion-drift {
+    animation-duration: 16s;
+  }
+
+  .motion-scan {
+    animation: modeless-scan 36s linear infinite;
+  }
+
+  .motion-flicker {
+    animation: modeless-flicker 18s ease-in-out infinite;
+  }
+
+  .motion-reveal {
+    animation: modeless-reveal 0.7s ease-out both;
+  }
+
+  .motion-glitch-subtle {
+    animation: modeless-glitch 1.2s ease-in-out 1;
+  }
+
+  .motion-orbital {
+    animation: modeless-orbital 42s linear infinite;
+  }
+
+@keyframes modeless-grid-gravity-shadow {
+  0% {
+    opacity: 0;
+    border-radius: 48% 52% 55% 45%;
+    transform: translate3d(44%, -18%, 0) scale(0.62, 0.74) rotate(-18deg);
+  }
+  18% {
+    opacity: 0.18;
+    border-radius: 42% 58% 46% 54%;
+    transform: translate3d(24%, -4%, 0) scale(0.86, 0.68) rotate(11deg);
+  }
+  42% {
+    opacity: 0.74;
+    border-radius: 61% 39% 48% 52%;
+    transform: translate3d(-4%, 8%, 0) scale(1.1, 0.92) rotate(-4deg);
+  }
+  68% {
+    opacity: 0.34;
+    border-radius: 47% 53% 64% 36%;
+    transform: translate3d(-24%, -2%, 0) scale(0.78, 1.14) rotate(17deg);
+  }
+  100% {
+    opacity: 0;
+    border-radius: 54% 46% 42% 58%;
+    transform: translate3d(-42%, 16%, 0) scale(0.58, 0.82) rotate(-12deg);
+  }
+}
+
+@keyframes modeless-grid-gravity-lens {
+  0% {
+    opacity: 0;
+    mask-position: 78% 24%;
+    transform: translate3d(36%, -12%, 0) scale(0.98, 1.02) skew(-0.5deg, 0.4deg) rotate(-0.2deg);
+  }
+  18% {
+    opacity: 0.08;
+    mask-position: 62% 42%;
+    transform: translate3d(18%, -2%, 0) scale(1.02, 0.99) skew(-1.2deg, 0.8deg) rotate(0.35deg);
+  }
+  42% {
+    opacity: 0.28;
+    mask-position: 44% 58%;
+    transform: translate3d(-2%, 6%, 0) scale(1.045, 0.975) skew(-2.2deg, 1.4deg) rotate(-0.8deg);
+  }
+  68% {
+    opacity: 0.14;
+    mask-position: 26% 46%;
+    transform: translate3d(-18%, 0, 0) scale(0.99, 1.035) skew(1.5deg, -0.8deg) rotate(0.5deg);
+  }
+  100% {
+    opacity: 0;
+    mask-position: 12% 70%;
+    transform: translate3d(-36%, 14%, 0) scale(0.96, 1.01) skew(0.4deg, -0.3deg) rotate(-0.2deg);
+  }
+}
+
+@keyframes modeless-bars {
+  0%,
+  100% {
+    transform: scaleY(0.36);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes modeless-live-surface {
+  0%,
+  100% {
+    opacity: 0.26;
+    transform: translate3d(-8%, -2%, 0) scale(1);
+  }
+  45% {
+    opacity: 0.5;
+    transform: translate3d(8%, 3%, 0) scale(1.04);
+  }
+  72% {
+    opacity: 0.36;
+    transform: translate3d(2%, -4%, 0) scale(1.02);
+  }
+}
+
+@keyframes modeless-data-node {
+  0%,
+  100% {
+    opacity: 0.42;
+    transform: scale(0.82);
+  }
+  46% {
+    opacity: 0.9;
+    transform: scale(1.18);
+  }
+  72% {
+    opacity: 0.62;
+    transform: scale(0.98);
+  }
+}
+
+@keyframes modeless-data-cell {
+  0%,
+  100% {
+    opacity: 0.62;
+    box-shadow: 0 0 0 hsl(var(--signal) / 0);
+  }
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 18px hsl(var(--signal) / 0.16);
+  }
+}
+
+@keyframes modeless-data-text {
+  0%,
+  100% {
+    opacity: 0.12;
+  }
+  42% {
+    opacity: 0.32;
+  }
+  68% {
+    opacity: 0.2;
+  }
+}
+
+@keyframes modeless-connection {
+  0%,
+  100% {
+    opacity: 0.08;
+  }
+  50% {
+    opacity: 0.18;
+  }
+}
+
+@keyframes modeless-trace-draw {
+  0% {
+    stroke-dashoffset: 720;
+    opacity: 0.18;
+  }
+  38% {
+    stroke-dashoffset: 0;
+    opacity: 0.88;
+  }
+  72% {
+    stroke-dashoffset: -180;
+    opacity: 0.46;
+  }
+  100% {
+    stroke-dashoffset: -720;
+    opacity: 0.18;
+  }
+}
+
+@keyframes modeless-wave-trace {
+  0%,
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0.2;
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    stroke-dashoffset: -420;
+    opacity: 0.42;
+    transform: translate3d(0, -4px, 0);
+  }
+}
+
+@keyframes modeless-pulse {
+  0%,
+  100% {
+    opacity: 0.56;
+    transform: scaleY(0.82);
+  }
+  50% {
+    opacity: 0.92;
+    transform: scaleY(1.08);
+  }
+}
+
+@keyframes modeless-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(10px, -7px, 0) scale(1.012);
+  }
+}
+
+@keyframes modeless-scan {
+  from {
+    transform: translate3d(-12%, 0, 0);
+  }
+  to {
+    transform: translate3d(12%, 0, 0);
+  }
+}
+
+@keyframes modeless-flicker {
+  0%,
+  100% {
+    opacity: 0.84;
+  }
+  48% {
+    opacity: 1;
+  }
+  52% {
+    opacity: 0.78;
+  }
+}
+
+@keyframes modeless-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes modeless-glitch {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  45% {
+    transform: translate3d(1px, 0, 0);
+  }
+  65% {
+    transform: translate3d(-1px, 0, 0);
+  }
+}
+
+@keyframes modeless-orbital {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.001ms !important;
+  }
+}

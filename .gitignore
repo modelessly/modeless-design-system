@@ -1,0 +1,9 @@
+node_modules
+dist
+.npm-pack-cache
+*.tgz
+examples/*/node_modules
+examples/*/dist
+.DS_Store
+
+*.tsbuildinfo
