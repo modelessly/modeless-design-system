@@ -1,11 +1,11 @@
 # Installation
 
-Modeless UI currently supports two adoption paths:
+Modeless Design System currently supports two adoption paths:
 
 - **Package install:** best for builders who want dependency management, types, and upgrades.
 - **Copy source:** best for teams who want to own and modify every component.
 
-The package is currently tested locally as `modeless-ui`. The intended public package name is `@modeless/ui`.
+The package is currently tested locally as `@modeless/design-system`.
 
 ## Local Demo
 
@@ -19,25 +19,25 @@ npm run dev
 From this repo:
 
 ```bash
-npm run build:ui
+npm run build
 npm pack --cache ./.npm-pack-cache
 ```
 
 In a clean React app:
 
 ```bash
-npm install /path/to/modeless/modeless-ui-0.1.0.tgz
+npm install /path/to/modeless/modeless-design-system-0.1.0.tgz
 ```
 
 Then import components and CSS:
 
 ```tsx
-import { ModelessButton, ModelessPanel, ModelessTextField } from "modeless-ui";
-import "modeless-ui/globals";
-import "modeless-ui/styles";
+import { ModelessButton, ModelessPanel, ModelessTextField } from "@modeless/design-system";
+import "@modeless/design-system/globals";
+import "@modeless/design-system/styles";
 ```
 
-See `design-system/docs/package-usage.md` for a complete Vite example.
+See `docs/package-usage.md` for a complete Vite example.
 
 ## Future GitHub Install
 
@@ -47,20 +47,20 @@ Once the repository is public and the package boundary is stable enough for earl
 npm install github:modelessly/modeless#main
 ```
 
-The `prepare` script builds `design-system/dist` during installation.
+The `prepare` script builds `dist` during installation.
 
 ## Future Npm Install
 
-The target public shape is:
+Once published, the public install shape will be:
 
 ```bash
-npm install @modeless/ui
+npm install @modeless/design-system
 ```
 
 ```tsx
-import { ModelessButton, ModelessPanel, ModelessTextField } from "@modeless/ui";
-import "@modeless/ui/globals";
-import "@modeless/ui/styles";
+import { ModelessButton, ModelessPanel, ModelessTextField } from "@modeless/design-system";
+import "@modeless/design-system/globals";
+import "@modeless/design-system/styles";
 ```
 
 ## Copy Into A Project
@@ -69,20 +69,20 @@ This is a repository source-copy path, not the default npm package path.
 
 Copy these folders into a React, Tailwind, and shadcn-style project:
 
-- `design-system/src/components/modeless`
-- `design-system/src/styles/modeless-theme.css`
-- `design-system/src/tokens`
-- `design-system/src/lib/utils.ts` if your project does not already have a compatible `cn()`
+- `src/components/modeless`
+- `src/styles/modeless-theme.css`
+- `src/tokens`
+- `src/lib/utils.ts` if your project does not already have a compatible `cn()`
 
 Then import the theme after your Tailwind globals:
 
 ```ts
-import "../design-system/src/styles/globals.css";
-import "../design-system/src/styles/modeless-theme.css";
+import "../src/styles/globals.css";
+import "../src/styles/modeless-theme.css";
 ```
 
 ## Tailwind
 
-Package consumers do not need to run Tailwind for Modeless components to render. `modeless-ui/globals` is compiled during `npm run build:ui`, and `modeless-ui/styles` provides the Modeless theme variables and artifact utilities.
+Package consumers do not need to run Tailwind for Modeless components to render. `@modeless/design-system/globals` is compiled during `npm run build`, and `@modeless/design-system/styles` provides the Modeless theme variables and artifact utilities.
 
-If a consumer writes their own Tailwind utility classes, that app still needs its own Tailwind setup. The package CSS only covers the utilities used by Modeless UI and the shared global/theme classes it ships.
+If a consumer writes their own Tailwind utility classes, that app still needs its own Tailwind setup. The package CSS only covers the utilities used by Modeless Design System and the shared global/theme classes it ships.

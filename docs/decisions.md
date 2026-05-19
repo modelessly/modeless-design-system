@@ -10,7 +10,7 @@ The demo uses a tiny pathname switch instead of adding a router dependency. This
 
 ## Distribution
 
-The repository is structured as a library-demo hybrid. `design-system/src/components/modeless` is the source users can copy, while Vite runs the documentation/demo app.
+The repository is structured as a library-demo hybrid. `src/components/modeless` is the source users can copy, while Vite runs the documentation/demo app.
 
 ## Assets
 

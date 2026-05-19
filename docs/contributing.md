@@ -15,14 +15,17 @@ npm install
 npm run dev
 npm run typecheck
 npm run build
+npm run verify
 ```
 
 ## Component Changes
 
 When adding a component, include:
 
-- Source file in `design-system/src/components/modeless`
-- Export in `design-system/src/components/modeless/index.ts`
+- Source file in `src/components/modeless`
+- Export in `src/components/modeless/index.ts`
 - Demo usage in `/components` or `/patterns`
-- Documentation update in `design-system/docs/components.md`
+- Documentation update in `docs/components.md`
 - Registry entry if it should be distributed through shadcn
+
+See the root `CONTRIBUTING.md` for public pull request expectations.

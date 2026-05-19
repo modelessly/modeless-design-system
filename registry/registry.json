@@ -1,16 +1,16 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
-  "name": "modeless-ui",
-  "homepage": "https://github.com/modeless-studio/modeless-ui",
+  "name": "@modeless/design-system",
+  "homepage": "https://github.com/modelessly/modeless-design-system",
   "items": [
     {
       "name": "modeless-theme",
       "type": "registry:style",
       "title": "Modeless Theme",
-      "description": "CSS variables, Tailwind tokens, typography, utilities, and motion classes for Modeless UI.",
+      "description": "CSS variables, Tailwind tokens, typography, utilities, and motion classes for Modeless Design System.",
       "files": [
         {
-          "path": "design-system/src/styles/modeless-theme.css",
+          "path": "src/styles/modeless-theme.css",
           "type": "registry:style"
         },
         {
@@ -26,21 +26,21 @@
       "description": "The complete Modeless component set.",
       "dependencies": ["class-variance-authority", "clsx", "tailwind-merge", "lucide-react"],
       "files": [
-        { "path": "design-system/src/lib/utils.ts", "type": "registry:lib" },
-        { "path": "design-system/src/components/modeless/modeless-button.tsx", "type": "registry:component" },
-        { "path": "design-system/src/components/modeless/modeless-panel.tsx", "type": "registry:component" },
-        { "path": "design-system/src/components/modeless/modeless-foundation.tsx", "type": "registry:component" },
-        { "path": "design-system/src/components/modeless/artifact-card.tsx", "type": "registry:component" },
-        { "path": "design-system/src/components/modeless/signal-badge.tsx", "type": "registry:component" },
-        { "path": "design-system/src/components/modeless/terminal-block.tsx", "type": "registry:component" },
-        { "path": "design-system/src/components/modeless/glyph-grid.tsx", "type": "registry:component" },
-        { "path": "design-system/src/components/modeless/generative-field.tsx", "type": "registry:component" },
-        { "path": "design-system/src/components/modeless/specimen-card.tsx", "type": "registry:component" },
-        { "path": "design-system/src/components/modeless/command-surface.tsx", "type": "registry:component" },
-        { "path": "design-system/src/components/modeless/blog-post-card.tsx", "type": "registry:component" },
-        { "path": "design-system/src/components/modeless/product-hero.tsx", "type": "registry:component" },
-        { "path": "design-system/src/components/modeless/modeless-shell.tsx", "type": "registry:component" },
-        { "path": "design-system/src/components/modeless/index.ts", "type": "registry:file" }
+        { "path": "src/lib/utils.ts", "type": "registry:lib" },
+        { "path": "src/components/modeless/modeless-button.tsx", "type": "registry:component" },
+        { "path": "src/components/modeless/modeless-panel.tsx", "type": "registry:component" },
+        { "path": "src/components/modeless/modeless-foundation.tsx", "type": "registry:component" },
+        { "path": "src/components/modeless/artifact-card.tsx", "type": "registry:component" },
+        { "path": "src/components/modeless/signal-badge.tsx", "type": "registry:component" },
+        { "path": "src/components/modeless/terminal-block.tsx", "type": "registry:component" },
+        { "path": "src/components/modeless/glyph-grid.tsx", "type": "registry:component" },
+        { "path": "src/components/modeless/generative-field.tsx", "type": "registry:component" },
+        { "path": "src/components/modeless/specimen-card.tsx", "type": "registry:component" },
+        { "path": "src/components/modeless/command-surface.tsx", "type": "registry:component" },
+        { "path": "src/components/modeless/blog-post-card.tsx", "type": "registry:component" },
+        { "path": "src/components/modeless/product-hero.tsx", "type": "registry:component" },
+        { "path": "src/components/modeless/modeless-shell.tsx", "type": "registry:component" },
+        { "path": "src/components/modeless/index.ts", "type": "registry:file" }
       ]
     },
     {
@@ -50,21 +50,21 @@
       "description": "Reusable visualization components for agentic workflows, prompt stacks, context windows, confidence, handoffs, token economics, on-chain flows, smart contracts, governance, trust surfaces, and signal morphology.",
       "dependencies": ["clsx", "tailwind-merge", "lucide-react"],
       "files": [
-        { "path": "design-system/src/lib/utils.ts", "type": "registry:lib" },
-        { "path": "design-system/src/tokens/motion.ts", "type": "registry:file" },
-        { "path": "design-system/src/components/modeless/visualizations/shared.tsx", "type": "registry:component" },
-        { "path": "design-system/src/components/modeless/visualizations/agent-trace-map.tsx", "type": "registry:component" },
-        { "path": "design-system/src/components/modeless/visualizations/prompt-stack-visualizer.tsx", "type": "registry:component" },
-        { "path": "design-system/src/components/modeless/visualizations/context-window-heatmap.tsx", "type": "registry:component" },
-        { "path": "design-system/src/components/modeless/visualizations/confidence-gradient-matrix.tsx", "type": "registry:component" },
-        { "path": "design-system/src/components/modeless/visualizations/human-ai-handoff-timeline.tsx", "type": "registry:component" },
-        { "path": "design-system/src/components/modeless/visualizations/token-economy-meter.tsx", "type": "registry:component" },
-        { "path": "design-system/src/components/modeless/visualizations/on-chain-flow-graph.tsx", "type": "registry:component" },
-        { "path": "design-system/src/components/modeless/visualizations/smart-contract-state-machine.tsx", "type": "registry:component" },
-        { "path": "design-system/src/components/modeless/visualizations/governance-pulse-board.tsx", "type": "registry:component" },
-        { "path": "design-system/src/components/modeless/visualizations/trust-surface-map.tsx", "type": "registry:component" },
-        { "path": "design-system/src/components/modeless/visualizations/signal-bloom.tsx", "type": "registry:component" },
-        { "path": "design-system/src/components/modeless/visualizations/index.ts", "type": "registry:file" }
+        { "path": "src/lib/utils.ts", "type": "registry:lib" },
+        { "path": "src/tokens/motion.ts", "type": "registry:file" },
+        { "path": "src/components/modeless/visualizations/shared.tsx", "type": "registry:component" },
+        { "path": "src/components/modeless/visualizations/agent-trace-map.tsx", "type": "registry:component" },
+        { "path": "src/components/modeless/visualizations/prompt-stack-visualizer.tsx", "type": "registry:component" },
+        { "path": "src/components/modeless/visualizations/context-window-heatmap.tsx", "type": "registry:component" },
+        { "path": "src/components/modeless/visualizations/confidence-gradient-matrix.tsx", "type": "registry:component" },
+        { "path": "src/components/modeless/visualizations/human-ai-handoff-timeline.tsx", "type": "registry:component" },
+        { "path": "src/components/modeless/visualizations/token-economy-meter.tsx", "type": "registry:component" },
+        { "path": "src/components/modeless/visualizations/on-chain-flow-graph.tsx", "type": "registry:component" },
+        { "path": "src/components/modeless/visualizations/smart-contract-state-machine.tsx", "type": "registry:component" },
+        { "path": "src/components/modeless/visualizations/governance-pulse-board.tsx", "type": "registry:component" },
+        { "path": "src/components/modeless/visualizations/trust-surface-map.tsx", "type": "registry:component" },
+        { "path": "src/components/modeless/visualizations/signal-bloom.tsx", "type": "registry:component" },
+        { "path": "src/components/modeless/visualizations/index.ts", "type": "registry:file" }
       ]
     },
     {
@@ -74,20 +74,20 @@
       "description": "Reusable interface components for agent authorization, scoped spend, shared payment tokens, checkout sessions, x402 handshakes, receipts, delegated timelines, trust boundaries, product feed readiness, and machine payment operations.",
       "dependencies": ["clsx", "tailwind-merge", "lucide-react"],
       "files": [
-        { "path": "design-system/src/lib/utils.ts", "type": "registry:lib" },
-        { "path": "design-system/src/tokens/motion.ts", "type": "registry:file" },
-        { "path": "design-system/src/components/modeless/commerce/shared.tsx", "type": "registry:component" },
-        { "path": "design-system/src/components/modeless/commerce/agent-payment-authorization.tsx", "type": "registry:component" },
-        { "path": "design-system/src/components/modeless/commerce/scoped-spend-control.tsx", "type": "registry:component" },
-        { "path": "design-system/src/components/modeless/commerce/shared-payment-token-card.tsx", "type": "registry:component" },
-        { "path": "design-system/src/components/modeless/commerce/agentic-checkout-session.tsx", "type": "registry:component" },
-        { "path": "design-system/src/components/modeless/commerce/x402-payment-handshake.tsx", "type": "registry:component" },
-        { "path": "design-system/src/components/modeless/commerce/agent-receipt.tsx", "type": "registry:component" },
-        { "path": "design-system/src/components/modeless/commerce/delegated-payment-timeline.tsx", "type": "registry:component" },
-        { "path": "design-system/src/components/modeless/commerce/commerce-trust-boundary.tsx", "type": "registry:component" },
-        { "path": "design-system/src/components/modeless/commerce/product-feed-readiness-panel.tsx", "type": "registry:component" },
-        { "path": "design-system/src/components/modeless/commerce/machine-payment-meter.tsx", "type": "registry:component" },
-        { "path": "design-system/src/components/modeless/commerce/index.ts", "type": "registry:file" }
+        { "path": "src/lib/utils.ts", "type": "registry:lib" },
+        { "path": "src/tokens/motion.ts", "type": "registry:file" },
+        { "path": "src/components/modeless/commerce/shared.tsx", "type": "registry:component" },
+        { "path": "src/components/modeless/commerce/agent-payment-authorization.tsx", "type": "registry:component" },
+        { "path": "src/components/modeless/commerce/scoped-spend-control.tsx", "type": "registry:component" },
+        { "path": "src/components/modeless/commerce/shared-payment-token-card.tsx", "type": "registry:component" },
+        { "path": "src/components/modeless/commerce/agentic-checkout-session.tsx", "type": "registry:component" },
+        { "path": "src/components/modeless/commerce/x402-payment-handshake.tsx", "type": "registry:component" },
+        { "path": "src/components/modeless/commerce/agent-receipt.tsx", "type": "registry:component" },
+        { "path": "src/components/modeless/commerce/delegated-payment-timeline.tsx", "type": "registry:component" },
+        { "path": "src/components/modeless/commerce/commerce-trust-boundary.tsx", "type": "registry:component" },
+        { "path": "src/components/modeless/commerce/product-feed-readiness-panel.tsx", "type": "registry:component" },
+        { "path": "src/components/modeless/commerce/machine-payment-meter.tsx", "type": "registry:component" },
+        { "path": "src/components/modeless/commerce/index.ts", "type": "registry:file" }
       ]
     }
   ]

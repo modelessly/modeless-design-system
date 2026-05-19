@@ -1,12 +1,12 @@
-# Modeless UI Vite Consumer
+# Modeless Design System Vite Consumer
 
-This example is a permanent external-consumer fixture for the future `modeless-ui` package.
+This example is a permanent external-consumer fixture for the `@modeless/design-system` package.
 
 It installs the package from the repo root with `file:../..` and imports:
 
-- `modeless-ui`
-- `modeless-ui/globals`
-- `modeless-ui/styles`
+- `@modeless/design-system`
+- `@modeless/design-system/globals`
+- `@modeless/design-system/styles`
 - exported tokens and types
 
 ## Run

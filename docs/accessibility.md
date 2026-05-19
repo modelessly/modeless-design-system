@@ -1,6 +1,6 @@
 # Accessibility
 
-Modeless UI keeps the visual density without treating usability as optional.
+Modeless Design System keeps the visual density without treating usability as optional.
 
 ## Contrast
 

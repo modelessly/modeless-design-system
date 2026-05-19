@@ -1,5 +1,5 @@
 {
-  "name": "modeless-ui-vite-consumer",
+  "name": "modeless-design-system-vite-consumer",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -9,7 +9,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "modeless-ui": "file:../../modeless-ui-0.1.0.tgz",
+    "@modeless/design-system": "file:../../modeless-design-system-0.1.0.tgz",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },

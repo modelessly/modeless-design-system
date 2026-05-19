@@ -25,9 +25,9 @@ import {
   modelessColors,
   modelessTypography,
   type ModelessMotionIntensity,
-} from "modeless-ui";
-import "modeless-ui/globals";
-import "modeless-ui/styles";
+} from "@modeless/design-system";
+import "@modeless/design-system/globals";
+import "@modeless/design-system/styles";
 
 const motion: ModelessMotionIntensity = "subtle";
 
@@ -64,7 +64,7 @@ function ConsumerExample() {
             <p className="text-label text-muted-foreground">external builder smoke test</p>
             <h1 className="mt-3 font-display text-4xl uppercase leading-none md:text-6xl">Operations Settings</h1>
             <p className="mt-4 max-w-2xl text-sm leading-6 text-muted-foreground">
-              A standalone Vite app consuming Modeless UI through package imports, CSS exports, token exports, and generated TypeScript declarations.
+              A standalone Vite app consuming Modeless Design System through package imports, CSS exports, token exports, and generated TypeScript declarations.
             </p>
           </div>
           <div className="flex flex-wrap gap-2 md:justify-end">
@@ -148,7 +148,7 @@ function ConsumerExample() {
           </ModelessCard>
 
           <div className="grid gap-5">
-            <ModelessPanel title="Package Surface" eyebrow="modeless-ui" motion={motion} actions={<SignalBadge variant="live">public API</SignalBadge>}>
+            <ModelessPanel title="Package Surface" eyebrow="@modeless/design-system" motion={motion} actions={<SignalBadge variant="live">public API</SignalBadge>}>
               <div className="grid gap-4">
                 <p className="text-sm leading-6 text-muted-foreground">
                   Components, theme variables, utility classes, tokens, and the <code className="font-mono text-primary">ModelessMotionIntensity</code> type are imported from the package contract.
@@ -205,7 +205,7 @@ function ConsumerExample() {
 
       {toastVisible ? (
         <div className="fixed bottom-4 right-4 z-50 w-[min(24rem,calc(100vw-2rem))]">
-          <ModelessToast heading="Settings saved" description="Consumer state updated through packaged Modeless UI controls." tone="success" />
+          <ModelessToast heading="Settings saved" description="Consumer state updated through packaged Modeless Design System controls." tone="success" />
         </div>
       ) : null}
     </main>

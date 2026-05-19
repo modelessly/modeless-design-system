@@ -387,7 +387,7 @@ Required metadata:
 
 ## Implementation Tokens
 
-The first token layer lives in `design-system/src/tokens/motion.ts`.
+The first token layer lives in `src/tokens/motion.ts`.
 
 ```ts
 modelessMotionIntensities

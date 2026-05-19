@@ -1,6 +1,6 @@
 # Component Readiness
 
-This policy defines how Modeless decides whether a component is ready for product use, external builders, and eventual `modeless-ui` publication.
+This policy defines how Modeless decides whether a component is ready for product use, external builders, and eventual `@modeless/design-system` publication.
 
 ## Maturity States
 
@@ -66,7 +66,7 @@ Acceptance criteria:
 
 Acceptance criteria:
 - A clean external React/Vite app can install the package.
-- The component imports from `modeless-ui`.
+- The component imports from `@modeless/design-system`.
 - Required CSS imports work.
 - Typecheck and production build pass in the consumer app.
 

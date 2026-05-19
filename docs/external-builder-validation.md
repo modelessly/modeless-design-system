@@ -4,11 +4,11 @@ Date: 2026-05-11
 
 ## Goal
 
-Validate the Modeless UI package experience from a fresh downstream app using the documented package-style contract:
+Validate the Modeless Design System package experience from a fresh downstream app using the documented package-style contract:
 
-- `modeless-ui`
-- `modeless-ui/globals`
-- `modeless-ui/styles`
+- `@modeless/design-system`
+- `@modeless/design-system/globals`
+- `@modeless/design-system/styles`
 
 This test intentionally did not use the checked-in `examples/vite-consumer` fixture.
 
@@ -23,7 +23,7 @@ Temporary app:
 Installed package:
 
 ```txt
-/Users/allensmith/Library/Mobile Documents/com~apple~CloudDocs/_GitHub/modeless/modeless-ui-0.1.0.tgz
+/Users/allensmith/Library/Mobile Documents/com~apple~CloudDocs/_GitHub/modeless/modeless-design-system-0.1.0.tgz
 ```
 
 The app is a compact operations settings dashboard with:
@@ -62,7 +62,7 @@ Passed:
 - Consumer TypeScript check passed.
 - Consumer production build passed.
 - Browser smoke passed at `http://127.0.0.1:5179/`.
-- App rendered the Modeless UI screen.
+- App rendered the Modeless Design System screen.
 - Dialog opened and confirmed.
 - Toast rendered after confirmation.
 - Tabs changed visible content.

@@ -9,11 +9,11 @@ QA harness: `/qa`
 ## Scope
 
 Routes checked:
-- `/design-system/components`
-- `/design-system/components/text-field`
-- `/design-system/components/tabs`
-- `/design-system/components/dialog`
-- `/design-system/components/states`
+- `/components`
+- `/components/text-field`
+- `/components/tabs`
+- `/components/dialog`
+- `/components/states`
 
 ## Checklist
 
@@ -30,29 +30,29 @@ Routes checked:
 
 Small-screen QA was performed through `/qa` using the Foundation Components suite with the `Small` viewport preset.
 
-### `/design-system/components`
+### `/components`
 
 - Catalog, maturity definitions, Foundation Component cards, preview tabs, and state examples render.
 - Component cards expose maturity and checklist counts.
 - No stale “Normal Components” copy observed.
 
-### `/design-system/components/text-field`
+### `/components/text-field`
 
 - TextField example, import snippet, props, accessibility, and checklist sections render.
 - Code block remains horizontally scrollable instead of forcing layout overflow.
 
-### `/design-system/components/tabs`
+### `/components/tabs`
 
 - Tabs example renders with selected state, panel content, and documented keyboard behavior.
 - `tab` and `tabpanel` roles are present.
 
-### `/design-system/components/dialog`
+### `/components/dialog`
 
 - Dialog example opens cleanly.
 - Focus trap, Escape close, and focus return were verified separately in keyboard QA.
 - Dialog surface uses labelled and described ARIA wiring.
 
-### `/design-system/components/states`
+### `/components/states`
 
 - Loading and error examples render.
 - State surfaces use readable text and contained actions.

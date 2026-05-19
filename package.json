@@ -1,18 +1,18 @@
 {
-  "name": "modeless-ui",
+  "name": "@modeless/design-system",
   "version": "0.1.0",
   "private": false,
   "type": "module",
-  "description": "Modeless UI: React components, tokens, and CSS for AI-native product interfaces.",
+  "description": "Modeless Design System: React components, tokens, and CSS for AI-native product interfaces.",
   "license": "MIT",
   "author": "Modeless",
   "homepage": "https://modeless.io",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/modelessly/modeless-ui.git"
+    "url": "git+https://github.com/modelessly/modeless-design-system.git"
   },
   "bugs": {
-    "url": "https://github.com/modelessly/modeless-ui/issues"
+    "url": "https://github.com/modelessly/modeless-design-system/issues"
   },
   "files": [
     "dist",
@@ -45,7 +45,7 @@
     "pack:check": "npm pack --dry-run --cache ./.npm-pack-cache",
     "pack:local": "npm pack --cache ./.npm-pack-cache",
     "verify": "npm run build && npm run public-api:check && npm run pack:check && npm run pack:local && npm run example:consumer:install && npm run example:consumer:typecheck && npm run example:consumer:build",
-    "example:consumer:install": "npm install --ignore-scripts --no-audit --no-fund --package-lock=false --prefix examples/vite-consumer",
+    "example:consumer:install": "npm install --ignore-scripts --no-audit --no-fund --package-lock=false --cache ./.npm-pack-cache --prefix examples/vite-consumer",
     "example:consumer:typecheck": "npm run typecheck --prefix examples/vite-consumer",
     "example:consumer:build": "npm run build --prefix examples/vite-consumer",
     "prepare": "npm run build",

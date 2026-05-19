@@ -1,6 +1,6 @@
 # Components
 
-All components live in `design-system/src/components/modeless` and are exported from `design-system/src/components/modeless/index.ts`.
+All components live in `src/components/modeless` and are exported from `src/components/modeless/index.ts`.
 
 ## Included
 
@@ -104,25 +104,25 @@ First-pass foundation components:
 - `ModelessCard`, `ModelessList`, `ModelessListItem`, `ModelessDivider`
 - `ModelessEmptyState`, `ModelessLoadingState`, `ModelessErrorState`
 
-See `design-system/docs/material-3-gap-audit.md` for the component coverage roadmap.
+See `docs/material-3-gap-audit.md` for the component coverage roadmap.
 
 ## AI-Native And Web3 Visualizations
 
-The visualization components live in `design-system/src/components/modeless/visualizations` and are exported from the main modeless component barrel. They are built with React, TypeScript, Tailwind, SVG/CSS motion, and lucide icons where useful. They do not require charting libraries or live APIs.
+The visualization components live in `src/components/modeless/visualizations` and are exported from the main modeless component barrel. They are built with React, TypeScript, Tailwind, SVG/CSS motion, and lucide icons where useful. They do not require charting libraries or live APIs.
 
 These components are intended for agentic workflows, AI product operations, token economics, protocol dashboards, governance health, smart contract state, universal signal morphology, and trust-sensitive systems. Each component accepts structured props and supports `motion`.
 
-See `design-system/docs/visualizations.md` for prop summaries, usage guidance, and accessibility notes. See `design-system/docs/motion-and-visualization.md` for the larger motion and visualization design system.
+See `docs/visualizations.md` for prop summaries, usage guidance, and accessibility notes. See `docs/motion-and-visualization.md` for the larger motion and visualization design system.
 
 `SignalBloom` visualizes domain-agnostic events, entities, risks, anomalies, incidents, threshold breaches, stale sources, and degraded states as organic severity glyphs. Domain examples, including transit or energy examples, must be provided through `SignalBloomDatum` data only.
 
-The design-system specimen page marks components as `stable`, `experimental`, or `research` so adopters can distinguish production-ready primitives from directional patterns.
+Component docs mark surfaces as `stable`, `beta`, or `experimental` so adopters can distinguish production-ready primitives from directional patterns.
 
 ## Agentic Commerce Components
 
-The agentic commerce components live in `design-system/src/components/modeless/commerce` and are exported from the main modeless component barrel. They are built for products that need to explain agent-led purchases, scoped payment credentials, spend policy, checkout ownership, or machine-payment protocol state.
+The agentic commerce components live in `src/components/modeless/commerce` and are exported from the main modeless component barrel. They are built for products that need to explain agent-led purchases, scoped payment credentials, spend policy, checkout ownership, or machine-payment protocol state.
 
-See `design-system/docs/agentic-commerce.md` for use cases, target users, inclusion rationale, motion guidance, and security notes.
+See `docs/agentic-commerce.md` for use cases, target users, inclusion rationale, motion guidance, and security notes.
 
 ## Conventions
 

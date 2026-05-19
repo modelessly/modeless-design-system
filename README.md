@@ -2,7 +2,7 @@
 
 Reusable React components, tokens, theme CSS, docs, and source-copy material for the Modeless interface language.
 
-The current local package name is `modeless-ui`; the intended public package name is `@modeless/ui`.
+The public package name is `@modeless/design-system`.
 
 ## Structure
 
@@ -46,18 +46,18 @@ Install the packed tarball in another app:
 ```bash
 npm run build
 npm pack --cache ./.npm-pack-cache
-npm install /path/to/modeless-ui/modeless-ui-0.1.0.tgz
+npm install /path/to/modeless-design-system/modeless-design-system-0.1.0.tgz
 ```
 
 Import components, globals, and theme CSS:
 
 ```tsx
-import { ModelessButton, ModelessPanel, ModelessTextField } from "modeless-ui";
-import "modeless-ui/globals";
-import "modeless-ui/styles";
+import { ModelessButton, ModelessPanel, ModelessTextField } from "@modeless/design-system";
+import "@modeless/design-system/globals";
+import "@modeless/design-system/styles";
 ```
 
-`modeless-ui/globals` is compiled during `npm run build`, so packaged components render in a plain React/Vite app without requiring the consumer to configure Tailwind. Consumers still need their own styling pipeline for app-authored utility classes.
+`@modeless/design-system/globals` is compiled during `npm run build`, so packaged components render in a plain React/Vite app without requiring the consumer to configure Tailwind. Consumers still need their own styling pipeline for app-authored utility classes.
 
 See `docs/package-usage.md` for the full consumer guide.
 
@@ -73,14 +73,13 @@ Public exports are guarded by `npm run public-api:check`, which reads built decl
 ## What Is Not Ready Yet
 
 - The package is not published to npm.
-- The final public package name is not locked.
 - Visualizations and agentic commerce components need stronger examples and accessibility guidance before they should be treated as stable.
 - The source-copy registry path is secondary and still needs fuller dependency/CSS guidance.
 - The package should stay pre-1.0 until package docs, release gates, and external consumption stay boring for a few cycles.
 
 ## Philosophy
 
-Modeless UI supports two adoption paths:
+Modeless Design System supports two adoption paths:
 
 - package install for builders who want dependency management, types, and upgrades
 - source/registry copy for teams who want to own and modify the code

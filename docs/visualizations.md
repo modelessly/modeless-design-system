@@ -12,7 +12,7 @@ import {
   ContextWindowHeatmap,
   SignalBloom,
   TrustSurfaceMap,
-} from "modeless-ui";
+} from "@modeless/design-system";
 ```
 
 ## Components
@@ -151,7 +151,7 @@ Visual encoding: severity and value affect bloom size; critical signals become s
 
 Accessibility: each glyph is a keyboard-focusable button with a text equivalent for label, severity, state, value, source, and freshness. Selection uses outline and details, not color alone. Summary, legend, details, and source footer remain readable when motion is off.
 
-See `design-system/docs/signal-bloom.md` for the full data model, mapping guidance, motion behavior, and future adapter notes.
+See `docs/signal-bloom.md` for the full data model, mapping guidance, motion behavior, and future adapter notes.
 
 ## Example
 

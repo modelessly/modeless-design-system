@@ -1,6 +1,6 @@
 # Tokens
 
-Modeless UI uses CSS variables as the source of truth for theming.
+Modeless Design System uses CSS variables as the source of truth for theming.
 
 ## Core Colors
 
@@ -32,7 +32,7 @@ Custom roles include `signal`, `terminal`, `artifact`, `grid-line`, `scanline`, 
 
 ## Motion
 
-Motion tokens live in `design-system/src/tokens/motion.ts`.
+Motion tokens live in `src/tokens/motion.ts`.
 
 - `modelessMotionIntensities`
 - `modelessMotionDurations`

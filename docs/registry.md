@@ -1,6 +1,6 @@
 # Registry
 
-This project includes a starter `design-system/registry/registry.json` compatible with the direction of shadcn custom registries.
+This project includes a starter `registry/registry.json` compatible with the direction of shadcn custom registries.
 
 The current registry points to local source files and theme files. Before publishing, update URLs to raw GitHub URLs or your hosted registry endpoint.
 

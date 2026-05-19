@@ -1,6 +1,6 @@
 # Agentic Commerce Components
 
-Modeless UI includes a first-pass component family for agentic payments and machine commerce. These are not payment processors and do not move money. They are reusable interface components for products that need to explain authorization, spend limits, scoped payment credentials, checkout state, and machine-payment handshakes.
+Modeless Design System includes a first-pass component family for agentic payments and machine commerce. These are not payment processors and do not move money. They are reusable interface components for products that need to explain authorization, spend limits, scoped payment credentials, checkout state, and machine-payment handshakes.
 
 ## Why This Exists
 
@@ -43,8 +43,8 @@ import {
   AgenticCheckoutSession,
   X402PaymentHandshake,
   type AgentPaymentAuthorizationStep,
-} from "modeless-ui";
-import "modeless-ui/styles";
+} from "@modeless/design-system";
+import "@modeless/design-system/styles";
 ```
 
 Every commerce component accepts `motion="off" | "subtle" | "live" | "high"`. Use `subtle` for ordinary product screens and `off` for dense admin surfaces or user-controlled reduced-motion modes.
