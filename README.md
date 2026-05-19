@@ -1,4 +1,4 @@
-# Modeless UI
+# Modeless Design System
 
 Reusable React components, tokens, theme CSS, docs, and source-copy material for the Modeless interface language.
 
