@@ -53,4 +53,6 @@ https://modelessly.github.io/modeless-design-system/
 
 The deployment verifies and packs the design-system package first, installs that artifact into the external-consumer fixture, and then builds the fixture with the GitHub Pages repository base path. This preview does not publish the npm package; npm publishing remains an explicit versioned release step.
 
-One-time repository setup: in GitHub repository settings, set **Pages > Build and deployment > Source** to **GitHub Actions**.
+One-time repository setup: in GitHub repository settings, set **Pages > Build and deployment > Source** to **GitHub Actions**. Until this is set, the `Setup Pages` workflow step fails with `Get Pages site failed` / `Not Found`.
+
+The workflow intentionally does not pass `enablement: true` to `actions/configure-pages`: GitHub requires a separate token with repository administration and Pages write permissions for that option. Enabling Pages once in repository settings keeps deployment on the normal scoped `GITHUB_TOKEN` path.
