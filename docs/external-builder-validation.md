@@ -73,7 +73,7 @@ Passed:
 TypeScript caught three incorrect assumptions in the first consumer pass:
 
 - `ModelessSegmentedControl` requires an accessible label through `aria-label`.
-- `ModelessProgress` currently accepts `default`, `warning`, or `muted`; it does not accept `success`.
+- At validation time, `ModelessProgress` accepted `default`, `warning`, or `muted`; completion-specific `success` support was added in the subsequent operational-workflow update.
 - `ModelessTabs` expects tab metadata plus children, not per-tab `content` objects.
 
 These were good failures: the package types were available, clear enough to correct the app, and did not require private imports.

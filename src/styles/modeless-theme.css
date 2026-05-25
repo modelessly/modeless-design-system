@@ -8,6 +8,7 @@
   --bone: 43 52% 87%;
   --xerox-white: 39 52% 94%;
   --acid-lime: 76 100% 58%;
+  --completion-green: 151 67% 54%;
   --electric-purple: 266 100% 59%;
   --radar-blue: 220 100% 59%;
   --warning-orange: 15 100% 56%;
@@ -43,7 +44,7 @@
   --scanline: 76 100% 58% / 0.08;
   --noise: 0 0% 100% / 0.07;
   --warning: var(--warning-orange);
-  --success: var(--acid-lime);
+  --success: var(--completion-green);
   --experimental: var(--electric-purple);
   --archived: var(--steel);
   --product-privacy: var(--radar-blue);
@@ -100,17 +101,17 @@
     linear-gradient(135deg, transparent calc(50% - 0.75px), var(--artifact-frame-color) calc(50% - 0.75px), var(--artifact-frame-color) calc(50% + 0.75px), transparent calc(50% + 0.75px)),
     linear-gradient(135deg, transparent calc(50% - 0.75px), var(--artifact-frame-color) calc(50% - 0.75px), var(--artifact-frame-color) calc(50% + 0.75px), transparent calc(50% + 0.75px));
   background-position:
-    var(--angle-cut) 0,
+    0 0,
     100% 0,
     0 100%,
-    0 var(--angle-cut),
+    0 0,
     0 0,
     100% 100%;
   background-size:
-    calc(100% - var(--angle-cut)) 1px,
-    1px calc(100% - var(--angle-cut)),
-    calc(100% - var(--angle-cut)) 1px,
-    1px calc(100% - var(--angle-cut)),
+    100% 1px,
+    1px 100%,
+    100% 1px,
+    1px 100%,
     var(--angle-cut) var(--angle-cut),
     var(--angle-cut) var(--angle-cut);
   background-repeat: no-repeat;
@@ -125,12 +126,36 @@
   --artifact-frame-color: hsl(var(--primary));
 }
 
+.artifact-angle-frame.hover\:border-primary\/70:hover {
+  --artifact-frame-color: hsl(var(--primary) / 0.7);
+}
+
+.artifact-angle-frame.border-signal {
+  --artifact-frame-color: hsl(var(--signal));
+}
+
 .artifact-angle-frame.border-warning {
   --artifact-frame-color: hsl(var(--warning));
 }
 
+.artifact-angle-frame.border-warning\/70 {
+  --artifact-frame-color: hsl(var(--warning) / 0.7);
+}
+
+.artifact-angle-frame.border-success {
+  --artifact-frame-color: hsl(var(--success));
+}
+
+.artifact-angle-frame.border-destructive {
+  --artifact-frame-color: hsl(var(--destructive));
+}
+
 .artifact-angle-frame.border-artifact {
   --artifact-frame-color: hsl(var(--artifact));
+}
+
+.artifact-angle-frame.border-foreground {
+  --artifact-frame-color: hsl(var(--foreground));
 }
 
 .artifact-angle-frame[class*="border-terminal-foreground"] {

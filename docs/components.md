@@ -11,6 +11,7 @@ All components live in `src/components/modeless` and are exported from `src/comp
 - `ModelessCardContent`
 - `ModelessCardFooter`
 - `ModelessTextField`
+- `ModelessDropzone`
 - `ModelessTextArea`
 - `ModelessSearchField`
 - `ModelessSelect`
@@ -99,12 +100,21 @@ These components are intentionally less domain-specific than the product, visual
 First-pass foundation components:
 
 - `ModelessTextField`, `ModelessTextArea`, `ModelessSearchField`, `ModelessSelect`, and `ModelessFormField`
+- `ModelessDropzone` for local-file selection and drag/drop import surfaces
 - `ModelessCheckbox`, `ModelessRadioGroup`, `ModelessSwitch`, and `ModelessSegmentedControl`
 - `ModelessTabs`, `ModelessTooltip`, `ModelessIconButton`, `ModelessDialog`, `ModelessToast`, and `ModelessProgress`
 - `ModelessCard`, `ModelessList`, `ModelessListItem`, `ModelessDivider`
 - `ModelessEmptyState`, `ModelessLoadingState`, `ModelessErrorState`
 
 See `docs/material-3-gap-audit.md` for the component coverage roadmap.
+
+### Operational Feedback
+
+Use `SignalBadge variant="ready"` once an input is loaded, `variant="live"` and the default `ModelessProgress` tone only while a task is active, and `variant="success"`, `ModelessProgress tone="success"`, and `ModelessToast tone="success"` after completion. Warning and error remain explicit non-success outcomes.
+
+`ModelessDropzone` provides `idle`, `dragging`, `loaded`, and `error` visual states, a keyboard-operable native file picker, `accept` guidance, selected filename display, disabled behavior, and file-list callbacks for picker and drop flows. Applications remain responsible for validating dropped file types and presenting specific errors.
+
+See `docs/operational-workflows.md` for long-running task composition, local imports, and destination folder selection.
 
 ## AI-Native And Web3 Visualizations
 

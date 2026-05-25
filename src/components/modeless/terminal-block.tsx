@@ -5,7 +5,7 @@ import { SignalBadge } from "./signal-badge";
 export interface TerminalLine {
   label?: string;
   value: React.ReactNode;
-  tone?: "default" | "muted" | "signal" | "warning" | "error";
+  tone?: "default" | "muted" | "signal" | "success" | "warning" | "error";
 }
 
 export interface TerminalBlockProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -13,13 +13,14 @@ export interface TerminalBlockProps extends React.HTMLAttributes<HTMLDivElement>
   lines: Array<string | TerminalLine>;
   prompt?: string;
   animated?: boolean;
-  status?: "live" | "stable" | "warning" | "experimental";
+  status?: "live" | "ready" | "stable" | "success" | "warning" | "error" | "experimental";
 }
 
 const toneClass = {
   default: "text-terminal-foreground",
   muted: "text-muted-foreground",
   signal: "text-primary",
+  success: "text-success",
   warning: "text-warning",
   error: "text-destructive",
 };

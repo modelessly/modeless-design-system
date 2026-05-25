@@ -64,7 +64,7 @@ See `docs/package-usage.md` for the full consumer guide.
 ## Public API Maturity
 
 - **Stable:** core primitives such as `ModelessButton`, `ModelessPanel`, `SignalBadge`, `TerminalBlock`, `CommandSurface`, and `ArtifactCard`.
-- **Beta:** Foundation Components such as text fields, selects, selection controls, tabs, cards, lists, dialog, toast, progress, and state surfaces.
+- **Beta:** Foundation Components such as text fields, dropzone, selects, selection controls, tabs, cards, lists, dialog, toast, progress, and state surfaces.
 - **Experimental:** visualization and agentic commerce components.
 - **Internal:** CVA variant helpers, shared frame helpers, commerce helper utilities, `cn()`, registry plumbing, and source-copy internals.
 

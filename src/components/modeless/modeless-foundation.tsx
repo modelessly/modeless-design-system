@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Check, ChevronDown, Circle, Info, Search, X } from "lucide-react";
+import { Check, ChevronDown, Circle, FileUp, Info, Search, X } from "lucide-react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../lib/utils";
 import { ModelessButton, type ModelessButtonProps } from "./modeless-button";
@@ -50,6 +50,125 @@ export const ModelessTextField = React.forwardRef<HTMLInputElement, ModelessText
   ),
 );
 ModelessTextField.displayName = "ModelessTextField";
+
+export type ModelessDropzoneState = "idle" | "dragging" | "loaded" | "error";
+
+export interface ModelessDropzoneProps
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "onDrop" | "onSelect"> {
+  label: React.ReactNode;
+  description?: React.ReactNode;
+  accept?: string;
+  fileName?: React.ReactNode;
+  state?: ModelessDropzoneState;
+  error?: React.ReactNode;
+  disabled?: boolean;
+  multiple?: boolean;
+  onSelect?: (files: File[]) => void;
+  onDrop?: (files: File[]) => void;
+}
+
+const dropzoneTone: Record<ModelessDropzoneState, string> = {
+  idle: "border-border",
+  dragging: "border-signal bg-signal/5",
+  loaded: "border-success bg-success/5",
+  error: "border-destructive bg-destructive/5",
+};
+
+export function ModelessDropzone({
+  label,
+  description,
+  accept,
+  fileName,
+  state = "idle",
+  error,
+  disabled = false,
+  multiple = false,
+  onSelect,
+  onDrop,
+  className,
+  ...props
+}: ModelessDropzoneProps) {
+  const inputId = React.useId();
+  const dragDepth = React.useRef(0);
+  const [isDragging, setIsDragging] = React.useState(false);
+  const visualState = isDragging && state !== "error" ? "dragging" : state;
+  const statusText = visualState === "dragging" ? "Drop to import" : visualState === "loaded" ? "Loaded" : visualState === "error" ? "Import failed" : "Ready";
+
+  const handleDragEnter = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    if (disabled) return;
+    dragDepth.current += 1;
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    if (disabled) return;
+    dragDepth.current = Math.max(0, dragDepth.current - 1);
+    if (dragDepth.current === 0) setIsDragging(false);
+  };
+
+  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    dragDepth.current = 0;
+    setIsDragging(false);
+    if (!disabled && event.dataTransfer.files.length > 0) onDrop?.(Array.from(event.dataTransfer.files));
+  };
+
+  return (
+    <div
+      className={cn(
+        "artifact-angle artifact-angle-frame grid gap-3 border bg-card p-4 text-card-foreground transition-colors",
+        dropzoneTone[visualState],
+        disabled && "cursor-not-allowed opacity-50",
+        className,
+      )}
+      {...props}
+      aria-disabled={disabled || undefined}
+      onDragEnter={handleDragEnter}
+      onDragOver={(event) => event.preventDefault()}
+      onDragLeave={handleDragLeave}
+      onDrop={handleDrop}
+    >
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <p className="font-mono text-label text-foreground">{label}</p>
+          {description ? <p className="mt-1 text-xs leading-5 text-muted-foreground">{description}</p> : null}
+        </div>
+        <FileUp aria-hidden={true} className={cn("h-5 w-5 shrink-0", visualState === "loaded" ? "text-success" : visualState === "error" ? "text-destructive" : "text-primary")} />
+      </div>
+      <div className="flex flex-wrap items-center gap-3">
+        <input
+          id={inputId}
+          type="file"
+          className="peer sr-only"
+          accept={accept}
+          multiple={multiple}
+          disabled={disabled}
+          onChange={(event) => {
+            const files = Array.from(event.currentTarget.files ?? []);
+            if (files.length > 0) onSelect?.(files);
+            event.currentTarget.value = "";
+          }}
+        />
+        <label
+          htmlFor={inputId}
+          className={cn(
+            "inline-flex h-9 cursor-pointer items-center border border-border bg-background px-3 font-mono text-label text-foreground transition-colors hover:border-primary hover:text-primary peer-focus-visible:ring-2 peer-focus-visible:ring-ring peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-background",
+            disabled && "pointer-events-none cursor-not-allowed",
+          )}
+        >
+          Choose file
+        </label>
+        <span aria-live="polite" className={cn("text-micro", visualState === "loaded" ? "text-success" : visualState === "error" ? "text-destructive" : visualState === "dragging" ? "text-primary" : "text-muted-foreground")}>
+          {statusText}
+        </span>
+      </div>
+      {fileName ? <p className="truncate border-t border-border pt-3 font-mono text-xs text-foreground">{fileName}</p> : null}
+      {error ? <p className="text-xs leading-5 text-destructive">{error}</p> : null}
+    </div>
+  );
+}
 
 export interface ModelessTextAreaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: React.ReactNode;
@@ -411,11 +530,12 @@ export function ModelessDivider({ orientation = "horizontal", label, className, 
 export interface ModelessProgressProps extends React.HTMLAttributes<HTMLDivElement> {
   value?: number;
   label?: React.ReactNode;
-  tone?: "default" | "warning" | "muted";
+  tone?: "default" | "success" | "warning" | "muted";
 }
 
 export function ModelessProgress({ value = 0, label, tone = "default", className, ...props }: ModelessProgressProps) {
   const clamped = Math.max(0, Math.min(100, value));
+  const progressTone = tone === "success" ? "bg-success" : tone === "warning" ? "bg-warning" : tone === "muted" ? "bg-muted-foreground" : "bg-primary";
   return (
     <div className={cn("grid gap-1", className)} {...props}>
       {label ? (
@@ -425,7 +545,7 @@ export function ModelessProgress({ value = 0, label, tone = "default", className
         </div>
       ) : null}
       <div role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={clamped} className="h-2 border border-border bg-background">
-        <div className={cn("h-full", tone === "warning" ? "bg-warning" : tone === "muted" ? "bg-muted-foreground" : "bg-primary")} style={{ width: `${clamped}%` }} />
+        <div className={cn("h-full", progressTone)} style={{ width: `${clamped}%` }} />
       </div>
     </div>
   );
@@ -532,7 +652,7 @@ export interface ModelessToastProps extends React.HTMLAttributes<HTMLDivElement>
 
 export function ModelessToast({ heading, description, tone = "default", className, ...props }: ModelessToastProps) {
   return (
-    <div role="status" className={cn("artifact-angle artifact-angle-sm artifact-angle-frame border bg-card p-3 shadow-lg", tone === "warning" ? "border-warning" : tone === "success" ? "border-primary" : "border-border", className)} {...props}>
+    <div role="status" className={cn("artifact-angle artifact-angle-sm artifact-angle-frame border bg-card p-3 shadow-lg", tone === "warning" ? "border-warning" : tone === "success" ? "border-success" : "border-border", className)} {...props}>
       <p className="font-mono text-label text-foreground">{heading}</p>
       {description ? <p className="mt-1 text-xs leading-5 text-muted-foreground">{description}</p> : null}
     </div>

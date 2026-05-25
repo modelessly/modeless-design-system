@@ -45,6 +45,7 @@ These are public, but should remain beta until keyboard, focus, dialog behavior,
 
 - `ModelessFormField`
 - `ModelessTextField`
+- `ModelessDropzone`
 - `ModelessTextArea`
 - `ModelessSearchField`
 - `ModelessSelect`

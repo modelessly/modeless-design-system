@@ -4,7 +4,7 @@ import { cn } from "../../lib/utils";
 import { ModelessButton } from "./modeless-button";
 import { SignalBadge } from "./signal-badge";
 
-type ArtifactStatus = "live" | "beta" | "archived" | "experimental" | "warning" | "stable" | "deprecated";
+type ArtifactStatus = "live" | "ready" | "beta" | "archived" | "experimental" | "warning" | "success" | "error" | "stable" | "deprecated";
 
 export interface ArtifactCardProps extends React.HTMLAttributes<HTMLElement> {
   title: string;

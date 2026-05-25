@@ -117,10 +117,11 @@ Important conventions:
 ## Maturity
 
 - **Stable:** core primitives such as `ModelessButton`, `ModelessPanel`, `SignalBadge`, `TerminalBlock`, `CommandSurface`, and `ArtifactCard`.
-- **Beta:** Foundation Components such as fields, selection controls, tabs, cards, lists, progress, dialog, toast, and state components.
+- **Beta:** Foundation Components such as fields, dropzone, selection controls, tabs, cards, lists, progress, dialog, toast, and state components.
 - **Experimental:** visualizations and agentic commerce components.
 
 See `docs/modeless-design-system-package-boundary.md` for the current export boundary.
+See `docs/operational-workflows.md` for active-versus-complete semantics, local-file import, and destination-folder composition.
 
 ## Verified Consumer Test
 

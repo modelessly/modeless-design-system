@@ -45,7 +45,7 @@
     "pack:check": "npm pack --dry-run --cache ./.npm-pack-cache",
     "pack:local": "npm pack --cache ./.npm-pack-cache",
     "verify": "npm run build && npm run public-api:check && npm run pack:check && npm run pack:local && npm run example:consumer:install && npm run example:consumer:typecheck && npm run example:consumer:build",
-    "example:consumer:install": "npm install --ignore-scripts --no-audit --no-fund --package-lock=false --cache ./.npm-pack-cache --prefix examples/vite-consumer",
+    "example:consumer:install": "node scripts/refresh-consumer-install.mjs && npm install --ignore-scripts --no-audit --no-fund --package-lock=false --cache ./.npm-pack-cache --prefix examples/vite-consumer",
     "example:consumer:typecheck": "npm run typecheck --prefix examples/vite-consumer",
     "example:consumer:build": "npm run build --prefix examples/vite-consumer",
     "prepare": "npm run build",

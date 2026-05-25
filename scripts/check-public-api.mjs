@@ -39,6 +39,7 @@ const requiredExports = {
     "ModelessButton",
     "ModelessPanel",
     "ModelessTextField",
+    "ModelessDropzone",
     "ModelessDialog",
     "ProductCard",
     "productStatusMeta",

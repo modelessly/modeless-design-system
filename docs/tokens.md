@@ -12,6 +12,7 @@ Modeless Design System uses CSS variables as the source of truth for theming.
 - `bone`: `#EEE6D0`
 - `xerox-white`: `#F7F2E8`
 - `acid-lime`: `#C7FF2A`
+- `completion-green`: `#39D98A`
 - `electric-purple`: `#8E2EFF`
 - `radar-blue`: `#2D78FF`
 - `warning-orange`: `#FF5A1F`
@@ -22,6 +23,19 @@ Modeless Design System uses CSS variables as the source of truth for theming.
 The theme exposes standard shadcn roles: `background`, `foreground`, `card`, `popover`, `primary`, `secondary`, `muted`, `accent`, `destructive`, `border`, `input`, and `ring`.
 
 Custom roles include `signal`, `terminal`, `artifact`, `grid-line`, `scanline`, `noise`, `warning`, `success`, `experimental`, and `archived`.
+
+## Operational State Colors
+
+| State | Semantic role | Use |
+| --- | --- | --- |
+| Idle / waiting | `muted`, `archived` | Work has not started or no item is selected. |
+| Loaded / ready | informational (`SignalBadge variant="ready"`) | An item is ready; no process is running. |
+| Active / live | `signal` / `primary` (acid lime) | Processing, connected, selected, or receiving live updates. |
+| Complete / success | `success` (completion green) | Work finished successfully and is static. |
+| Warning | `warning` | A recoverable issue or attention-required condition. |
+| Error / destructive | `destructive` | Failed, cancelled, or destructive outcomes/actions. |
+
+Acid lime communicates liveness and active attention. Do not use it to indicate a task that has already finished; successful completion uses `success` so a finished job does not appear to remain in progress.
 
 ## Typography
 

@@ -9,7 +9,7 @@ import {
   ModelessCheckbox,
   ModelessDialog,
   ModelessDivider,
-  ModelessEmptyState,
+  ModelessDropzone,
   ModelessList,
   ModelessListItem,
   ModelessPanel,
@@ -50,6 +50,13 @@ function ConsumerExample() {
   const [toastVisible, setToastVisible] = React.useState(false);
   const [automationEnabled, setAutomationEnabled] = React.useState(true);
   const [budgetAlerts, setBudgetAlerts] = React.useState(true);
+  const [fileName, setFileName] = React.useState<string>();
+  const [taskState, setTaskState] = React.useState<"waiting" | "loaded" | "processing" | "complete">("waiting");
+
+  const loadFiles = (files: File[]) => {
+    setFileName(files[0]?.name);
+    setTaskState("loaded");
+  };
 
   const showToast = () => {
     setToastVisible(true);
@@ -130,7 +137,7 @@ function ConsumerExample() {
 
                 {activeTab === "audit" ? (
                   <ModelessList>
-                    <ModelessListItem heading="Policy review" description="Completed 8 minutes ago" trailing={<SignalBadge variant="live">passed</SignalBadge>} />
+                    <ModelessListItem heading="Policy review" description="Completed 8 minutes ago" trailing={<SignalBadge variant="success">passed</SignalBadge>} />
                     <ModelessListItem heading="Token scope check" description="Waiting on finance approval" trailing={<SignalBadge variant="beta">review</SignalBadge>} />
                     <ModelessListItem heading="Export retention" description="No files generated yet" trailing={<SignalBadge variant="archived">empty</SignalBadge>} />
                   </ModelessList>
@@ -156,21 +163,56 @@ function ConsumerExample() {
                 <ModelessDivider label="tokens" />
                 <div className="grid grid-cols-2 gap-3 text-sm">
                   <TokenSwatch label="acid lime" value={modelessColors.acidLime} />
+                  <TokenSwatch label="completion green" value={modelessColors.completionGreen} />
                   <TokenSwatch label="warning" value={modelessColors.warningOrange} />
                 </div>
                 <p className="font-mono text-xs text-muted-foreground">Typography token: {modelessTypography.mono}</p>
               </div>
             </ModelessPanel>
 
-            <ModelessEmptyState
-              heading="No exports queued"
-              description="The empty state, dialog, and toast components give external builders a basic state toolkit without adding another dependency."
-              action={
-                <ModelessButton variant="outline" onClick={() => setDialogOpen(true)}>
-                  Create export
-                </ModelessButton>
+            <ModelessPanel
+              title="Local Import"
+              eyebrow="task lifecycle"
+              actions={
+                <SignalBadge variant={taskState === "processing" ? "live" : taskState === "complete" ? "success" : taskState === "loaded" ? "ready" : "archived"}>
+                  {taskState}
+                </SignalBadge>
               }
-            />
+            >
+              <div className="grid gap-4">
+                <ModelessDropzone
+                  label="Source file"
+                  description="Drag a local document here or choose a file. Accepted: PDF, CSV."
+                  accept=".pdf,.csv"
+                  fileName={fileName}
+                  state={fileName ? "loaded" : "idle"}
+                  disabled={taskState === "processing"}
+                  onSelect={loadFiles}
+                  onDrop={loadFiles}
+                />
+                <ModelessProgress
+                  label="Import task"
+                  value={taskState === "complete" ? 100 : taskState === "processing" ? 64 : 0}
+                  tone={taskState === "complete" ? "success" : taskState === "processing" ? "default" : "muted"}
+                />
+                <div className="flex flex-wrap gap-2">
+                  <ModelessButton
+                    variant="signal"
+                    disabled={!fileName || taskState === "processing" || taskState === "complete"}
+                    onClick={() => setTaskState("processing")}
+                  >
+                    Start import
+                  </ModelessButton>
+                  <ModelessButton
+                    variant="outline"
+                    disabled={taskState !== "processing"}
+                    onClick={() => setTaskState("complete")}
+                  >
+                    Mark complete
+                  </ModelessButton>
+                </div>
+              </div>
+            </ModelessPanel>
           </div>
         </div>
       </div>
@@ -218,7 +260,7 @@ function StatusCard({ label, value, meta, tone }: { label: string; value: string
       <ModelessCardContent className="grid gap-3">
         <div className="flex items-center justify-between gap-3">
           <p className="text-micro text-muted-foreground">{label}</p>
-          <span className={tone === "success" ? "text-primary" : tone === "warning" ? "text-warning" : "text-muted-foreground"}>●</span>
+          <span className={tone === "success" ? "text-success" : tone === "warning" ? "text-warning" : "text-muted-foreground"}>●</span>
         </div>
         <p className="font-display text-4xl uppercase leading-none">{value}</p>
         <p className="text-xs leading-5 text-muted-foreground">{meta}</p>

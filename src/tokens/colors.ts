@@ -7,6 +7,7 @@ export const modelessColors = {
   bone: "#EEE6D0",
   xeroxWhite: "#F7F2E8",
   acidLime: "#C7FF2A",
+  completionGreen: "#39D98A",
   electricPurple: "#8E2EFF",
   radarBlue: "#2D78FF",
   warningOrange: "#FF5A1F",

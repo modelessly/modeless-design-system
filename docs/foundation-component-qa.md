@@ -63,6 +63,10 @@ Small-screen QA was performed through `/qa` using the Foundation Components suit
 - Re-run this QA after major theme, spacing, typography, or angled-frame changes.
 - Keep `/qa` small-screen review as a release gate before graduating newly changed components to `stable`.
 
+## Operational Workflow Follow-Up
+
+The operational-workflow update adds distinct success coloring, `ModelessDropzone`, and revised shared angled-frame rendering. Source, package, and external-consumer build verification cover the API path, but visual sign-off remains pending a browser-enabled QA pass. Re-check default, terminal, warning, success, and dropzone frames in Chrome and Safari at narrow and wide widths, preferably on a Retina/high-DPI display.
+
 ## Readiness Impact
 
 The checked Foundation Component docs can mark `Visual QA complete` as `pass` for this pass. Re-run `/qa` after major theme, spacing, typography, or angled-frame changes.
