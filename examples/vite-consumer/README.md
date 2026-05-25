@@ -20,4 +20,12 @@ npm run typecheck --prefix examples/vite-consumer
 npm run build --prefix examples/vite-consumer
 ```
 
-This example should eventually run in CI after the package build.
+This example runs in CI after the package build and supplies the deployed visual showcase.
+
+## Hosted Preview
+
+Pushes to `main` deploy this fixture to GitHub Pages after package verification:
+
+[`https://modelessly.github.io/modeless-design-system/`](https://modelessly.github.io/modeless-design-system/)
+
+The GitHub Pages build uses the repository subpath automatically; ordinary local `vite` development remains rooted at `/`.

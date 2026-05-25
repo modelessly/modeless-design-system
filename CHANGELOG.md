@@ -9,6 +9,7 @@
 - Renamed the public package contract to `@modeless/design-system`.
 - Added distinct completion-green success semantics across badges, progress indicators, feedback, and terminal status treatments.
 - Added the accessible `ModelessDropzone` Foundation Component and operational workflow guidance for local-file and destination-folder patterns.
+- Added automatic GitHub Pages deployment for the packaged Vite consumer showcase on pushes to `main`.
 
 ### Fixed
 

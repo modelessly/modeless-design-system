@@ -48,6 +48,7 @@
     "example:consumer:install": "node scripts/refresh-consumer-install.mjs && npm install --ignore-scripts --no-audit --no-fund --package-lock=false --cache ./.npm-pack-cache --prefix examples/vite-consumer",
     "example:consumer:typecheck": "npm run typecheck --prefix examples/vite-consumer",
     "example:consumer:build": "npm run build --prefix examples/vite-consumer",
+    "example:consumer:build:pages": "npm run build:pages --prefix examples/vite-consumer",
     "prepare": "npm run build",
     "typecheck": "tsc --noEmit"
   },

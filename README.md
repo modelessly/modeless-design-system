@@ -61,6 +61,14 @@ import "@modeless/design-system/styles";
 
 See `docs/package-usage.md` for the full consumer guide.
 
+## Live Preview
+
+The public consumer showcase deploys automatically from `main` through GitHub Pages:
+
+[`https://modelessly.github.io/modeless-design-system/`](https://modelessly.github.io/modeless-design-system/)
+
+The preview builds the permanent Vite consumer fixture against the freshly packed package, so it exercises the same public component and CSS imports an external builder uses. npm publication remains a separate release action.
+
 ## Public API Maturity
 
 - **Stable:** core primitives such as `ModelessButton`, `ModelessPanel`, `SignalBadge`, `TerminalBlock`, `CommandSurface`, and `ArtifactCard`.

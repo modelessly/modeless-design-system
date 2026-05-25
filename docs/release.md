@@ -38,6 +38,19 @@ npm publish --tag beta
 
 - [ ] Release-readiness docs are current.
 - [ ] CI is active and green.
+- [ ] GitHub Pages is configured to use GitHub Actions and the consumer showcase deploy is green.
 - [ ] Public templates and security policy are present.
 - [ ] Known beta and experimental areas are labeled clearly.
 - [ ] Private planning notes remain outside git.
+
+## Automatic Preview Deployment
+
+The repository automatically deploys `examples/vite-consumer` to GitHub Pages from `main` using `.github/workflows/pages.yml`. This is the live visual preview for reviewing public component behavior without a local development environment:
+
+```txt
+https://modelessly.github.io/modeless-design-system/
+```
+
+The deployment verifies and packs the design-system package first, installs that artifact into the external-consumer fixture, and then builds the fixture with the GitHub Pages repository base path. This preview does not publish the npm package; npm publishing remains an explicit versioned release step.
+
+One-time repository setup: in GitHub repository settings, set **Pages > Build and deployment > Source** to **GitHub Actions**.
