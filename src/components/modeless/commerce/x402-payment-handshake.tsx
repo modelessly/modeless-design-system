@@ -70,6 +70,7 @@ export function X402PaymentHandshake({
                 <button
                   key={step.id}
                   type="button"
+                  aria-pressed={step.id === selectedId}
                   onClick={() => selectStep(step.id)}
                   className={cn(
                     "grid min-w-0 gap-2 border border-border bg-card/90 p-3 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:grid-cols-[7rem_minmax(0,1fr)]",
