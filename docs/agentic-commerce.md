@@ -104,7 +104,7 @@ const steps = [
 />
 ```
 
-Accessibility: the flow diagram carries `role="img"` with an `aria-label`, and each step renders its `label` and `actor` as text. Step rows are native buttons, so they are reachable and operable by keyboard with a visible focus ring. Selection is currently shown by border and color only — see the known gaps below — so include any state a reviewer must not miss in `label` itself. Amount, merchant, and risk score are exposed as text metrics rather than through the diagram.
+Accessibility: the flow diagram carries `role="img"` with an `aria-label`, and each step renders its `label` and `actor` as text. Step rows are native buttons, so they are reachable and operable by keyboard with a visible focus ring, and each exposes its selected state through `aria-pressed`. The list is wrapped in a labelled group. Amount, merchant, and risk score are exposed as text metrics rather than through the diagram.
 
 ### ScopedSpendControl
 
@@ -153,7 +153,7 @@ Why include it: payment credentials are usually invisible. This component turns 
 />
 ```
 
-Accessibility: permission rows are native buttons with a visible focus ring, and each renders its `label` as text. **`enabled` is currently conveyed only by an icon and a color swatch, both hidden from assistive technology, with no text equivalent** — until that is fixed, state whether a permission is active in `permission.label` itself. Revocation guidance is rendered as text.
+Accessibility: permission rows are native buttons with a visible focus ring, and each exposes its selected state through `aria-pressed`. The permission icon and risk swatch are decorative and hidden from assistive technology, so grant state and risk are carried as text alongside the label — a screen reader announces "Recurring charges, granted, risk review" or "Refunds, not granted". Revocation guidance is rendered as text.
 
 ### AgenticCheckoutSession
 
@@ -317,17 +317,20 @@ Most components render the state that matters as text: step actors, event states
 
 Commerce motion is limited to low-opacity drift on active rows and meters. All of it is disabled under `prefers-reduced-motion: reduce`, and no component depends on animation to communicate authorization state, settlement, or failure. Pass `motion="off"` where a payment surface should stay completely still.
 
-### Known Gaps
+### Selection State
 
-These are documented rather than fixed, and they are part of why the family remains experimental. Both are code changes, not documentation changes:
+All five interactive components expose the selected row through `aria-pressed` on the native button, so selection is announced rather than being carried by border and background color alone. Where a list of controls has a group label, it is exposed with `role="group"` so the label reaches assistive technology.
 
-1. **Selection is not exposed to assistive technology.** All five interactive components indicate the selected row with border and background color only. None sets `aria-pressed` or `aria-current`, so a screen reader user can operate the control but cannot tell which step, scope, permission, or event is currently selected. Until this is fixed, do not rely on selection alone to convey anything a reviewer must know.
+This follows the pattern established by `SignalBloom` in the visualization family: native buttons carrying pressed state, with the meaning of each row available as text.
 
-2. **`SharedPaymentTokenCard` conveys `enabled` by icon and color only.** The active/inactive distinction is drawn with two different icons and a colored swatch, all hidden from assistive technology, with no text equivalent. A screen reader user cannot currently tell which permissions a shared payment token grants. Include the state in `permission.label` as a workaround.
+### Prior Gaps, Now Closed
 
-Both gaps violate the system's own rule in `docs/accessibility.md` that state must never be carried by color alone. Closing them is the remaining work before this family can be considered for promotion out of experimental.
+Two defects were documented here before being fixed, and are recorded because the family's maturity assessment references them:
 
-The pattern to follow already exists in the system: `SignalBloom` renders its selectable items as native buttons carrying `aria-pressed` and a composed `aria-label` that states severity, state, and value, inside containers with their own labels. Commerce inspection rows should match it rather than invent a second approach.
+1. **Selection was not exposed to assistive technology.** None of the five interactive components set `aria-pressed` or `aria-current`, so a screen reader user could operate a control but not tell what was selected. All five now set `aria-pressed`.
+2. **`SharedPaymentTokenCard` conveyed `enabled` by icon and color only.** Grant state and risk are now rendered as text alongside each permission label.
+
+Both had violated the system's rule in `docs/accessibility.md` that state must never be carried by color alone.
 
 ## Security Notes
 

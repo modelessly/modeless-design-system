@@ -57,6 +57,6 @@ Five components have inspection states and render their selectable rows as nativ
 
 Put meaning in the data rather than in tone: step actors, event states, protocol status, zone risk, and item status are all rendered as text next to the visual treatment.
 
-Two known gaps remain, and both are why the family stays experimental: selection state is not exposed to assistive technology in any of the five interactive components, and `SharedPaymentTokenCard` conveys permission `enabled` by icon and color only. See the Known Gaps section in `docs/agentic-commerce.md` for detail and workarounds.
+All five interactive components expose the selected row through `aria-pressed`, matching the pattern `SignalBloom` uses in the visualization family, and grouped controls carry `role="group"` so their label is exposed. Where an icon or color swatch is the only visual signal — as with permission grant state and risk in `SharedPaymentTokenCard` — the meaning is rendered as text alongside the label.
 
 Per-component notes are in `docs/agentic-commerce.md`.
