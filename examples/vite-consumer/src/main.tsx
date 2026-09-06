@@ -10,6 +10,7 @@ import {
   ModelessDialog,
   ModelessDivider,
   ModelessDropzone,
+  ModelessGlobe,
   ModelessList,
   ModelessListItem,
   ModelessPanel,
@@ -22,8 +23,11 @@ import {
   ModelessTextField,
   ModelessToast,
   SignalBadge,
+  CanvasSurface,
   modelessColors,
+  modelessVisualizationColors,
   modelessTypography,
+  type CanvasFrameInfo,
   type ModelessMotionIntensity,
 } from "@modeless/design-system";
 import "@modeless/design-system/globals";
@@ -84,6 +88,24 @@ function ConsumerExample() {
           <StatusCard label="Sync health" value="96%" meta="12 integrations current" tone="success" />
           <StatusCard label="Queue depth" value="18" meta="4 need review" tone="default" />
           <StatusCard label="Monthly budget" value="$42.8k" meta="72% of limit" tone="warning" />
+        </section>
+
+        <section className="grid gap-5 lg:grid-cols-[0.95fr_1.05fr]">
+          <ModelessGlobe
+            seed="consumer-global-trust"
+            label="Global trust and provenance globe"
+            description="Trust, identity, and provenance shells remain readable as a static frame when reduced motion is enabled."
+            variant="trust"
+            motion={motion}
+            metadata={
+              <div className="grid grid-cols-3 gap-2">
+                <MiniMetric label="regions" value="6" />
+                <MiniMetric label="layers" value="3" />
+                <MiniMetric label="freshness" value="12m" />
+              </div>
+            }
+          />
+          <SignalPressureStudy />
         </section>
 
         <div className="grid gap-5 lg:grid-cols-[1.15fr_0.85fr]">
@@ -165,6 +187,7 @@ function ConsumerExample() {
                   <TokenSwatch label="acid lime" value={modelessColors.acidLime} />
                   <TokenSwatch label="completion green" value={modelessColors.completionGreen} />
                   <TokenSwatch label="warning" value={modelessColors.warningOrange} />
+                  <TokenSwatch label="viz mint" value={modelessVisualizationColors.activeMint} />
                 </div>
                 <p className="font-mono text-xs text-muted-foreground">Typography token: {modelessTypography.mono}</p>
               </div>
@@ -251,6 +274,86 @@ function ConsumerExample() {
         </div>
       ) : null}
     </main>
+  );
+}
+
+function SignalPressureStudy() {
+  const render = React.useCallback((info: CanvasFrameInfo) => {
+    const { ctx, w, h, t, palette, reducedMotion } = info;
+    const time = reducedMotion ? 7.5 : t;
+    const cx = w / 2;
+    const cy = h / 2;
+    const bg = ctx.createRadialGradient(cx, cy, Math.min(w, h) * 0.05, cx, cy, Math.max(w, h) * 0.75);
+    bg.addColorStop(0, "hsl(152 20% 10%)");
+    bg.addColorStop(1, "hsl(0 0% 3%)");
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, w, h);
+
+    ctx.lineWidth = 1;
+    for (let row = 0; row < 7; row++) {
+      const y = (row + 1) * (h / 8);
+      ctx.strokeStyle = `hsl(${palette.structure.graphite} / 0.24)`;
+      ctx.beginPath();
+      ctx.moveTo(w * 0.08, y);
+      ctx.lineTo(w * 0.92, y);
+      ctx.stroke();
+    }
+
+    for (let trace = 0; trace < 4; trace++) {
+      ctx.strokeStyle = `hsl(${trace === 2 ? palette.warning.amber : palette.active.mint} / ${trace === 2 ? 0.46 : 0.34})`;
+      ctx.lineWidth = trace === 2 ? 1.8 : 1.2;
+      ctx.beginPath();
+      for (let i = 0; i < 88; i++) {
+        const x = w * 0.08 + (i / 87) * w * 0.84;
+        const pressure = Math.sin(i * 0.21 + time * (0.42 + trace * 0.08) + trace);
+        const y = h * (0.34 + trace * 0.1) + pressure * h * (0.03 + trace * 0.01);
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+    }
+
+    for (let i = 0; i < 22; i++) {
+      const progress = (i / 21 + time * 0.025) % 1;
+      const x = w * 0.08 + progress * w * 0.84;
+      const y = h * (0.28 + ((i * 17) % 43) / 100);
+      ctx.fillStyle = `hsl(${i % 5 === 0 ? palette.warning.amber : palette.active.lime} / ${i % 5 === 0 ? 0.76 : 0.5})`;
+      ctx.beginPath();
+      ctx.arc(x, y, i % 5 === 0 ? 2.5 : 1.5, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }, []);
+
+  return (
+    <section
+      className="artifact-angle artifact-angle-frame border-border bg-card text-card-foreground"
+      role="img"
+      aria-label="Signal pressure field"
+      aria-describedby="signal-pressure-description"
+    >
+      <div className="relative aspect-[4/3] min-h-64 overflow-hidden">
+        <CanvasSurface render={render} cost="light" />
+      </div>
+      <div className="grid gap-3 border-t border-border p-4">
+        <p id="signal-pressure-description" className="text-sm leading-6 text-muted-foreground">
+          Non-geographic trace study showing freshness, active flow, and pressure without using a globe.
+        </p>
+        <div className="grid grid-cols-3 gap-2 text-xs leading-5 text-muted-foreground">
+          <MiniMetric label="pressure" value="amber" />
+          <MiniMetric label="motion" value="subtle" />
+          <MiniMetric label="mode" value="canvas" />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function MiniMetric({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="border border-border bg-background p-2">
+      <p className="text-micro text-muted-foreground">{label}</p>
+      <p className="mt-1 font-mono text-xs text-foreground">{value}</p>
+    </div>
   );
 }
 

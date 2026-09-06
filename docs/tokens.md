@@ -37,6 +37,23 @@ Custom roles include `signal`, `terminal`, `artifact`, `grid-line`, `scanline`, 
 
 Acid lime communicates liveness and active attention. Do not use it to indicate a task that has already finished; successful completion uses `success` so a finished job does not appear to remain in progress.
 
+## Visualization Palette
+
+The data visualization palette is a controlled semantic extension of the core colors. It keeps the soft, atmospheric globe direction while adding enough range for trust maps, provenance timelines, pressure fields, agent traces, signal morphology, and non-geographic studies.
+
+Exported token object: `modelessVisualizationColors`.
+
+CSS variables:
+
+- Structure: `--viz-structure-leaf`, `--viz-structure-cyan`, `--viz-structure-graphite`
+- Active/signal: `--viz-active-lime`, `--viz-active-mint`, `--viz-active-electric-blue`
+- Warning/pressure: `--viz-warning-amber`, `--viz-warning-warm-yellow`
+- Risk/failure: `--viz-risk-rose`, `--viz-risk-coral`, `--viz-risk-red-orange`
+- Trust/identity: `--viz-trust-violet`, `--viz-trust-blue-violet`
+- Provenance/history: `--viz-provenance-blue`, `--viz-provenance-gray-lavender`
+
+Use one dominant structural hue, one active hue, and no more than two secondary accents in a component. Never rely on color alone.
+
 ## Typography
 
 - `font-display`: condensed/heavy display stack.

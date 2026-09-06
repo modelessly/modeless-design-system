@@ -1,30 +1,6 @@
 {
   "$comment": "Human-owned per-component maturity assignments. This file is the single reconciled source of truth for maturityTier; it is NOT generated. Tiers use the vocabulary defined in docs/component-readiness.md: stable | beta | experimental | internal | deprecated. Entries whose `source` begins with 'inferred:' have no documented tier and are pending human review \u2014 see docs/agentic-upgrade-audit.md (D2). Inference never yields 'stable': only a documented tier can grant unsupervised agent use.",
-  "$pendingComment": "Tier assignments for components that are documented in docs/component-readiness.md but not yet exported from main (the canvas/globe work is still uncommitted). These are parked here so the documented tiers are not re-derived from scratch when that work lands: move them into `components` in the same commit that exports them. Nothing reads this key \u2014 registry:check fails if an exported component has no entry under `components`, so the move is enforced.",
-  "$pending": {
-    "CanvasSurface": {
-      "tier": "beta",
-      "source": "docs/component-readiness.md#current-visualization-readiness",
-      "note": "Tier stated in documentation."
-    },
-    "ModelessGlobe": {
-      "tier": "experimental",
-      "source": "docs/component-readiness.md#current-visualization-readiness",
-      "note": "Tier stated in documentation."
-    },
-    "useCanvasAnimation": {
-      "tier": "beta",
-      "source": "docs/component-readiness.md#current-visualization-readiness",
-      "note": "Tier stated in documentation.",
-      "kind": "hook"
-    }
-  },
   "components": {
-    "AgenticCheckoutSession": {
-      "tier": "experimental",
-      "source": "README.md#public-api-maturity",
-      "note": "README lists all agentic commerce components as Experimental. docs/agentic-commerce.md marks this family's ScopedSpendControl, ProductFeedReadinessPanel and MachinePaymentMeter as Stable; that table is aspirational and conflicts with the graduation rule in docs/component-readiness.md, which requires the accessible-naming check to pass. docs/agentic-commerce.md currently contains no accessibility guidance. Revisit after Phase 4."
-    },
     "AgentPaymentAuthorization": {
       "tier": "experimental",
       "source": "README.md#public-api-maturity",
@@ -40,6 +16,11 @@
       "source": "docs/component-readiness.md#current-visualization-readiness",
       "note": "Covered by the 'Existing visualization components' row."
     },
+    "AgenticCheckoutSession": {
+      "tier": "experimental",
+      "source": "README.md#public-api-maturity",
+      "note": "README lists all agentic commerce components as Experimental. docs/agentic-commerce.md marks this family's ScopedSpendControl, ProductFeedReadinessPanel and MachinePaymentMeter as Stable; that table is aspirational and conflicts with the graduation rule in docs/component-readiness.md, which requires the accessible-naming check to pass. docs/agentic-commerce.md currently contains no accessibility guidance. Revisit after Phase 4."
+    },
     "ArtifactCard": {
       "tier": "stable",
       "source": "README.md#public-api-maturity",
@@ -49,6 +30,11 @@
       "tier": "beta",
       "source": "inferred:category-default",
       "note": "No tier stated in any document. Defaulted to beta; inference never yields stable."
+    },
+    "CanvasSurface": {
+      "tier": "beta",
+      "source": "docs/component-readiness.md#current-visualization-readiness",
+      "note": "Tier stated in documentation."
     },
     "CommandSurface": {
       "tier": "stable",
@@ -165,6 +151,11 @@
       "source": "README.md#public-api-maturity",
       "note": "Covered by the README Foundation Components row."
     },
+    "ModelessGlobe": {
+      "tier": "experimental",
+      "source": "docs/component-readiness.md#current-visualization-readiness",
+      "note": "Tier stated in documentation."
+    },
     "ModelessIconButton": {
       "tier": "beta",
       "source": "README.md#public-api-maturity",
@@ -260,17 +251,17 @@
       "source": "docs/component-readiness.md#current-visualization-readiness",
       "note": "Covered by the 'Existing visualization components' row."
     },
+    "ProductCTACluster": {
+      "tier": "beta",
+      "source": "inferred:category-default",
+      "note": "No tier stated. docs/components.md calls the product primitives 'stable enough to live in the design system', but that is not a maturity assertion. Inference ceiling is beta."
+    },
     "ProductCard": {
       "tier": "beta",
       "source": "inferred:category-default",
       "note": "No tier stated. docs/components.md calls the product primitives 'stable enough to live in the design system', but that is not a maturity assertion. Inference ceiling is beta."
     },
     "ProductCategoryLabel": {
-      "tier": "beta",
-      "source": "inferred:category-default",
-      "note": "No tier stated. docs/components.md calls the product primitives 'stable enough to live in the design system', but that is not a maturity assertion. Inference ceiling is beta."
-    },
-    "ProductCTACluster": {
       "tier": "beta",
       "source": "inferred:category-default",
       "note": "No tier stated. docs/components.md calls the product primitives 'stable enough to live in the design system', but that is not a maturity assertion. Inference ceiling is beta."
@@ -364,6 +355,12 @@
       "tier": "experimental",
       "source": "README.md#public-api-maturity",
       "note": "README lists all agentic commerce components as Experimental. docs/agentic-commerce.md marks this family's ScopedSpendControl, ProductFeedReadinessPanel and MachinePaymentMeter as Stable; that table is aspirational and conflicts with the graduation rule in docs/component-readiness.md, which requires the accessible-naming check to pass. docs/agentic-commerce.md currently contains no accessibility guidance. Revisit after Phase 4."
+    },
+    "useCanvasAnimation": {
+      "tier": "beta",
+      "source": "docs/component-readiness.md#current-visualization-readiness",
+      "note": "Tier stated in documentation.",
+      "kind": "hook"
     }
   }
 }

@@ -34,3 +34,38 @@ export type {
   SignalBloomSource,
   SignalBloomState,
 } from "./signal-bloom";
+export { CanvasSurface } from "./canvas-surface";
+export type { CanvasSurfaceProps } from "./canvas-surface";
+export { ModelessGlobe } from "./globe";
+export type {
+  GlobeProjectedPoint,
+  GlobeVec3,
+  ModelessGlobeConfig,
+  ModelessGlobeDensity,
+  ModelessGlobeFrame,
+  ModelessGlobeProps,
+  ModelessGlobeRuntime,
+  ModelessGlobeVariant,
+} from "./globe";
+export {
+  createGlobeArc,
+  drawModelessGlobeBase,
+  ensureGlobeRuntime,
+  latLonToSpherePoint,
+  projectSpherePoint,
+  rotateX,
+  rotateY,
+  scaleVec,
+  slerp,
+} from "./globe";
+export {
+  hsl,
+  mixHsl,
+  modelessVisualizationPalette,
+  parseHslTriple,
+  resolveModelessVisualizationPalette,
+  type ModelessVisualizationPalette,
+} from "./lib/palette";
+export { hashSeed, mulberry32 } from "./lib/rng";
+export { motionBudget } from "./lib/motion-budget";
+export { useCanvasAnimation, type CanvasAnimationOptions, type CanvasFrameInfo, type CanvasRenderFn } from "./lib/use-canvas-animation";

@@ -73,7 +73,8 @@ The preview builds the permanent Vite consumer fixture against the freshly packe
 
 - **Stable:** core primitives such as `ModelessButton`, `ModelessPanel`, `SignalBadge`, `TerminalBlock`, `CommandSurface`, and `ArtifactCard`.
 - **Beta:** Foundation Components such as text fields, dropzone, selects, selection controls, tabs, cards, lists, dialog, toast, progress, and state surfaces.
-- **Experimental:** visualization and agentic commerce components.
+- **Beta:** data visualization style guidance, visualization palette tokens, `CanvasSurface`, and `useCanvasAnimation`.
+- **Experimental:** `ModelessGlobe`, globe math helpers, existing visualization components, and agentic commerce components.
 - **Internal:** CVA variant helpers, shared frame helpers, commerce helper utilities, `cn()`, registry plumbing, and source-copy internals.
 
 Public exports are guarded by `npm run public-api:check`, which reads built declaration files after `npm run build` and fails if helper internals leak or required exports disappear.

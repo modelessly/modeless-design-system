@@ -21,6 +21,21 @@ colors:
   radar-blue: "hsl(220 100% 59%)"
   warning-orange: "hsl(15 100% 56%)"
   signal-pink: "hsl(326 100% 62%)"
+  viz-structure-leaf: "hsl(100 40% 68%)"
+  viz-structure-cyan: "hsl(190 46% 66%)"
+  viz-structure-graphite: "hsl(210 6% 42%)"
+  viz-active-lime: "hsl(82 66% 66%)"
+  viz-active-mint: "hsl(165 34% 62%)"
+  viz-active-electric-blue: "hsl(214 84% 66%)"
+  viz-warning-amber: "hsl(44 64% 70%)"
+  viz-warning-warm-yellow: "hsl(54 78% 72%)"
+  viz-risk-rose: "hsl(344 50% 75%)"
+  viz-risk-coral: "hsl(8 66% 68%)"
+  viz-risk-red-orange: "hsl(15 82% 62%)"
+  viz-trust-violet: "hsl(266 38% 74%)"
+  viz-trust-blue-violet: "hsl(246 52% 72%)"
+  viz-provenance-blue: "hsl(212 34% 68%)"
+  viz-provenance-gray-lavender: "hsl(246 15% 66%)"
   background: "hsl(0 0% 3%)"
   foreground: "hsl(43 52% 87%)"
   card: "hsl(0 0% 6%)"
@@ -113,6 +128,7 @@ The palette is a small set of core colors that semantic roles alias onto, so the
 
 Acid lime marks liveness, never completion. A finished job rendered in lime reads as still running, so success uses completion green.
 
+The `viz-*` tokens extend this into a controlled range for data visualization — structure, active, warning, risk, trust, and provenance families. Use one dominant structural hue, one active hue, and at most two secondary accents in a single component. Never rely on color alone.
 
 ## Typography
 
