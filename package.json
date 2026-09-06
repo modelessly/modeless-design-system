@@ -17,6 +17,7 @@
   "files": [
     "dist",
     "docs",
+    "DESIGN.md",
     "README.md",
     "CHANGELOG.md",
     "LICENSE"
@@ -40,11 +41,15 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build": "vite build --config vite.package.config.ts && tsc -p tsconfig.package.json && node scripts/copy-ui-assets.mjs",
+    "build": "vite build --config vite.package.config.ts && tsc -p tsconfig.package.json && node scripts/copy-ui-assets.mjs && node scripts/generate-design-md.mjs",
     "public-api:check": "node scripts/check-public-api.mjs",
+    "design:generate": "node scripts/generate-design-md.mjs",
+    "design:lint": "designmd lint DESIGN.md",
+    "design:export:tailwind": "designmd export --format css-tailwind DESIGN.md > dist/design/tailwind-theme.css",
+    "design:export:dtcg": "designmd export --format dtcg DESIGN.md > dist/design/tokens.json",
     "pack:check": "npm pack --dry-run --cache ./.npm-pack-cache",
     "pack:local": "npm pack --cache ./.npm-pack-cache",
-    "verify": "npm run build && npm run public-api:check && npm run pack:check && npm run pack:local && npm run example:consumer:install && npm run example:consumer:typecheck && npm run example:consumer:build",
+    "verify": "npm run build && npm run public-api:check && npm run design:lint && npm run pack:check && npm run pack:local && npm run example:consumer:install && npm run example:consumer:typecheck && npm run example:consumer:build",
     "example:consumer:install": "node scripts/refresh-consumer-install.mjs && npm install --ignore-scripts --no-audit --no-fund --package-lock=false --cache ./.npm-pack-cache --prefix examples/vite-consumer",
     "example:consumer:typecheck": "npm run typecheck --prefix examples/vite-consumer",
     "example:consumer:build": "npm run build --prefix examples/vite-consumer",
