@@ -55,7 +55,7 @@ export function ContextWindowHeatmap({
             <span>window occupancy</span>
             <span>{usage}% used</span>
           </div>
-          <div className={cn("grid gap-1 bg-background p-2", columns)} aria-label={`Context window ${usage}% used`}>
+          <div role="img" className={cn("grid gap-1 bg-background p-2", columns)} aria-label={`Context window ${usage}% used`}>
             {segments.flatMap((segment, segmentIndex) => {
               const cells = Math.max(1, Math.round((segment.tokens / maxTokens) * (density === "dense" ? 96 : 64)));
               return Array.from({ length: cells }).map((_, cellIndex) => {

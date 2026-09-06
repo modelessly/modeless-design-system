@@ -65,7 +65,7 @@ export function ModelessShell({
             })}
           </nav>
           <ModelessButton variant="outline" size="icon" className="md:hidden" aria-label="Toggle navigation" onClick={() => setOpen((value) => !value)}>
-            {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+            {open ? <X aria-hidden={true} className="h-4 w-4" /> : <Menu aria-hidden={true} className="h-4 w-4" />}
           </ModelessButton>
         </div>
         {open && (
