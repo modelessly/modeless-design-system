@@ -79,6 +79,7 @@ export function SharedPaymentTokenCard({
             <button
               key={permission.id}
               type="button"
+              aria-pressed={permission.id === selectedId}
               onClick={() => selectPermission(permission.id)}
               className={cn(
                 "grid grid-cols-[auto_1fr_auto] items-center gap-2 border border-border bg-background p-3 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
@@ -86,7 +87,14 @@ export function SharedPaymentTokenCard({
               )}
             >
               {permission.enabled ? <ShieldCheck aria-hidden={true} className="h-4 w-4 text-primary" /> : <KeyRound aria-hidden={true} className="h-4 w-4 text-muted-foreground" />}
-              <span className="text-xs text-foreground">{permission.label}</span>
+              <span className="text-xs text-foreground">
+                {permission.label}
+                {/* The icon and swatch below are decorative, so grant state and risk are
+                    carried here as text for assistive technology. */}
+                <span className="sr-only">
+                  {permission.enabled ? `, granted, risk ${permission.risk ?? "safe"}` : ", not granted"}
+                </span>
+              </span>
               <span
                 className={cn("h-2 w-6", motion !== "off" && permission.enabled && "motion-data-cell")}
                 style={{ background: permission.enabled ? commerceTone(permission.risk ?? "safe") : "hsl(var(--border))", "--motion-index": index } as React.CSSProperties}
