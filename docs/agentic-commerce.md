@@ -104,6 +104,8 @@ const steps = [
 />
 ```
 
+Accessibility: the flow diagram carries `role="img"` with an `aria-label`, and each step renders its `label` and `actor` as text. Step rows are native buttons, so they are reachable and operable by keyboard with a visible focus ring, and each exposes its selected state through `aria-pressed`. The list is wrapped in a labelled group. Amount, merchant, and risk score are exposed as text metrics rather than through the diagram.
+
 ### ScopedSpendControl
 
 Use case: a team gives an autonomous agent a limited operating budget across categories.
@@ -125,6 +127,8 @@ Why include it: agent permissions should feel like envelopes, not passwords. Use
   selectedScopeId="apis"
 />
 ```
+
+Accessibility: the radial meter carries `role="img"` with an `aria-label`, and its numeric values are rendered as adjacent text metrics rather than inside the label, so budget figures remain readable when the meter is not. Scope rows are native buttons with a visible focus ring.
 
 ### SharedPaymentTokenCard
 
@@ -148,6 +152,8 @@ Why include it: payment credentials are usually invisible. This component turns 
   selectedPermissionId="amount"
 />
 ```
+
+Accessibility: permission rows are native buttons with a visible focus ring, and each exposes its selected state through `aria-pressed`. The permission icon and risk swatch are decorative and hidden from assistive technology, so grant state and risk are carried as text alongside the label — a screen reader announces "Recurring charges, granted, risk review" or "Refunds, not granted". Revocation guidance is rendered as text.
 
 ### AgenticCheckoutSession
 
@@ -182,6 +188,8 @@ Why include it: agentic checkout has multiple actors. The component shows who ac
 />
 ```
 
+Accessibility: event rows are native buttons with a visible focus ring, and each renders both `label` and `state` as text, so checkout ownership does not depend on color. Actor icons are hidden from assistive technology.
+
 ### X402PaymentHandshake
 
 Use case: a machine or agent pays for a resource such as an API, dataset, model endpoint, or decentralized service.
@@ -213,6 +221,8 @@ Why include it: machine payments introduce protocol state that can be hard to de
 />
 ```
 
+Accessibility: each protocol step renders its `label` and `status` as text, so phase progress is legible without color. The step control is a native button with a visible focus ring.
+
 ### AgentReceipt
 
 Use case: an agent completes a bounded purchase and the organization needs a compact record of what happened.
@@ -220,6 +230,8 @@ Use case: an agent completes a bounded purchase and the organization needs a com
 Primary users: finance reviewers, support teams, audit teams, and product teams building agent activity logs.
 
 Why include it: agent purchases need a receipt that explains agency, approval, merchant response, and evidence chain, not just amount and date.
+
+Accessibility: the receipt is static, with no interactive controls. Evidence items render `label` and `status` as text, and totals and metadata are exposed as text metrics. Icons are decorative and hidden from assistive technology.
 
 ### DelegatedPaymentTimeline
 
@@ -229,6 +241,8 @@ Primary users: operations teams, compliance reviewers, support teams, and AI pro
 
 Why include it: delegation is a time-based trust problem. This component makes authority transfer inspectable after the fact.
 
+Accessibility: the timeline is static. Each event renders `actor`, `label`, and `state` as text, so authority transfer is readable in sequence without relying on the visual track.
+
 ### CommerceTrustBoundary
 
 Use case: a commerce or protocol team needs to explain where delegated payment risk enters the system.
@@ -236,6 +250,8 @@ Use case: a commerce or protocol team needs to explain where delegated payment r
 Primary users: risk teams, security reviewers, protocol designers, and enterprise AI platform owners.
 
 Why include it: agent commerce creates unclear liability edges. This component gives those edges a visual grammar.
+
+Accessibility: the boundary map carries `role="img"` with an `aria-label`, and each zone renders its `label` and `risk` as text alongside the diagram. The component is static — liability edges are conveyed by structure and text, not by color alone.
 
 ### ProductFeedReadinessPanel
 
@@ -245,6 +261,8 @@ Primary users: merchant platform teams, catalog ops, marketplace teams, and agen
 
 Why include it: agentic commerce starts before checkout. Products need structured data, availability, policies, identity, and fulfillment clarity.
 
+Accessibility: the readiness meter carries `role="img"` with an `aria-label`. Each checked item renders its `label` and `status` as text, and the overall score is exposed as a text metric, so readiness is never carried by the meter alone.
+
 ### MachinePaymentMeter
 
 Use case: an agent pays for APIs, files, model calls, or protocol resources throughout an automated workflow.
@@ -252,6 +270,8 @@ Use case: an agent pays for APIs, files, model calls, or protocol resources thro
 Primary users: developer platform teams, AI infrastructure teams, API operators, and finance operations.
 
 Why include it: small machine payments become operational infrastructure. This component tracks spend and settlement health without hiding failures.
+
+Accessibility: the settlement meter carries `role="img"` with an `aria-label`. Usage, cost, failure, and settlement values are rendered as text metrics rather than inside the label, so failures stay visible to assistive technology.
 
 ## Motion Guidance
 
@@ -276,6 +296,41 @@ The commerce components support lightweight inspection states. They work uncontr
 - `X402PaymentHandshake`: `selectedStepId`, `onSelectedStepChange`
 
 Use these inspection states when a user needs to understand why an agent can spend, who approved a checkout step, what a scoped token permits, or what protocol phase is currently active. Avoid hiding critical payment or risk details behind hover-only interactions.
+
+## Accessibility
+
+These components describe money movement, so a reviewer who cannot see the visual must still be able to tell what an agent is permitted to do, who approved it, and whether it failed.
+
+### Shared Behavior
+
+Every commerce component is wrapped in a shared frame that renders a `<section>` with a visible `<h3>` title. Its decorative badge, and every icon in the family, is hidden from assistive technology. Components that render a diagram or meter carry `role="img"` with an `aria-label` naming what it depicts, and expose the underlying numbers as adjacent text metrics rather than burying them in the label — the value stays readable when the graphic is not.
+
+### Keyboard
+
+The five components with inspection states — `AgentPaymentAuthorization`, `ScopedSpendControl`, `SharedPaymentTokenCard`, `AgenticCheckoutSession`, and `X402PaymentHandshake` — render their selectable rows as native `<button type="button">` elements. They are reachable in document order, activate with Enter and Space, and keep the system's visible `focus-visible` ring. The remaining five components are static and expose no controls.
+
+### Text Over Color
+
+Most components render the state that matters as text: step actors, event states, protocol status, zone risk, and item status all appear as strings next to the visual treatment. Follow that rule when supplying data — put meaning in `label`, `state`, `status`, and `actor` rather than relying on a tone value to carry it.
+
+### Motion
+
+Commerce motion is limited to low-opacity drift on active rows and meters. All of it is disabled under `prefers-reduced-motion: reduce`, and no component depends on animation to communicate authorization state, settlement, or failure. Pass `motion="off"` where a payment surface should stay completely still.
+
+### Selection State
+
+All five interactive components expose the selected row through `aria-pressed` on the native button, so selection is announced rather than being carried by border and background color alone. Where a list of controls has a group label, it is exposed with `role="group"` so the label reaches assistive technology.
+
+This follows the pattern established by `SignalBloom` in the visualization family: native buttons carrying pressed state, with the meaning of each row available as text.
+
+### Prior Gaps, Now Closed
+
+Two defects were documented here before being fixed, and are recorded because the family's maturity assessment references them:
+
+1. **Selection was not exposed to assistive technology.** None of the five interactive components set `aria-pressed` or `aria-current`, so a screen reader user could operate a control but not tell what was selected. All five now set `aria-pressed`.
+2. **`SharedPaymentTokenCard` conveyed `enabled` by icon and color only.** Grant state and risk are now rendered as text alongside each permission label.
+
+Both had violated the system's rule in `docs/accessibility.md` that state must never be carried by color alone.
 
 ## Security Notes
 

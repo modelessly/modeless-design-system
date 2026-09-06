@@ -132,10 +132,7 @@ const CANNOT_SYNTHESIZE = new Map();
  * Entries are asserted to still fail, so a merged fix makes this list stale
  * and the suite tells you to delete the entry rather than letting it linger.
  */
-const KNOWN_FAILURES = new Map([
-  ["AgentPaymentAuthorization", "unexposed group label; fixed in PR #4"],
-  ["SignalBloom", "role=listitem on buttons and an unexposed legend label; fixed in PR #5"],
-]);
+const KNOWN_FAILURES = new Map();
 
 const components = createSynthesizer();
 

@@ -110,11 +110,12 @@ export function AgentPaymentAuthorization({
               <p className="mt-2 text-xs leading-5 text-foreground/80">{selectedStep.detail ?? stateMeta[selectedStep.state].label}</p>
             </div>
           ) : null}
-          <div className="grid gap-1.5" aria-label="Inspect authorization steps">
+          <div className="grid gap-1.5" role="group" aria-label="Inspect authorization steps">
             {steps.map((step) => (
               <button
                 key={step.id}
                 type="button"
+                aria-pressed={step.id === selectedId}
                 onClick={() => selectStep(step.id)}
                 className={cn(
                   "grid grid-cols-[1fr_auto] items-center gap-2 border border-border bg-background px-2 py-2 text-left text-xs transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
