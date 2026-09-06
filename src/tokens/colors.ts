@@ -14,6 +14,24 @@ export const modelessColors = {
   signalPink: "#FF3FA4",
 } as const;
 
+export const modelessVisualizationColors = {
+  structureLeaf: "hsl(100 40% 68%)",
+  structureCyan: "hsl(190 46% 66%)",
+  structureGraphite: "hsl(210 6% 42%)",
+  activeLime: "hsl(82 66% 66%)",
+  activeMint: "hsl(165 34% 62%)",
+  activeElectricBlue: "hsl(214 84% 66%)",
+  warningAmber: "hsl(44 64% 70%)",
+  warningWarmYellow: "hsl(54 78% 72%)",
+  riskRose: "hsl(344 50% 75%)",
+  riskCoral: "hsl(8 66% 68%)",
+  riskRedOrange: "hsl(15 82% 62%)",
+  trustViolet: "hsl(266 38% 74%)",
+  trustBlueViolet: "hsl(246 52% 72%)",
+  provenanceBlue: "hsl(212 34% 68%)",
+  provenanceGrayLavender: "hsl(246 15% 66%)",
+} as const;
+
 export const semanticColors = {
   background: "hsl(var(--background))",
   foreground: "hsl(var(--foreground))",

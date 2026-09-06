@@ -73,3 +73,15 @@ Acceptance criteria:
 ## Graduation Rule
 
 A Foundation Component can move from `beta` to `stable` when every readiness check is `pass`, public API examples are documented, and the component has passed at least one clean external-consumer test after its latest meaningful API or styling change.
+
+## Current Visualization Readiness
+
+| Surface | State | Notes |
+| --- | --- | --- |
+| Data visualization style guidance | `beta` | Ready to guide product and package work; should be refined as more studies ship. |
+| Visualization palette tokens | `beta` | Public and usable, but semantic ranges may tighten before 1.0. |
+| `CanvasSurface` | `beta` | Small primitive with clear package boundary; use for decorative canvas surfaces with accessible wrapper text. |
+| `useCanvasAnimation` | `beta` | Handles reduced motion, offscreen pause, tab-hidden pause, DPR scaling, resize, and heavy-animation budgeting. |
+| `ModelessGlobe` | `experimental` | Reusable global-systems module with baseline, traffic, and trust variants; API may change as provenance/orbital examples mature. |
+| Globe math helpers | `experimental` | Exported for thin variants; keep usage close to globe modules until the API settles. |
+| Existing visualization components | `experimental` | Useful for trials and internal products; continue improving examples, mobile behavior, and accessibility notes. |

@@ -59,6 +59,12 @@ const requiredExports = {
     "GovernancePulseBoard",
     "TrustSurfaceMap",
     "SignalBloom",
+    "CanvasSurface",
+    "useCanvasAnimation",
+    "ModelessGlobe",
+    "ModelessVisualizationPalette",
+    "modelessVisualizationPalette",
+    "resolveModelessVisualizationPalette",
   ],
   "dist/components/modeless/commerce/index.d.ts": [
     "AgentPaymentAuthorization",
@@ -73,7 +79,7 @@ const requiredExports = {
     "MachinePaymentMeter",
   ],
   "dist/tokens/index.d.ts": ['export * from "./colors"', 'export * from "./typography"', 'export * from "./motion"'],
-  "dist/tokens/colors.d.ts": ["modelessColors", "semanticColors"],
+  "dist/tokens/colors.d.ts": ["modelessColors", "modelessVisualizationColors", "semanticColors"],
   "dist/tokens/typography.d.ts": ["modelessTypography"],
   "dist/tokens/motion.d.ts": ["ModelessMotionIntensity", "modelessMotion"],
 };

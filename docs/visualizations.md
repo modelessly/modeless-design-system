@@ -10,12 +10,34 @@ All components support `motion="off" | "subtle" | "live" | "high"` where motion 
 import {
   AgentTraceMap,
   ContextWindowHeatmap,
+  ModelessGlobe,
   SignalBloom,
   TrustSurfaceMap,
 } from "@modeless/design-system";
 ```
 
+## Shared Utilities
+
+- `CanvasSurface` provides a positioned decorative canvas host.
+- `useCanvasAnimation` drives Canvas 2D visuals with DPR scaling, resize handling, offscreen pause, tab-hidden pause, reduced-motion static frames, and a small concurrency budget for heavy pieces.
+- `resolveModelessVisualizationPalette`, `modelessVisualizationPalette`, `hsl`, `mixHsl`, `hashSeed`, and `mulberry32` support custom visual studies without drifting away from the Modeless data visualization style.
+- Globe helpers such as `latLonToSpherePoint`, `createGlobeArc`, and `projectSpherePoint` are exported for thin globe variants.
+
 ## Components
+
+### ModelessGlobe
+
+Purpose: render global-scale systems with a shared orthographic globe shell, depth, occlusion, dotted surfaces, atmospheric field, arcs, and thin variant layers.
+
+Key props: `seed`, `label`, `description`, `metadata`, `motion`, `palette`, `config`, `variant`.
+
+Built-in variants: `baseline`, `traffic`, and `trust`.
+
+Use when: the system is meaningfully global, geographic, orbital, infrastructural, provenance-based, or trust-layered.
+
+Avoid when: a matrix, trace, timeline, bloom, meter, or non-geographic animated study would explain the system more honestly.
+
+Accessibility: the canvas is decorative; the wrapper carries `role="img"` with `label`, optional `description`, and visible adjacent metadata.
 
 ### AgentTraceMap
 
@@ -166,4 +188,42 @@ See `docs/signal-bloom.md` for the full data model, mapping guidance, motion beh
   risks={[{ label: "Human review required before action", level: "medium" }]}
   motion="subtle"
 />
+```
+
+## Globe Example
+
+```tsx
+<ModelessGlobe
+  seed="global-trust-demo"
+  label="Global trust layer"
+  description="Identity, permission, and provenance shells around active infrastructure regions."
+  variant="trust"
+  motion="subtle"
+  config={{ density: "default", atmosphere: true }}
+/>
+```
+
+## Custom Canvas Study
+
+```tsx
+<section role="img" aria-label="Agent trace pressure" aria-describedby="trace-pressure-copy">
+  <div className="relative aspect-[16/9] overflow-hidden bg-card">
+    <CanvasSurface
+      render={({ ctx, w, h, t, palette }) => {
+        ctx.fillStyle = "hsl(0 0% 3%)";
+        ctx.fillRect(0, 0, w, h);
+        ctx.strokeStyle = `hsl(${palette.active.mint} / 0.45)`;
+        ctx.beginPath();
+        for (let i = 0; i < 80; i++) {
+          const x = (i / 79) * w;
+          const y = h * 0.5 + Math.sin(i * 0.24 + t) * h * 0.18;
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+      }}
+    />
+  </div>
+  <p id="trace-pressure-copy">Signal pressure rises through the active agent path.</p>
+</section>
 ```

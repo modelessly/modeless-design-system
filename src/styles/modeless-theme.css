@@ -13,6 +13,21 @@
   --radar-blue: 220 100% 59%;
   --warning-orange: 15 100% 56%;
   --signal-pink: 326 100% 62%;
+  --viz-structure-leaf: 100 40% 68%;
+  --viz-structure-cyan: 190 46% 66%;
+  --viz-structure-graphite: 210 6% 42%;
+  --viz-active-lime: 82 66% 66%;
+  --viz-active-mint: 165 34% 62%;
+  --viz-active-electric-blue: 214 84% 66%;
+  --viz-warning-amber: 44 64% 70%;
+  --viz-warning-warm-yellow: 54 78% 72%;
+  --viz-risk-rose: 344 50% 75%;
+  --viz-risk-coral: 8 66% 68%;
+  --viz-risk-red-orange: 15 82% 62%;
+  --viz-trust-violet: 266 38% 74%;
+  --viz-trust-blue-violet: 246 52% 72%;
+  --viz-provenance-blue: 212 34% 68%;
+  --viz-provenance-gray-lavender: 246 15% 66%;
 
   --background: var(--off-black);
   --foreground: var(--bone);
