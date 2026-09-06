@@ -245,7 +245,7 @@ export function SignalBloom({
                     <span className="text-micro text-muted-foreground">{group.items.length} signals</span>
                   </div>
                 ) : null}
-                <div className={getLayoutClass(variant, density)} role="list" aria-label="Signal bloom items">
+                <div className={getLayoutClass(variant, density)} role="group" aria-label="Signal bloom items">
                   {group.items.map((item, index) => (
                     <SignalBloomItem
                       key={item.id}
@@ -299,7 +299,7 @@ function SummaryCell({ label, value }: { label: string; value: string }) {
 
 function SignalBloomLegend() {
   return (
-    <div className="grid min-w-56 grid-cols-2 gap-1 text-micro text-muted-foreground" aria-label="Signal bloom legend">
+    <div className="grid min-w-56 grid-cols-2 gap-1 text-micro text-muted-foreground" role="group" aria-label="Signal bloom legend">
       {(["none", "low", "medium", "high", "critical"] as SignalBloomSeverity[]).map((severity) => (
         <div key={severity} className="flex items-center gap-1.5">
           <span className={cn("h-2.5 w-2.5 border", severity === "critical" ? "rotate-45" : "rounded-full")} style={{ borderColor: severityTone[severity], background: `color-mix(in srgb, ${severityTone[severity]} 42%, transparent)` }} />
@@ -348,7 +348,6 @@ function SignalBloomItem({
   return (
     <button
       type="button"
-      role="listitem"
       aria-pressed={selected}
       aria-label={label}
       onClick={onSelect}
@@ -584,7 +583,7 @@ function SignalBloomSourceFooter({ items }: { items: SignalBloomDatum[] }) {
   if (!sources.length) return null;
 
   return (
-    <footer className="flex flex-wrap gap-2 border-t border-border pt-3 text-micro text-muted-foreground" aria-label="Signal bloom data sources">
+    <footer className="flex flex-wrap gap-2 border-t border-border pt-3 text-micro text-muted-foreground" role="group" aria-label="Signal bloom data sources">
       {sources.map((source) => (
         <span key={`${source.label}-${source.freshness ?? "unknown"}`} className="border border-border bg-background px-2 py-1">
           {source.label} / {freshnessLabel[source.freshness ?? "unknown"]}
