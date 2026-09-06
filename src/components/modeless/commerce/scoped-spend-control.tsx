@@ -98,6 +98,7 @@ export function ScopedSpendControl({
                 <button
                   key={scope.id}
                   type="button"
+                  aria-pressed={scope.id === selectedId}
                   onClick={() => selectScope(scope.id)}
                   className={cn(
                     "grid min-w-0 gap-2 border border-border bg-background p-3 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:grid-cols-[minmax(6rem,8rem)_minmax(0,1fr)_minmax(4.5rem,auto)] sm:items-center",

@@ -67,6 +67,7 @@ export function AgenticCheckoutSession({
                 <button
                   key={event.id}
                   type="button"
+                  aria-pressed={event.id === selectedId}
                   onClick={() => selectEvent(event.id)}
                   className={cn(
                     "grid min-w-0 gap-3 border border-border bg-card/90 p-3 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:grid-cols-[2.75rem_minmax(0,1fr)_auto] sm:items-center",
