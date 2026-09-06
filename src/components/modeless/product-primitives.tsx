@@ -298,7 +298,7 @@ export function ProductMaturityMeter({ level, motion = "subtle" }: { level: numb
         <span>Maturity</span>
         <span>{boundedLevel}/5</span>
       </div>
-      <div className="grid grid-cols-5 gap-1" aria-label={`Maturity level ${boundedLevel} of 5`}>
+      <div className="grid grid-cols-5 gap-1" role="img" aria-label={`Maturity level ${boundedLevel} of 5`}>
         {Array.from({ length: 5 }).map((_, index) => (
           <span
             key={index}
