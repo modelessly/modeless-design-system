@@ -76,20 +76,14 @@ export { ProductHero } from "./product-hero";
 export type { ProductHeroProps } from "./product-hero";
 export { ModelessShell } from "./modeless-shell";
 export type { ModelessShellNavItem, ModelessShellProps } from "./modeless-shell";
-export {
-  ProductCTACluster,
-  ProductCard,
-  ProductCategoryLabel,
-  ProductMaturityMeter,
-  ProductStatusBadge,
-  SectionHeader,
-  StatusLegend,
-  TagList,
-  productStatusMeta,
-} from "./product-primitives";
-export type { ProductAccent, ProductCardData, ProductStatus } from "./product-primitives";
-export { MotionVisualizationGuide } from "./motion-visualization-guide";
-export type { MotionVisualizationGuideProps } from "./motion-visualization-guide";
+// Internal tier, so deliberately not re-exported here: ProductCard,
+// ProductCTACluster, ProductCategoryLabel, ProductStatusBadge, StatusLegend and
+// their ProductCardData/ProductStatus/ProductAccent vocabulary describe the
+// Modeless catalog rather than a general interface pattern, and
+// MotionVisualizationGuide documents the system rather than composing anything.
+// They remain in src/ for the Modeless site to import directly. See
+// registry/component-maturity.json and docs/component-readiness.md.
+export { ProductMaturityMeter, SectionHeader, TagList } from "./product-primitives";
 export * from "./visualizations";
 export * from "./commerce";
 export type { ModelessMotionIntensity } from "../../tokens";

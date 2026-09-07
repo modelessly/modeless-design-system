@@ -75,7 +75,7 @@ The preview builds the permanent Vite consumer fixture against the freshly packe
 - **Beta:** Foundation Components such as text fields, dropzone, selects, selection controls, tabs, cards, lists, dialog, toast, progress, and state surfaces.
 - **Beta:** data visualization style guidance, visualization palette tokens, `CanvasSurface`, and `useCanvasAnimation`.
 - **Experimental:** `ModelessGlobe`, globe math helpers, existing visualization components, and agentic commerce components.
-- **Internal:** CVA variant helpers, shared frame helpers, commerce helper utilities, `cn()`, registry plumbing, and source-copy internals.
+- **Internal:** the Modeless catalog surfaces (`ProductCard`, `ProductCTACluster`, `ProductCategoryLabel`, `ProductStatusBadge`, `StatusLegend` and the `ProductCardData`/`ProductStatus`/`ProductAccent` vocabulary), `MotionVisualizationGuide`, CVA variant helpers, shared frame helpers, commerce helper utilities, `cn()`, registry plumbing, and source-copy internals. Internal surfaces stay in `src/` for the Modeless site to import directly and are not exported from the package.
 
 Public exports are guarded by `npm run public-api:check`, which reads built declaration files after `npm run build` and fails if helper internals leak or required exports disappear.
 

@@ -31,6 +31,18 @@ const forbiddenPublicNames = [
   "clampPercent",
   "commerceTone",
   "cn",
+  // Internal tier: Modeless catalog vocabulary and the system's own guide
+  // surface. See registry/component-maturity.json.
+  "ProductCard",
+  "ProductCTACluster",
+  "ProductCategoryLabel",
+  "ProductStatusBadge",
+  "StatusLegend",
+  "ProductCardData",
+  "ProductStatus",
+  "ProductAccent",
+  "productStatusMeta",
+  "MotionVisualizationGuide",
 ];
 
 const requiredExports = {
@@ -41,8 +53,9 @@ const requiredExports = {
     "ModelessTextField",
     "ModelessDropzone",
     "ModelessDialog",
-    "ProductCard",
-    "productStatusMeta",
+    "ProductMaturityMeter",
+    "SectionHeader",
+    "TagList",
     "ModelessMotionIntensity",
     'export * from "./visualizations"',
     'export * from "./commerce"',

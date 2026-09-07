@@ -89,9 +89,19 @@ if (registry) {
 
   }
 
-  const orphaned = Object.keys(maturity.components ?? {}).filter((name) => !exported.has(name));
-  for (const name of orphaned) {
-    failures.push(`${MATURITY_SOURCE} assigns a tier to "${name}", which is not exported.`);
+  // The internal tier means "not part of the public package contract", so those
+  // components must be absent from the barrel — and every other tier must be
+  // present in it. Both directions are enforced, so a component cannot be
+  // quietly demoted in the tier file while still shipping, or unexported
+  // without the tier being updated to say so.
+  for (const [name, assignment] of Object.entries(maturity.components ?? {})) {
+    const isExported = exported.has(name);
+    if (assignment.tier === "internal" && isExported) {
+      failures.push(`${MATURITY_SOURCE} marks "${name}" internal, but it is still exported from ${ENTRY}.`);
+    }
+    if (assignment.tier !== "internal" && !isExported) {
+      failures.push(`${MATURITY_SOURCE} assigns tier "${assignment.tier}" to "${name}", which is not exported.`);
+    }
   }
 
   const undocumented = registry.components.filter((component) => !component.documentedIn?.length);
