@@ -43,14 +43,13 @@
     "dev": "vite",
     "build": "vite build --config vite.package.config.ts && tsc -p tsconfig.package.json && node scripts/copy-ui-assets.mjs && node scripts/generate-component-registry.mjs && node scripts/generate-design-md.mjs",
     "public-api:check": "node scripts/check-public-api.mjs",
-    "build": "vite build --config vite.package.config.ts && tsc -p tsconfig.package.json && node scripts/copy-ui-assets.mjs && node scripts/generate-component-registry.mjs && node scripts/generate-design-md.mjs",
-    "public-api:check": "node scripts/check-public-api.mjs",
     "registry:check": "node scripts/check-component-registry.mjs",
     "design:generate": "node scripts/generate-design-md.mjs",
     "design:lint": "designmd lint DESIGN.md",
     "design:export:tailwind": "designmd export --format css-tailwind DESIGN.md > dist/design/tailwind-theme.css",
     "design:export:dtcg": "designmd export --format dtcg DESIGN.md > dist/design/tokens.json",
     "test": "node --test \"tests/**/*.test.mjs\"",
+    "mcp:serve": "node mcp/server.mjs",
     "pack:check": "npm pack --dry-run --cache ./.npm-pack-cache",
     "pack:local": "npm pack --cache ./.npm-pack-cache",
     "verify": "npm run build && npm run public-api:check && npm run registry:check && npm run design:lint && npm run test && npm run pack:check && npm run pack:local && npm run example:consumer:install && npm run example:consumer:typecheck && npm run example:consumer:build",
@@ -69,6 +68,7 @@
   },
   "devDependencies": {
     "@google/design.md": "^0.4.0",
+    "@modelcontextprotocol/sdk": "^1.30.0",
     "@types/node": "^22.10.2",
     "@types/react": "^19.0.1",
     "@types/react-dom": "^19.0.2",
@@ -80,7 +80,8 @@
     "react-dom": "^19.0.0",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.7.2",
-    "vite": "^6.0.3"
+    "vite": "^6.0.3",
+    "zod": "^4.5.4"
   },
   "peerDependencies": {
     "react": ">=18",
