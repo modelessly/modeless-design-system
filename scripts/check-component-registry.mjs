@@ -3,9 +3,13 @@ import path from "node:path";
 import ts from "typescript";
 
 import { COMPILER_OPTIONS, ENTRY, MATURITY_SOURCE, OUTPUT, collectExports } from "./generate-component-registry.mjs";
+import { resolveLocalImport } from "./registry-graph.mjs";
 
 const root = process.cwd();
 const TIERS = ["stable", "beta", "experimental", "internal", "deprecated"];
+
+/** The documented source-copy entrypoints. Removing one is a breaking change. */
+const AUTHORED_BUNDLES = ["modeless-theme", "modeless-components", "modeless-visualizations", "modeless-agentic-commerce"];
 
 const failures = [];
 const warnings = [];
@@ -18,82 +22,122 @@ const registry = await fs
     return null;
   });
 
+/**
+ * An item is only useful if copying its files gives you something that
+ * compiles, so every local import reachable from an item's files must also be
+ * listed in that item.
+ */
+async function checkSelfContained(item, byName) {
+  // Files reachable through registryDependencies are installed alongside this
+  // item, so they count as available.
+  const listed = new Set();
+  const queue = [item];
+  const visited = new Set();
+  while (queue.length > 0) {
+    const current = queue.shift();
+    if (!current || visited.has(current.name)) continue;
+    visited.add(current.name);
+    for (const file of current.files ?? []) listed.add(file.path);
+    for (const dependency of current.registryDependencies ?? []) queue.push(byName.get(dependency));
+  }
+
+  const own = new Set(item.files?.map((file) => file.path) ?? []);
+  const missing = new Set();
+
+  for (const file of own) {
+    let source;
+    try {
+      source = await fs.readFile(path.join(root, file), "utf8");
+    } catch {
+      continue; // reported separately
+    }
+    if (!/\.tsx?$/.test(file)) continue;
+
+    for (const [, specifier] of source.matchAll(/(?:^|\n)\s*(?:import|export)[\s\S]*?from\s+"(\.[^"]+)"/g)) {
+      const resolved = resolveLocalImport(file, specifier);
+      if (resolved && !listed.has(resolved)) missing.add(`${file} imports ${resolved}`);
+    }
+  }
+
+  return [...missing];
+}
+
 if (registry) {
   const packageJson = JSON.parse(await fs.readFile(path.join(root, "package.json"), "utf8"));
   const maturity = JSON.parse(await fs.readFile(path.join(root, MATURITY_SOURCE), "utf8"));
 
-  // Every component currently exported must have a record, and every record must
-  // still correspond to a live export. Both directions matter: the first catches
-  // a new component shipping without metadata, the second catches a stale record
-  // outliving the component it described.
+  const byName = new Map(registry.items.map((item) => [item.name, item]));
+  const generated = registry.items.filter((item) => item.meta?.generated);
+  const authored = registry.items.filter((item) => !item.meta?.generated);
+
+  for (const name of AUTHORED_BUNDLES) {
+    if (!authored.some((item) => item.name === name)) {
+      failures.push(`Authored bundle "${name}" is missing from ${OUTPUT}. Removing it breaks the documented source-copy path.`);
+    }
+  }
+
   const program = ts.createProgram([path.resolve(root, ENTRY)], COMPILER_OPTIONS);
   const exported = new Set(collectExports(program).map((entry) => entry.name));
-  const recorded = new Set(registry.components.map((component) => component.name));
+  const recorded = new Set(generated.map((item) => item.meta.export));
 
   for (const name of exported) {
-    if (!recorded.has(name)) failures.push(`Exported component "${name}" has no registry record.`);
+    if (!recorded.has(name)) failures.push(`Exported component "${name}" has no registry item.`);
   }
   for (const name of recorded) {
-    if (!exported.has(name)) failures.push(`Registry record "${name}" is no longer exported from ${ENTRY}.`);
+    if (!exported.has(name)) failures.push(`Registry item for "${name}" is no longer exported from ${ENTRY}.`);
   }
 
-  if (registry.packageVersion !== packageJson.version) {
-    failures.push(
-      `Registry packageVersion "${registry.packageVersion}" does not match package.json "${packageJson.version}". Regenerate it.`,
-    );
-  }
+  for (const item of generated) {
+    const label = item.meta.export ?? item.name;
 
-  for (const component of registry.components) {
-    const label = component.name ?? "(unnamed record)";
-
-    if (!component.name) failures.push("A registry record has no name.");
-    if (!component.category) failures.push(`${label}: missing category.`);
-    if (component.category === "uncategorized") {
-      failures.push(`${label}: category is "uncategorized" — add its path prefix to CATEGORIES in the generator.`);
+    if (!item.name || !item.type || !item.files?.length) failures.push(`${label}: incomplete registry item.`);
+    if (!item.categories?.length || item.categories[0] === "uncategorized") {
+      failures.push(`${label}: missing or uncategorized category.`);
     }
 
-    if (!component.maturityTier) {
-      failures.push(`${label}: no maturityTier. Add an entry to ${MATURITY_SOURCE}.`);
-    } else if (!TIERS.includes(component.maturityTier)) {
-      failures.push(`${label}: maturityTier "${component.maturityTier}" is not one of ${TIERS.join(", ")}.`);
-    }
+    const tier = item.meta.maturityTier;
+    if (!tier) failures.push(`${label}: no maturityTier. Add an entry to ${MATURITY_SOURCE}.`);
+    else if (!TIERS.includes(tier)) failures.push(`${label}: maturityTier "${tier}" is not one of ${TIERS.join(", ")}.`);
+    if (tier === "internal") failures.push(`${label}: internal components must not appear in the registry.`);
 
-    // Inference must never grant unsupervised agent use. Only a documented tier
-    // can put a component in the "stable" trust tier.
-    if (component.maturitySource?.startsWith("inferred:") && component.maturityTier === "stable") {
+    if (item.meta.maturitySource?.startsWith("inferred:") && tier === "stable") {
       failures.push(`${label}: tier "stable" was inferred, not documented. Only a documented tier may be stable.`);
     }
 
-    if (!component.props || !Array.isArray(component.props.own)) {
-      failures.push(`${label}: props were not introspected.`);
-    }
+    if (!Array.isArray(item.meta.props?.own)) failures.push(`${label}: props were not introspected.`);
 
-    const { provenance } = component;
+    const { provenance } = item.meta;
     if (!provenance?.packageVersion || !provenance?.sourceFile || !provenance?.sourceUrl) {
       failures.push(`${label}: incomplete provenance.`);
-    } else {
-      try {
-        await fs.access(path.join(root, provenance.sourceFile));
-      } catch {
-        failures.push(`${label}: provenance.sourceFile "${provenance.sourceFile}" does not exist.`);
-      }
-      if (!provenance.lastModified) {
-        warnings.push(`${label}: no git history for ${provenance.sourceFile} (uncommitted?).`);
-      }
+    } else if (provenance.packageVersion !== packageJson.version) {
+      failures.push(`${label}: provenance version "${provenance.packageVersion}" does not match package.json. Regenerate.`);
     }
 
-    const unknown = component.tokenBindings?.unknownCssVariables ?? [];
-    if (unknown.length) {
-      failures.push(`${label}: references CSS variables not declared in the theme: ${unknown.join(", ")}.`);
-    }
-
+    const unknown = item.meta.tokenBindings?.unknownCssVariables ?? [];
+    if (unknown.length) failures.push(`${label}: references CSS variables not declared in the theme: ${unknown.join(", ")}.`);
   }
 
-  // The internal tier means "not part of the public package contract", so those
-  // components must be absent from the barrel — and every other tier must be
-  // present in it. Both directions are enforced, so a component cannot be
-  // quietly demoted in the tier file while still shipping, or unexported
-  // without the tier being updated to say so.
+  // Every file referenced by any item must exist, and every item must be
+  // self-contained enough to copy.
+  for (const item of registry.items) {
+    for (const file of item.files ?? []) {
+      try {
+        await fs.access(path.join(root, file.path));
+      } catch {
+        failures.push(`${item.name}: file "${file.path}" does not exist.`);
+      }
+    }
+
+    const missing = await checkSelfContained(item, byName);
+    if (missing.length === 0) continue;
+
+    if (item.meta?.generated) {
+      failures.push(`${item.name}: not self-contained — ${missing.join("; ")}.`);
+    } else {
+      warnings.push(`${item.name} (hand-authored bundle): not self-contained — ${missing.join("; ")}.`);
+    }
+  }
+
   for (const [name, assignment] of Object.entries(maturity.components ?? {})) {
     const isExported = exported.has(name);
     if (assignment.tier === "internal" && isExported) {
@@ -104,22 +148,16 @@ if (registry) {
     }
   }
 
-  const undocumented = registry.components.filter((component) => !component.documentedIn?.length);
+  const undocumented = generated.filter((item) => !item.meta.documentedIn?.length);
   if (undocumented.length) {
     warnings.push(
-      `${undocumented.length} of ${registry.components.length} components have no per-component documentation section, so their compositionRules/doDont are structural only: ${undocumented
-        .map((component) => component.name)
-        .join(", ")}.`,
+      `${undocumented.length} of ${generated.length} components have no per-component documentation section, so their compositionRules/doDont are structural only.`,
     );
   }
 
-  const needsReview = registry.components.filter((component) => component.maturityNeedsReview);
+  const needsReview = generated.filter((item) => item.meta.maturitySource?.startsWith("inferred:"));
   if (needsReview.length) {
-    warnings.push(
-      `${needsReview.length} components carry an inferred tier pending human review (see docs/agentic-upgrade-audit.md D2): ${needsReview
-        .map((component) => component.name)
-        .join(", ")}.`,
-    );
+    warnings.push(`${needsReview.length} components carry an inferred tier pending human review: ${needsReview.map((item) => item.meta.export).join(", ")}.`);
   }
 }
 
@@ -135,4 +173,6 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`Component registry check passed for ${registry.components.length} records.`);
+console.log(
+  `Component registry check passed: ${registry.items.filter((item) => !item.meta?.generated).length} authored bundles + ${registry.items.filter((item) => item.meta?.generated).length} component items.`,
+);
