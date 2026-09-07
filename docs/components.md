@@ -4,6 +4,8 @@ All components live in `src/components/modeless` and are exported from `src/comp
 
 ## Included
 
+Exported from the package. Internal surfaces are listed under Product Primitives below and are deliberately absent here.
+
 - `ModelessButton`
 - `ModelessPanel`
 - `ModelessCard`
@@ -43,13 +45,8 @@ All components live in `src/components/modeless` and are exported from `src/comp
 - `ProductHero`
 - `ModelessShell`
 - `SectionHeader`
-- `ProductCard`
-- `ProductStatusBadge`
-- `ProductCategoryLabel`
 - `ProductMaturityMeter`
 - `TagList`
-- `ProductCTACluster`
-- `StatusLegend`
 - `AgentTraceMap`
 - `PromptStackVisualizer`
 - `ContextWindowHeatmap`
@@ -74,7 +71,9 @@ All components live in `src/components/modeless` and are exported from `src/comp
 
 ## Product Primitives
 
-The product primitives are stable enough to live in the design system because they describe reusable Modeless catalog language, not one route's implementation.
+Three of these are part of the public package: `SectionHeader`, `TagList`, and `ProductMaturityMeter`. They take plain strings, a string array, and a number respectively, so nothing about them is Modeless-specific beyond the naming.
+
+The rest are **internal** and are not exported from the package. `ProductCard`, `ProductCTACluster`, `ProductCategoryLabel`, `ProductStatusBadge` and `StatusLegend` are typed against the Modeless catalog vocabulary — `ProductCardData` carries `slug`, CTA labels and hrefs, `externalUrl` and `maturityLevel`, while `ProductStatus` and `ProductAccent` are closed unions describing Modeless's own categories and release practice (`private-build`, `open-source-soon`). An external builder cannot use them for their own catalog, which is what the internal tier in `docs/component-readiness.md` describes. They remain in `src/` for the Modeless site to import directly.
 
 - `ProductCard` renders a product/release artifact card.
 - `ProductStatusBadge` maps shared product states to accessible badge variants.

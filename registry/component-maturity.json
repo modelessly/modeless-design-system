@@ -1,5 +1,5 @@
 {
-  "$comment": "Human-owned per-component maturity assignments. This file is the single reconciled source of truth for maturityTier; it is NOT generated. Tiers use the vocabulary defined in docs/component-readiness.md: stable | beta | experimental | internal | deprecated. Entries whose `source` begins with 'inferred:' have no documented tier and are pending human review \u2014 see docs/agentic-upgrade-audit.md (D2). Inference never yields 'stable': only a documented tier can grant unsupervised agent use.",
+  "$comment": "Human-owned per-component maturity assignments. This file is the single reconciled source of truth for maturityTier; it is NOT generated. Tiers use the vocabulary defined in docs/component-readiness.md: stable | beta | experimental | internal | deprecated. Entries whose `source` begins with 'inferred:' have no documented tier and are pending human review. Entries marked 'reviewed:<date>' were assigned by human review. Entries at the internal tier are intentionally absent from the public barrel. Inference never yields 'stable': only a documented tier can grant unsupervised agent use.",
   "components": {
     "AgentPaymentAuthorization": {
       "tier": "experimental",
@@ -28,8 +28,8 @@
     },
     "BlogPostCard": {
       "tier": "beta",
-      "source": "inferred:category-default",
-      "note": "No tier stated in any document. Defaulted to beta; inference never yields stable."
+      "source": "reviewed:2026-09-07",
+      "note": "General article card. Confirmed beta on review. Not yet exercised by the consumer example, which is the outstanding readiness check for stable."
     },
     "CanvasSurface": {
       "tier": "beta",
@@ -63,13 +63,13 @@
     },
     "GenerativeField": {
       "tier": "beta",
-      "source": "inferred:category-default",
-      "note": "No tier stated in any document. Defaulted to beta; inference never yields stable."
+      "source": "reviewed:2026-09-07",
+      "note": "Decorative field primitive with nine variants. Confirmed beta on review. Not yet exercised by the consumer example, which is the outstanding readiness check for stable."
     },
     "GlyphGrid": {
       "tier": "beta",
-      "source": "inferred:category-default",
-      "note": "No tier stated in any document. Defaulted to beta; inference never yields stable."
+      "source": "reviewed:2026-09-07",
+      "note": "Decorative grid primitive. Confirmed beta on review. Not yet exercised by the consumer example, which is the outstanding readiness check for stable."
     },
     "GovernancePulseBoard": {
       "tier": "experimental",
@@ -93,8 +93,8 @@
     },
     "ModelessButtonLink": {
       "tier": "beta",
-      "source": "inferred:category-default",
-      "note": "No tier stated in any document. Defaulted to beta; inference never yields stable."
+      "source": "reviewed:2026-09-07",
+      "note": "Anchor variant of ModelessButton with an identical variant/size API. Undocumented; a candidate for documenting and promoting alongside its sibling, which is stable. Confirmed beta on review. Not yet exercised by the consumer example, which is the outstanding readiness check for stable."
     },
     "ModelessCard": {
       "tier": "beta",
@@ -208,8 +208,8 @@
     },
     "ModelessShell": {
       "tier": "beta",
-      "source": "inferred:category-default",
-      "note": "No tier stated in any document. Defaulted to beta; inference never yields stable."
+      "source": "reviewed:2026-09-07",
+      "note": "General application shell. Confirmed beta on review. Not yet exercised by the consumer example, which is the outstanding readiness check for stable."
     },
     "ModelessSwitch": {
       "tier": "beta",
@@ -242,9 +242,9 @@
       "note": "Covered by the README Foundation Components row."
     },
     "MotionVisualizationGuide": {
-      "tier": "beta",
-      "source": "inferred:category-default",
-      "note": "No tier stated in any document. Defaulted to beta; inference never yields stable."
+      "tier": "internal",
+      "source": "reviewed:2026-09-07",
+      "note": "Takes only `motion` and hardcodes its content; documents the design system rather than composing anything. Reviewed against the internal definition in docs/component-readiness.md: reserved for the Modeless site or product-specific surfaces, not part of the public package contract. Removed from the public barrel; the source remains in src/ for the Modeless site to import directly."
     },
     "OnChainFlowGraph": {
       "tier": "experimental",
@@ -252,19 +252,19 @@
       "note": "Covered by the 'Existing visualization components' row."
     },
     "ProductCTACluster": {
-      "tier": "beta",
-      "source": "inferred:category-default",
-      "note": "No tier stated. docs/components.md calls the product primitives 'stable enough to live in the design system', but that is not a maturity assertion. Inference ceiling is beta."
+      "tier": "internal",
+      "source": "reviewed:2026-09-07",
+      "note": "Takes the whole ProductCardData schema. Reviewed against the internal definition in docs/component-readiness.md: reserved for the Modeless site or product-specific surfaces, not part of the public package contract. Removed from the public barrel; the source remains in src/ for the Modeless site to import directly."
     },
     "ProductCard": {
-      "tier": "beta",
-      "source": "inferred:category-default",
-      "note": "No tier stated. docs/components.md calls the product primitives 'stable enough to live in the design system', but that is not a maturity assertion. Inference ceiling is beta."
+      "tier": "internal",
+      "source": "reviewed:2026-09-07",
+      "note": "ProductCardData is the Modeless catalog schema (slug, primary/secondary CTA, externalUrl, maturityLevel, accent), not a general card. Reviewed against the internal definition in docs/component-readiness.md: reserved for the Modeless site or product-specific surfaces, not part of the public package contract. Removed from the public barrel; the source remains in src/ for the Modeless site to import directly."
     },
     "ProductCategoryLabel": {
-      "tier": "beta",
-      "source": "inferred:category-default",
-      "note": "No tier stated. docs/components.md calls the product primitives 'stable enough to live in the design system', but that is not a maturity assertion. Inference ceiling is beta."
+      "tier": "internal",
+      "source": "reviewed:2026-09-07",
+      "note": "accent is ProductAccent, a closed union of the six Modeless categories. Reviewed against the internal definition in docs/component-readiness.md: reserved for the Modeless site or product-specific surfaces, not part of the public package contract. Removed from the public barrel; the source remains in src/ for the Modeless site to import directly."
     },
     "ProductFeedReadinessPanel": {
       "tier": "experimental",
@@ -273,18 +273,18 @@
     },
     "ProductHero": {
       "tier": "beta",
-      "source": "inferred:category-default",
-      "note": "No tier stated in any document. Defaulted to beta; inference never yields stable."
+      "source": "reviewed:2026-09-07",
+      "note": "General hero surface; content arrives as props. Confirmed beta on review. Not yet exercised by the consumer example, which is the outstanding readiness check for stable."
     },
     "ProductMaturityMeter": {
       "tier": "beta",
-      "source": "inferred:category-default",
-      "note": "No tier stated. docs/components.md calls the product primitives 'stable enough to live in the design system', but that is not a maturity assertion. Inference ceiling is beta."
+      "source": "reviewed:2026-09-07",
+      "note": "Takes level: number. A generic 0-5 meter; only the name is product-specific, and is worth revisiting. Confirmed beta on review. Not yet exercised by the consumer example, which is the outstanding readiness check for stable."
     },
     "ProductStatusBadge": {
-      "tier": "beta",
-      "source": "inferred:category-default",
-      "note": "No tier stated. docs/components.md calls the product primitives 'stable enough to live in the design system', but that is not a maturity assertion. Inference ceiling is beta."
+      "tier": "internal",
+      "source": "reviewed:2026-09-07",
+      "note": "status is ProductStatus, a closed union describing Modeless release practice (private-build, open-source-soon). Reviewed against the internal definition in docs/component-readiness.md: reserved for the Modeless site or product-specific surfaces, not part of the public package contract. Removed from the public barrel; the source remains in src/ for the Modeless site to import directly."
     },
     "PromptStackVisualizer": {
       "tier": "experimental",
@@ -298,8 +298,8 @@
     },
     "SectionHeader": {
       "tier": "beta",
-      "source": "inferred:category-default",
-      "note": "No tier stated. docs/components.md calls the product primitives 'stable enough to live in the design system', but that is not a maturity assertion. Inference ceiling is beta."
+      "source": "reviewed:2026-09-07",
+      "note": "Takes three strings. Generic despite the family naming. Confirmed beta on review. Not yet exercised by the consumer example, which is the outstanding readiness check for stable."
     },
     "SharedPaymentTokenCard": {
       "tier": "experimental",
@@ -323,18 +323,18 @@
     },
     "SpecimenCard": {
       "tier": "beta",
-      "source": "inferred:category-default",
-      "note": "No tier stated in any document. Defaulted to beta; inference never yields stable."
+      "source": "reviewed:2026-09-07",
+      "note": "General swatch/specimen surface. Confirmed beta on review. Not yet exercised by the consumer example, which is the outstanding readiness check for stable."
     },
     "StatusLegend": {
-      "tier": "beta",
-      "source": "inferred:category-default",
-      "note": "No tier stated. docs/components.md calls the product primitives 'stable enough to live in the design system', but that is not a maturity assertion. Inference ceiling is beta."
+      "tier": "internal",
+      "source": "reviewed:2026-09-07",
+      "note": "Explains the ProductStatus vocabulary. Reviewed against the internal definition in docs/component-readiness.md: reserved for the Modeless site or product-specific surfaces, not part of the public package contract. Removed from the public barrel; the source remains in src/ for the Modeless site to import directly."
     },
     "TagList": {
       "tier": "beta",
-      "source": "inferred:category-default",
-      "note": "No tier stated. docs/components.md calls the product primitives 'stable enough to live in the design system', but that is not a maturity assertion. Inference ceiling is beta."
+      "source": "reviewed:2026-09-07",
+      "note": "Takes tags: string[]. Generic despite the family naming. Confirmed beta on review. Not yet exercised by the consumer example, which is the outstanding readiness check for stable."
     },
     "TerminalBlock": {
       "tier": "stable",
