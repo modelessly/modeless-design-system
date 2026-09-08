@@ -1,118 +1,112 @@
 # QA Brief — Runtime Testing (Track B)
 
-A self-contained brief for a browser-based QA agent. It assumes **no access to this repository** — everything needed is below. Paste it whole.
+Instructions for a browser-based QA agent, plus a scoring key for the operator.
 
-Scope, priorities, and the other two test tracks are in `docs/qa-test-plan.md`.
+**Part 1 is pasted to the agent. Part 2 must not be** — it contains the answers.
+
+## Which surface, and why
+
+Two live surfaces exist, and they test different things:
+
+| Surface | What it is | State |
+| --- | --- | --- |
+| `https://modeless.io/design-system/specimens` | The full design system site. Renders every component group, including agentic commerce, `SignalBloom`, and the product primitives. | Consumes an older copy of the library, predating the recent accessibility fixes |
+| `https://modelessly.github.io/modeless-design-system/` | A small consumer app built from the freshly packed package on every push to `main`. Foundation components, globe, canvas, task lifecycle only. | Current |
+
+The specimens page has far better coverage, so it is the target. Because it is running pre-fix code, this first engagement is a **calibration run**: it establishes whether the QA agent finds defects that are known to be present, before its results are trusted on a clean build.
 
 ---
 
-## Brief begins
+# Part 1 — The brief (paste this)
 
-You are QA-testing a deployed design system showcase. Test only what is on the page. Do not assume behavior you cannot observe.
+You are QA-testing a design system specimen page. Test only what is on the page. Do not assume behavior you cannot observe.
 
-**Target:** `https://modelessly.github.io/modeless-design-system/`
+**Target:** `https://modeless.io/design-system/specimens`
 
-This is a single-page app called "Operations Settings" — a standalone consumer app built against the Modeless Design System package. It exercises the package the way an external builder would.
+This page renders the full component catalog: core primitives, product primitives, foundation components, a motion system, a visualization suite, and agentic commerce surfaces.
 
-### Step 0 — Report your capabilities first
+## Step 0 — Report your capabilities first
 
-Before testing, state which of these you can do. Do not guess; if you cannot do something, say so and mark the affected checks `NOT TESTABLE` rather than passing them.
+Before testing, state which of these you can do. Do not guess. If you cannot do something, say so and mark the affected checks `NOT TESTABLE` rather than passing them.
 
 1. Load a URL and screenshot it
 2. Click, type, and press specific keys (Tab, Enter, Space, Escape)
 3. Resize the viewport to a specific width
 4. Emulate `prefers-reduced-motion: reduce`
-5. Read the accessibility tree (roles, accessible names, `aria-pressed` / `aria-checked` states)
-6. Read computed CSS values for an element
+5. Read the accessibility tree — element roles, accessible names, and states such as `aria-pressed` / `aria-selected` / `aria-checked`
+6. Read computed CSS values and DOM attributes for a specific element
 7. Run a color-contrast check
 
-Checks below name the capability they need. **A check you cannot run is not a pass.**
+Each check names the capability it needs. **A check you cannot run is not a pass.**
 
-### Ground rules
+## Ground rules
 
-- **Report defects against the documented rules stated in each check**, not against your own taste. Aesthetic opinions go in a separate "Observations" list.
-- **Every defect needs:** what you did, what you expected, what happened, the viewport width, and a screenshot.
-- **Do not report** anything about build tooling, source code, or npm — you cannot see those, and they are covered by automated checks already.
-- If the page fails to load or looks broken, stop and report that first — it is the finding.
+- Report defects against the **documented rules stated in each check**, not against your own taste. Aesthetic opinions go in a separate "Observations" list.
+- Every defect needs: what you did, what you expected, what happened, viewport width, and a screenshot or the offending markup.
+- Do not report anything about build tooling, source code, or npm — you cannot see those, and automated checks already cover them.
+- The page is long. Work through it section by section and say which sections you covered.
 
----
+## B1 — Interactive state exposure *(needs: 2, 5)*
 
-## B1 — Color semantics *(needs: 1, 2)*
+Several sections render lists of selectable rows: the visualization suite under **Signal Bloom**, and the agentic commerce surfaces (**Agent Payment Authorization**, **Scoped Spend Control**, **Shared Payment Token Card**, **Agentic Checkout Session**, **x402 Payment Handshake**).
 
-**The system's central rule: acid lime (bright yellow-green) means live or active. It must never indicate something finished.** Completion uses green. A finished job rendered in lime reads as still running, which is the specific bug this rule exists to prevent.
+For each of those six areas:
 
-Find the **Task Lifecycle** section near the bottom of the page. It has a "Local Import" surface, an "Import Task" progress bar at 0%, and buttons **Start import** and **Mark complete**.
+1. Tab to a selectable row and activate it with Enter, then with Space.
+2. Inspect that element in the accessibility tree.
 
-1. Observe the idle state. Record the badge text and its color.
-2. Click **Start import**. The task is now active. Record badge text, badge color, and progress bar color.
-3. Click **Mark complete**. The task is now finished. Record the same three things.
+**What to check and report for each:**
+- What **role** does the element expose? A control you can activate should be exposed as a button.
+- Does the element report a **selected or pressed state** that changes when you select it?
+- Is the selection distinguishable **without color** — does anything in the accessibility tree change, or only the styling?
 
-**Pass:** the active state uses acid lime; the completed state uses a distinctly different green and no longer uses lime anywhere in that surface.
-**Fail:** the completed state is still lime, or active and complete are the same color.
+Report the role and state for each of the six areas as a table, whether or not you consider it a defect. This is the highest-priority section of this brief.
 
-Also check the **Sync Health / Queue Depth / Monthly Budget** metric cards and the status dots near the top: no state should be distinguishable *only* by color — each should also carry text.
+## B2 — Names and labels *(needs: 5)*
 
-## B2 — Reduced motion *(needs: 1, 4)*
+1. Every button and interactive control has a non-empty accessible name.
+2. Decorative graphics — charts, meters, canvases, status dots — are either hidden from assistive technology or carry a meaningful name. **A graphic exposed with no name is a defect.**
+3. Any element carrying a label that describes a value — for example a meter, a gauge, or a level indicator — actually exposes that label. Check the element's role: **a label on a generic container is not announced.** Report any element with a label but no role.
+4. Where a list structure is used, confirm its children are valid for that structure.
 
-The page has animated surfaces: a rotating globe under "Regions / Layers / Freshness", a canvas "pressure study", and ambient drift on panels.
+## B3 — Color semantics *(needs: 1, 5)*
 
-1. Load normally and screenshot the animated areas.
-2. Enable `prefers-reduced-motion: reduce`, reload, and screenshot again.
+The system's central rule: **acid lime (bright yellow-green) means live or active, never finished.** Completion uses green. A finished job in lime reads as still running.
 
-**Pass:** with reduced motion on, animation stops or becomes imperceptible, **and every surface remains understandable** — labels, values, and state are still readable from text and shape alone. The globe and pressure study must still communicate their data without movement.
-**Fail:** motion continues, or a surface becomes meaningless without it (for example, a value that was only legible while animating).
+Check every status surface — badges, progress indicators, status legends, meters, the **Status And Metadata** and **Status Legend** sections. Report any completed, successful, or finished state rendered in lime.
 
-Also, at normal settings: **report any rapid flicker, strobing, or jitter.** Motion here is meant to be slow and telemetry-like. Anything that pulses fast enough to be distracting is a defect.
+Separately: report any state distinguishable **only** by color, with no text or shape equivalent.
 
-## B3 — Keyboard operation *(needs: 1, 2)*
+## B4 — Motion and reduced motion *(needs: 1, 4)*
 
-Using only the keyboard, starting from the top of the page:
+The page includes a **Motion Intensity** preview with `off` / `subtle` / `live` / `high` settings, a motion graphics section (**Pulse**, **Trace**, **Drift**, **Orbit**), and animated visualizations.
 
-1. Tab through the entire page. Every interactive control must be reachable.
-2. **Every focused element must show a visible focus ring.** Report any control where focus is invisible or where the ring is too low-contrast to see against its background — check especially controls on dark panels.
-3. Operate each control type: the **Workspace Name** text field, the **Default Environment** select, the **Daily / Weekly / Manual** segmented control, the **General / Delivery / Audit** tabs, any switches and checkboxes, and the **Choose file** button in the Source File dropzone.
-4. Segmented control and tabs: confirm they can be operated with the keyboard and that the selection visibly changes.
-5. Open a dialog if one is reachable (try **Save settings** / **Review changes**). If a dialog opens: confirm Escape closes it, and that focus does not get lost behind it.
+1. At default settings, report any **rapid flicker, strobing, or jitter**. Motion here is meant to be slow and telemetry-like.
+2. Set the intensity preview to `off` and confirm layout does not shift.
+3. Enable `prefers-reduced-motion: reduce`, reload, and confirm animation stops **and every surface remains understandable** — state must still be readable from text, shape, and structure alone.
 
-**Fail conditions:** an unreachable control, an invisible focus ring, a control that cannot be operated by keyboard, or focus escaping to the page behind an open dialog.
+**Fail:** motion continues under reduced motion, or a surface becomes meaningless without movement.
 
-## B4 — Accessible names and states *(needs: 5 — if you cannot read the AX tree, mark NOT TESTABLE)*
+## B5 — Keyboard operation *(needs: 1, 2)*
 
-1. Every button and control has a non-empty accessible name. Icon-only controls are the usual offenders.
-2. Decorative graphics — the globe canvas, the pressure study, status dots — are either hidden from assistive technology or carry a meaningful name. **A graphic that is exposed with no name is a defect.**
-3. The segmented control and tabs report their selected state (`aria-selected`, `aria-checked`, or `aria-pressed` as appropriate) — not just a color change.
-4. The progress bar exposes its value.
+1. Tab through the page. Every interactive control must be reachable.
+2. **Every focused element must show a visible focus ring.** Report any control where focus is invisible or too low-contrast against its background — the theme is dark, so this is a likely failure.
+3. Operate the foundation controls in **Foundation Components** and **Operational Settings**: text fields, selects, tabs, segmented controls, switches, checkboxes.
+4. If a dialog opens, confirm Escape closes it and focus does not get lost behind it.
 
-## B5 — Responsive layout *(needs: 1, 3)*
+## B6 — Responsive layout *(needs: 1, 3)*
 
 Test at **375px**, **768px**, and **1280px**.
 
-**Fail conditions:**
-- The page scrolls horizontally at any width
-- Text is clipped, overlaps, or overflows its container
-- Controls become unusably small or overlap each other
-- The metric cards or form fields break their layout
+**Fail:** horizontal page scrolling, clipped or overlapping text, controls that overlap or become unusably small, broken card and form layouts. Wide content such as tables and diagrams may scroll *within its own container* — that is correct, not a defect.
 
-Screenshot each width, full page.
+Screenshot each width.
 
-## B6 — Shape language *(needs: 1)*
+## B7 — Contrast *(needs: 7)*
 
-Cards and panels use a distinctive 45° corner cut on the upper-left and lower-right — the "artifact angle".
+Light text on near-black. Check body text, muted metadata text, and text inside badges, chips, and buttons against their actual backgrounds. Report anything below WCAG AA — 4.5:1 for normal text, 3:1 for large.
 
-**Pass:** the cut appears on component surfaces (cards, panels, metric tiles).
-**Fail:** the cut appears on full page sections or on background grids, which are meant to stay square.
-
-## B7 — Contrast *(needs: 7 — if you cannot check contrast, mark NOT TESTABLE)*
-
-The theme is light text on near-black. Check body text, muted metadata text, and text inside badges and buttons against their actual backgrounds. Report anything below WCAG AA (4.5:1 for normal text, 3:1 for large).
-
-Muted metadata text and text on colored badges are the most likely failures.
-
----
-
-## Calibration check
-
-Somewhere on this page there is at least one genuine issue. If your report contains **zero defects across all sections**, re-check B4 and B7 specifically before submitting — a clean sweep more often means a check did not actually run than that the page is perfect.
+Muted metadata and text on colored badges are the most likely failures.
 
 ## Report format
 
@@ -120,15 +114,15 @@ Somewhere on this page there is at least one genuine issue. If your report conta
 ## Capabilities
 [which of the 7 you can do]
 
-## Summary
-[one paragraph: what you tested, what you could not]
+## Sections covered
+[which page sections you actually reached]
+
+## B1 state table
+| Area | Role exposed | Selected state exposed? | Notes |
 
 ## Defects
-### D1 — [short title]  (section: B3, viewport: 375px)
-Steps: ...
-Expected: ...
-Actual: ...
-Screenshot: ...
+### D1 — [title]  (check: B2, viewport: 1280px)
+Steps / Expected / Actual / Evidence
 
 ## Observations
 [judgment calls, not rule violations]
@@ -137,12 +131,45 @@ Screenshot: ...
 [checks skipped, and why]
 ```
 
-## Brief ends
+# End of brief
 
 ---
 
-## Note for the operator
+# Part 2 — Operator scoring key
 
-The deployed showcase renders the foundation components, the globe, the canvas study, badges, and the task lifecycle. It does **not** render the agentic commerce components or `SignalBloom`.
+**Do not paste this to the agent.**
 
-That matters, because the highest-value accessibility checks in `docs/qa-test-plan.md` (Track B1 there) target exactly those: the `aria-pressed` selection fixes across the five commerce components, the `SharedPaymentTokenCard` grant-state text, and `SignalBloom`'s toggle semantics. **Those cannot be tested on the current showcase.** Extending `examples/vite-consumer/src/main.tsx` to render them would make that possible — until then, those fixes remain verified only in static markup.
+This engagement is a calibration run. The target is running a build that predates the accessibility fixes in PRs #5, #6 and #7, so three specific defects are **known to be present**. They were confirmed by direct DOM inspection of the live page on 2026-09-08.
+
+## Scored canaries
+
+| # | Defect | Where | How to confirm |
+| --- | --- | --- | --- |
+| 1 | Selectable items are exposed as `listitem`, not as buttons, which discards the button role and makes their `aria-pressed` state invalid and ignored | `SignalBloom` sections | `document.querySelectorAll('button[role="listitem"]').length` → **22** |
+| 2 | Selection is not exposed at all on any of the five commerce components — no `aria-pressed`, no `aria-current` | Agentic commerce sections | `[...document.querySelectorAll('[aria-pressed]')].filter(e=>e.getAttribute('role')!=='listitem').length` → **0** |
+| 3 | A value label sits on a generic container with no role, so it is never announced | Product primitives — maturity meter | `<div aria-label="Maturity level 3 of 5">` with no `role` attribute; 12 roleless labelled elements page-wide |
+
+Also present, unscored: one exposed `<svg>` with no accessible name, and 21 `role="list"` containers whose children are not listitems.
+
+## Scoring
+
+- **Finds 1 and 2** — the agent can inspect the accessibility tree and reason about roles. Trust its B1 and B2 results.
+- **Finds 3 but not 1 or 2** — it is checking for missing labels but not for *wrong* roles. Its clean results on state exposure mean nothing.
+- **Finds none** — it is doing visual QA only, whatever it claims about capability 5. Treat every accessibility section as `NOT TESTABLE` and get a human with a screen reader.
+- **Reports defects beyond these three** — worth reviewing carefully. The three above are what is known; they are not necessarily all that is there.
+
+A clean report on this page is a false negative by definition.
+
+## After calibration
+
+Once the agent's capability is established, the real validation needs the site rebuilt against the current library. Until then the specimens page cannot confirm any fix.
+
+The Pages fixture at `https://modelessly.github.io/modeless-design-system/` *is* current, so it is where the foundation-component fixes can be verified today — but it renders no commerce components and no `SignalBloom`, so it cannot cover canaries 1 or 2.
+
+## Separate finding: the site's tiers have drifted from the package
+
+Not a runtime defect, and not something the agent can detect without repository access:
+
+`https://modeless.io/design-system/components` labels the **Product Primitives** group `stable`. As of PR #9, `ProductCard`, `ProductStatusBadge`, `ProductCategoryLabel`, `ProductCTACluster` and `StatusLegend` are `internal` and are no longer exported from the package — the site advertises as stable a set of components an external builder cannot install. The same page labels Foundation Components `new` where the package says `beta`.
+
+Worth fixing when the site is updated.
