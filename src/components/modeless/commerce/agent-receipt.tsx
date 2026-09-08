@@ -29,7 +29,7 @@ export interface AgentReceiptProps extends React.HTMLAttributes<HTMLDivElement> 
 }
 
 const statusTone = {
-  settled: "safe",
+  settled: "success",
   pending: "review",
   review: "machine",
   failed: "risk",
@@ -37,7 +37,7 @@ const statusTone = {
 
 const evidenceTone = {
   captured: "settled",
-  verified: "safe",
+  verified: "success",
   missing: "risk",
   review: "review",
 } as const;

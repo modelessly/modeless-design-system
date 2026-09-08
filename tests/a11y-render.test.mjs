@@ -106,6 +106,25 @@ const RULES = [
     },
   },
   {
+    id: "focus-must-stay-visible",
+    describe: "an element that clears its outline must show a focus ring, or sit in a wrapper that does",
+    check(document) {
+      // ModelessTextField cleared the native outline and drew nothing in its
+      // place, so focusing the most-used control in the system showed nothing.
+      return [...document.querySelectorAll("input, textarea, select, button, a[href], [tabindex]")]
+        .filter((element) => {
+          const own = element.getAttribute("class") ?? "";
+          if (!/\boutline-none\b/.test(own)) return false;
+          if (/ring-\d|ring-ring|shadow-\[/.test(own)) return false;
+          for (let node = element.parentElement; node; node = node.parentElement) {
+            if (/focus-within:ring/.test(node.getAttribute("class") ?? "")) return false;
+          }
+          return true;
+        })
+        .map((element) => `<${element.tagName.toLowerCase()}> clears its outline with no focus ring on it or any ancestor`);
+    },
+  },
+  {
     id: "svg-needs-name-or-hidden",
     describe: "an <svg> must be hidden from assistive technology or carry a name",
     check(document) {

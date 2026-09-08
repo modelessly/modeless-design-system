@@ -21,7 +21,7 @@ export function VisualizationFrame({
   return (
     <section
       className={cn(
-        "artifact-angle artifact-angle-frame live-surface relative overflow-hidden border border-border bg-card text-card-foreground",
+        "artifact-angle artifact-angle-frame live-surface relative min-w-0 max-w-full overflow-hidden border border-border bg-card text-card-foreground",
         `modeless-motion-${motion}`,
         className,
       )}
@@ -43,6 +43,14 @@ export function VisualizationFrame({
 
 export function toneColor(tone?: string) {
   switch (tone) {
+    // Finished states resolve to --success. Without these they fall through to
+    // the default below, which is acid lime — the colour reserved for live.
+    case "success":
+    case "complete":
+    case "completed":
+    case "resolved":
+    case "done":
+      return "hsl(var(--success))";
     case "warning":
     case "risk":
     case "failed":

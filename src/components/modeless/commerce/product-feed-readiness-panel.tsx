@@ -20,7 +20,7 @@ export interface ProductFeedReadinessPanelProps extends React.HTMLAttributes<HTM
 }
 
 const readinessTone = {
-  ready: "safe",
+  ready: "settled",
   review: "review",
   missing: "risk",
 } as const;

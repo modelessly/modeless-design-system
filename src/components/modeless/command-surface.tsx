@@ -25,7 +25,7 @@ export function CommandSurface({ className, items, placeholder = "Search artifac
 
   return (
     <div className={cn("artifact-angle artifact-angle-frame overflow-hidden border border-border bg-card", className)} {...props}>
-      <label className="flex items-center gap-2 border-b border-border px-3 py-2">
+      <label className="flex items-center gap-2 border-b border-border px-3 py-2 focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 focus-within:ring-offset-background">
         <Search aria-hidden="true" className="h-4 w-4 text-muted-foreground" />
         <span className="sr-only">Search commands</span>
         <input

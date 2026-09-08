@@ -26,7 +26,7 @@ const statusTone = {
   challenge: "review",
   signed: "machine",
   submitted: "settled",
-  settled: "safe",
+  settled: "success",
   failed: "risk",
 } as const;
 

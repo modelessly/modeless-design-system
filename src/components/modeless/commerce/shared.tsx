@@ -44,8 +44,12 @@ export function clampPercent(value: number) {
   return `${Math.max(0, Math.min(100, value))}%`;
 }
 
-export function commerceTone(tone?: "safe" | "review" | "risk" | "settled" | "machine" | "muted") {
+export function commerceTone(tone?: "safe" | "success" | "review" | "risk" | "settled" | "machine" | "muted") {
   switch (tone) {
+    // Acid lime means live, never finished. A completed state resolves to
+    // --success so a settled payment does not read as still in flight.
+    case "success":
+      return "hsl(var(--success))";
     case "review":
       return "hsl(var(--warning))";
     case "risk":
@@ -61,7 +65,7 @@ export function commerceTone(tone?: "safe" | "review" | "risk" | "settled" | "ma
   }
 }
 
-export function CommerceMetric({ label, value, tone = "safe" }: { label: string; value: string; tone?: "safe" | "review" | "risk" | "settled" | "machine" | "muted" }) {
+export function CommerceMetric({ label, value, tone = "safe" }: { label: string; value: string; tone?: "safe" | "success" | "review" | "risk" | "settled" | "machine" | "muted" }) {
   return (
     <div className="artifact-angle artifact-angle-sm artifact-angle-frame border border-border bg-background p-3">
       <p className="text-micro text-muted-foreground">{label}</p>
