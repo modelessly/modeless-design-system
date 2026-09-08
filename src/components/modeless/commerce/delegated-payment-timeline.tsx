@@ -27,7 +27,7 @@ const actorIcon = {
 } satisfies Record<DelegatedPaymentEvent["actor"], React.ComponentType<{ className?: string; "aria-hidden"?: boolean }>>;
 
 const eventTone = {
-  complete: "safe",
+  complete: "success",
   active: "machine",
   review: "review",
   blocked: "risk",

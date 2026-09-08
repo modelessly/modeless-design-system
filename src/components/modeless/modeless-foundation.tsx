@@ -41,7 +41,15 @@ export interface ModelessTextFieldProps extends React.InputHTMLAttributes<HTMLIn
 export const ModelessTextField = React.forwardRef<HTMLInputElement, ModelessTextFieldProps>(
   ({ label, description, error, leadingIcon, trailingIcon, className, required, ...props }, ref) => (
     <ModelessFormField label={label} description={description} error={error} required={required}>
-      <span className={cn("flex h-11 items-center gap-2 border border-border bg-background px-3", error && "border-warning")}>
+      <span
+        className={cn(
+          // The inner input clears its own outline, so the wrapper carries the
+          // focus ring; without this, focusing the field shows nothing.
+          "flex h-11 items-center gap-2 border border-border bg-background px-3",
+          "focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 focus-within:ring-offset-background",
+          error && "border-warning",
+        )}
+      >
         {leadingIcon ? <span className="shrink-0 text-muted-foreground">{leadingIcon}</span> : null}
         <input ref={ref} required={required} className={cn("min-w-0 flex-1 bg-transparent font-mono text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50", className)} {...props} />
         {trailingIcon ? <span className="shrink-0 text-muted-foreground">{trailingIcon}</span> : null}
