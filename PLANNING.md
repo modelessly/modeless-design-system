@@ -4,7 +4,7 @@ Kanban for product planning, release readiness, and idea capture.
 
 **North star:** a design system for AI agents first, humans second. The repository is the agent's distribution channel; modeless.io is the human's, and should be generated from what the repository already produces rather than maintained beside it.
 
-Last brought current: 2026-09-09.
+Last brought current: 2026-09-09 (after the Track A external-builder run).
 
 Updated after every working session, alongside `CHANGELOG.md` and any documentation the work touched.
 
@@ -37,7 +37,9 @@ Ordered by what they unblock. Each names the recommendation where there is one.
 ### P1 — make the repository genuinely agent-consumable
 
 - [ ] **Give agents a usable path into the registry.** 287 KB is too large to read whole and nothing says not to try. Document MCP-first access, emit a smaller index, or both.
-- [ ] **Document a working install path.** `README.md` and `docs/package-usage.md` describe two routes: `npm install @modeless/design-system`, which fails because publication is paused, and packing from a local clone, which requires the source. The `github:` install that actually works — and that modeless.io now uses — is documented nowhere. An external builder following the docs cannot install the package.
+- [ ] **Expand named types in the registry's `meta.props`.** The generator emits `steps: AgentTraceStep[]` and `status: AgentTraceStatus` as bare names. An agent reading the registry learns a prop exists and nothing about its shape, so it guesses `"active"`, gets a compiler error, and guesses again. Resolving type aliases one level — union members, and the fields of object types used in props — turns the registry from a prop list into a usable schema. Highest-leverage single fix Track A surfaced.
+- [ ] **Make the registry consumable by the shadcn CLI.** Items list file *paths* with no `content` and no hosted base URL, so `npx shadcn add <item>` parses the item, reports success and writes nothing. Either inline file contents at generation time or publish the registry at a fetchable URL. Until then the copy path only works by hand.
+- [ ] **Fix the `modeless-components` bundle.** It ships `src/components/modeless/index.ts`, which unconditionally re-exports `./visualizations` and `./commerce` — but those families are delegated to `registryDependencies` rather than included in `files`. Copying the bundle alone produces `TS2307` on both. Either inline the two families or ship a barrel that matches what the item copies.
 - [ ] **Map `docs/`.** 31 files with no index; neither an agent nor a new human can tell which matter. Ideally generated.
 - [ ] **Document the muted-text contrast constraint.** Muted text passes AA on background, card and muted surfaces and fails on `border` (3.49:1) and `input` (4.35:1). No component composes it that way today, so this is preventative — and cheaper than lightening a core token. Closes the library half of QA D8.
 
@@ -55,9 +57,9 @@ Direction settled: four sections — Get started, Foundations, Components, Patte
 
 Nothing reaches `stable` until these move: `docs/component-readiness.md` requires a clean external-consumer test and no component has ever passed one.
 
-- [ ] **Track A — external builder run.** A coding agent builds a real app from the published package using only `docs/`, never `src/`. Also the first genuine exercise of the registry copy path repaired in Phase 3. **Prompt ready: `docs/qa-prompt-external-builder.md`** — safe to hand over whole. The operator's setup and scoring key are in `docs/qa-brief-external-builder.md`, which the agent must not see. Run it before the P2 site restructure, so the documentation is validated before component pages are generated from it.
 - [ ] **Re-run the runtime QA properly.** The first Grok run was a calibration run and passed. The next run, against a rebuilt site, is the real validation.
-- [ ] **Per-component documentation for the 44 components that lack it.** Their composition rules and do/don't guidance are structural only, which limits both the generated site pages and what an agent can be told. Splittable by family.
+- [ ] **Per-component documentation for the 44 components that lack it.** Their composition rules and do/don't guidance are structural only, which limits both the generated site pages and what an agent can be told. Splittable by family. Track A named the five that cost it the most time: `ModelessShell` (the `ModelessShellNavItem` interface), `SectionHeader` (`label`/`title`/`copy`, not `eyebrow`/`title`/`description`), `ModelessEmptyState` and `ModelessErrorState` (`heading`, not `title`), and `AgentTraceMap` (the required `x`/`y`/`type` fields on each step, the coordinate space they live in, and the `status` union). Start there.
+- [ ] **Re-run Track A after the registry and documentation fixes land.** The first run is the baseline: install worked on the third attempt, first component rendered after a TypeScript workaround, and prop discovery ran through the compiler rather than the docs. The measure of the fixes is a second run with a shorter friction log.
 
 ### P4 — library debt
 
@@ -100,6 +102,13 @@ Nothing reaches `stable` until these move: `docs/component-readiness.md` require
 
 - [x] **`AGENTS.md`** — the agent entry point: task-to-document map, how to query the registry instead of reading it, the trust tiers as enforced rules, nine output rules, and an explicit do-not list (#17).
 - [x] **Agent distribution channel decided** — agents consume through the repository, not the package. `registry/`, `component-maturity.json` and `mcp/` stay out of the tarball deliberately, and the README now says so.
+
+### Track A — the first external builder run
+
+- [x] **Ran Track A with Antigravity**, clean-room, documentation only. It built the fleet operations dashboard — 16 components, the full idle → active → complete lifecycle, an SVG trace visualization, empty and error states — and passed all four readiness-gate questions. Both the runtime and copy paths were exercised. The run found all three sealed canaries and six defects beyond them. Recorded in `docs/qa-track-a-run-1.md`.
+- [x] **Fixed the wrong repository slug.** `docs/installation.md` told installers `npm install github:modelessly/modeless#main` — the *private site* repository, not the design system. npm resolves it, records the dependency as `modeless`, and every `@modeless/design-system` import then fails to resolve. Nobody had ever run the documented command.
+- [x] **Documented the install path that works.** The GitHub install now leads `README.md` and `docs/installation.md` instead of sitting under a "Future" heading, and the npm 404 is stated up front rather than discovered.
+- [x] **Fixed the CSS subpath exports having no types.** `import "@modeless/design-system/globals"` fails to typecheck under `noUncheckedSideEffectImports`, which the stock Vite `react-ts` template sets — so the first thing an external builder does breaks, and the fix is an ambient declaration they have to invent. The build now emits `.d.ts` files beside both stylesheets and the export map points at them. The consumer fixture sets the flag, so the gate catches this from now on.
 
 ### Quality
 

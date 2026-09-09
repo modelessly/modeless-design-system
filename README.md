@@ -41,7 +41,13 @@ npm run example:consumer:typecheck
 npm run example:consumer:build
 ```
 
-Install the packed tarball in another app:
+Install in another app. The package is not on npm; install from GitHub:
+
+```bash
+npm install github:modelessly/modeless-design-system
+```
+
+Or, from a local clone, install the packed tarball:
 
 ```bash
 npm run build

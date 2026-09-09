@@ -33,8 +33,14 @@
       "types": "./dist/tokens/index.d.ts",
       "import": "./dist/tokens/index.js"
     },
-    "./styles": "./dist/styles/modeless-theme.css",
-    "./globals": "./dist/styles/globals.css"
+    "./styles": {
+      "types": "./dist/styles/modeless-theme.d.ts",
+      "default": "./dist/styles/modeless-theme.css"
+    },
+    "./globals": {
+      "types": "./dist/styles/globals.d.ts",
+      "default": "./dist/styles/globals.css"
+    }
   },
   "sideEffects": [
     "dist/styles/*.css"
