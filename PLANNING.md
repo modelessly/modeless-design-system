@@ -37,6 +37,7 @@ Ordered by what they unblock. Each names the recommendation where there is one.
 ### P1 — make the repository genuinely agent-consumable
 
 - [ ] **Give agents a usable path into the registry.** 287 KB is too large to read whole and nothing says not to try. Document MCP-first access, emit a smaller index, or both.
+- [ ] **Document a working install path.** `README.md` and `docs/package-usage.md` describe two routes: `npm install @modeless/design-system`, which fails because publication is paused, and packing from a local clone, which requires the source. The `github:` install that actually works — and that modeless.io now uses — is documented nowhere. An external builder following the docs cannot install the package.
 - [ ] **Map `docs/`.** 31 files with no index; neither an agent nor a new human can tell which matter. Ideally generated.
 - [ ] **Document the muted-text contrast constraint.** Muted text passes AA on background, card and muted surfaces and fails on `border` (3.49:1) and `input` (4.35:1). No component composes it that way today, so this is preventative — and cheaper than lightening a core token. Closes the library half of QA D8.
 
@@ -54,7 +55,7 @@ Direction settled: four sections — Get started, Foundations, Components, Patte
 
 Nothing reaches `stable` until these move: `docs/component-readiness.md` requires a clean external-consumer test and no component has ever passed one.
 
-- [ ] **Track A — external builder run.** A coding agent builds a real app from the published package using only `docs/`, never `src/`. Also the first genuine exercise of the registry copy path repaired in Phase 3. Brief in `docs/qa-test-plan.md`. Long-running and independent of the site — worth starting early rather than last.
+- [ ] **Track A — external builder run.** A coding agent builds a real app from the published package using only `docs/`, never `src/`. Also the first genuine exercise of the registry copy path repaired in Phase 3. **Brief ready: `docs/qa-brief-external-builder.md`** — hand Part 1 to the agent, keep Part 2. Run it before the P2 site restructure, so the documentation is validated before component pages are generated from it.
 - [ ] **Re-run the runtime QA properly.** The first Grok run was a calibration run and passed. The next run, against a rebuilt site, is the real validation.
 - [ ] **Per-component documentation for the 44 components that lack it.** Their composition rules and do/don't guidance are structural only, which limits both the generated site pages and what an agent can be told. Splittable by family.
 
