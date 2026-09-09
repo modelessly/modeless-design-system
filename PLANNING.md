@@ -55,7 +55,7 @@ Direction settled: four sections — Get started, Foundations, Components, Patte
 
 Nothing reaches `stable` until these move: `docs/component-readiness.md` requires a clean external-consumer test and no component has ever passed one.
 
-- [ ] **Track A — external builder run.** A coding agent builds a real app from the published package using only `docs/`, never `src/`. Also the first genuine exercise of the registry copy path repaired in Phase 3. **Brief ready: `docs/qa-brief-external-builder.md`** — hand Part 1 to the agent, keep Part 2. Run it before the P2 site restructure, so the documentation is validated before component pages are generated from it.
+- [ ] **Track A — external builder run.** A coding agent builds a real app from the published package using only `docs/`, never `src/`. Also the first genuine exercise of the registry copy path repaired in Phase 3. **Prompt ready: `docs/qa-prompt-external-builder.md`** — safe to hand over whole. The operator's setup and scoring key are in `docs/qa-brief-external-builder.md`, which the agent must not see. Run it before the P2 site restructure, so the documentation is validated before component pages are generated from it.
 - [ ] **Re-run the runtime QA properly.** The first Grok run was a calibration run and passed. The next run, against a rebuilt site, is the real validation.
 - [ ] **Per-component documentation for the 44 components that lack it.** Their composition rules and do/don't guidance are structural only, which limits both the generated site pages and what an agent can be told. Splittable by family.
 
