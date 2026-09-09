@@ -22,11 +22,17 @@
 
 ### Changed
 
+- Documented the GitHub install as the supported path in `README.md` and `docs/installation.md`, and stated that npm publication is paused, instead of describing two routes that do not work for an external builder.
+- The packaged consumer fixture now typechecks with `noUncheckedSideEffectImports`, matching the stock Vite `react-ts` template.
+
 - Six components moved to the internal tier and out of the public barrel: `ProductCard`, `ProductCTACluster`, `ProductCategoryLabel`, `ProductStatusBadge`, `StatusLegend` and `MotionVisualizationGuide`. They are typed against the Modeless catalog rather than a general interface pattern, so they are no longer part of the public package contract. **Breaking.**
 - Resolved every inferred maturity tier by human review: 6 stable, 38 beta, 22 experimental, 6 internal. Tiers are now enforced against the exports in both directions.
 - Completed the registry bundles, which were shipping files that could not resolve their imports — `shadcn add` copied components without the token barrel they import.
 
 ### Fixed
+
+- Fixed `docs/installation.md` naming the wrong repository for the GitHub install (`modelessly/modeless`, the private site repo, rather than `modelessly/modeless-design-system`), which installed under the wrong package name and broke every import.
+- Fixed the `./globals` and `./styles` subpath exports shipping no type declarations, so side-effect CSS imports failed to typecheck in consumers that enable `noUncheckedSideEffectImports`.
 
 - Stabilized clipped-corner frame edge rendering by letting the shared clip geometry determine 1px border joins.
 - Fixed completion states rendering in acid lime. `AgentReceipt`, `DelegatedPaymentTimeline` and `X402PaymentHandshake` resolved finished states to the active colour, against the rule that lime means live and never finished.

@@ -13,3 +13,10 @@ const result = await postcss([tailwindcss("./tailwind.config.ts"), autoprefixer]
 
 await writeFile("dist/styles/globals.css", result.css);
 await copyFile("src/styles/modeless-theme.css", "dist/styles/modeless-theme.css");
+
+// Type declarations for the CSS subpath exports. Without these, a consumer whose
+// tsconfig sets `noUncheckedSideEffectImports` — the default in the Vite react-ts
+// template — cannot typecheck `import "@modeless/design-system/globals"`.
+const cssTypes = 'declare const _default: string;\nexport default _default;\n';
+await writeFile("dist/styles/globals.d.ts", cssTypes);
+await writeFile("dist/styles/modeless-theme.d.ts", cssTypes);

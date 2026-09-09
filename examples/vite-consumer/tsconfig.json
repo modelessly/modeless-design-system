@@ -13,7 +13,8 @@
     "moduleResolution": "Bundler",
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "noUncheckedSideEffectImports": true
   },
   "include": ["src"],
   "references": []

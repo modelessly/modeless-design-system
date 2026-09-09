@@ -5,7 +5,28 @@ Modeless Design System currently supports two adoption paths:
 - **Package install:** best for builders who want dependency management, types, and upgrades.
 - **Copy source:** best for teams who want to own and modify every component.
 
-The package is currently tested locally as `@modeless/design-system`.
+The package is not published to npm. `npm install @modeless/design-system` will 404 until
+publication resumes. Install from GitHub.
+
+## Package Install From GitHub
+
+This is the supported install today, and the one modeless.io uses:
+
+```bash
+npm install github:modelessly/modeless-design-system
+```
+
+The `prepare` script builds `dist` during installation, so no extra build step is needed.
+
+Then import components and CSS:
+
+```tsx
+import { ModelessButton, ModelessPanel, ModelessTextField } from "@modeless/design-system";
+import "@modeless/design-system/globals";
+import "@modeless/design-system/styles";
+```
+
+See `docs/package-usage.md` for a complete Vite example.
 
 ## Local Demo
 
@@ -38,16 +59,6 @@ import "@modeless/design-system/styles";
 ```
 
 See `docs/package-usage.md` for a complete Vite example.
-
-## Future GitHub Install
-
-Once the repository is public and the package boundary is stable enough for early adopters:
-
-```bash
-npm install github:modelessly/modeless#main
-```
-
-The `prepare` script builds `dist` during installation.
 
 ## Future Npm Install
 
