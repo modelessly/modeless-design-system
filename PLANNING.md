@@ -6,13 +6,13 @@ Kanban for product planning, release readiness, and idea capture.
 
 Last brought current: 2026-09-09.
 
+Updated after every working session, alongside `CHANGELOG.md` and any documentation the work touched.
+
 ---
 
 ## Needs Decision
 
 Ordered by what they unblock. Each names the recommendation where there is one.
-
-- [ ] **Agent distribution channel.** The tarball ships `dist`, `docs/`, `DESIGN.md`, README, changelog and licence — but not `registry/` or `mcp/`. A package-consuming agent gets the prose without the machine-readable half. Ship `registry/` in the tarball, or state in the README that agent consumption is via the repository. The half-shipped state is the only bad option. *Recommendation: the repository, matching how the system is already shaped.* Unblocks `AGENTS.md` and the registry access path.
 
 - [ ] **Release posture.** Quiet GitHub soft launch, npm prerelease, or public announcement. Carried over and still open. Note that the taxonomy half of this question is now settled — see the tier review under Done.
 
@@ -41,7 +41,6 @@ Ordered by what they unblock. Each names the recommendation where there is one.
 ### P0 — unblocks everything else
 
 - [ ] **Rebuild modeless.io against the current library.** It runs a build predating the accessibility fixes. Until it is rebuilt: no fix can be confirmed from the live site, QA keeps re-reporting defects that are already fixed, and the tier labels stay wrong. Six other items sit behind this one.
-- [ ] **Write `AGENTS.md`.** The repository has no agent entry point. An agent landing here faces a README, a `DESIGN.md`, 31 files in `docs/`, and a 287 KB `registry.json` too large to read whole, with nothing saying what to read, in what order, or that an MCP server exists. For an agents-first system this is the most valuable missing file in the repository. Small.
 
 ### P1 — make the repository genuinely agent-consumable
 
@@ -96,6 +95,11 @@ Nothing reaches `stable` until these move: `docs/component-readiness.md` require
 - [x] Phase 6 — drift detection for the generated artifacts (#15).
 - [x] Resolved the 16 inferred maturity tiers; six components moved to `internal` and out of the public barrel (#9).
 - [x] Landed the globe and canvas visualization layer (#8).
+
+### Repository as the agent channel
+
+- [x] **`AGENTS.md`** — the agent entry point: task-to-document map, how to query the registry instead of reading it, the trust tiers as enforced rules, nine output rules, and an explicit do-not list (#17).
+- [x] **Agent distribution channel decided** — agents consume through the repository, not the package. `registry/`, `component-maturity.json` and `mcp/` stay out of the tarball deliberately, and the README now says so.
 
 ### Quality
 

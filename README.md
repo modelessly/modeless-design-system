@@ -88,9 +88,14 @@ Public exports are guarded by `npm run public-api:check`, which reads built decl
 
 ## Philosophy
 
-Modeless Design System supports two adoption paths:
+Modeless Design System is built for AI agents first and humans second.
 
-- package install for builders who want dependency management, types, and upgrades
-- source/registry copy for teams who want to own and modify the code
+It supports three ways in:
+
+- **package install** for builders who want dependency management, types, and upgrades
+- **source/registry copy** for teams who want to own and modify the code
+- **the repository itself** for agents, which is where the machine-readable half of the system lives
 
 The npm-style package artifact is dependency-shaped: it ships `dist`, docs, README, changelog, license, and package metadata. It does not ship `src` or `registry` by default.
+
+**Agents consume this system through the repository, not the package.** `registry/registry.json` (a record per component: props, token bindings, composition rules, do/don't guidance, provenance), `registry/component-maturity.json`, and the MCP server in `mcp/` are deliberately not shipped in the tarball — an installed copy gives you the built components and the prose, not the queryable metadata. Start at [`AGENTS.md`](AGENTS.md).
