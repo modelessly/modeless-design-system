@@ -18,6 +18,7 @@
 - Added drift detection for the generated artifacts, so a stale committed `registry.json` or `DESIGN.md` fails the gate.
 - Added accessibility documentation for the visualization and agentic commerce families, including per-component notes.
 - Added `PLANNING.md` as the tracked backlog, and QA documentation covering the test plan, the runtime brief and the calibration findings.
+- Documented the agent distribution channel in the README: agents consume this system through the repository, not the package. `registry/`, `registry/component-maturity.json` and `mcp/` are deliberately absent from the tarball, so an installed copy carries the built components and the prose but not the queryable metadata.
 
 ### Changed
 

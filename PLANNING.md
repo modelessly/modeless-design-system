@@ -24,10 +24,6 @@ Ordered by what they unblock. Each names the recommendation where there is one.
 
 - [ ] **Rename `ProductMaturityMeter`.** It takes `level: number` and has nothing to do with products; the name is the only product-specific thing left about it. Cheap, but it is a public API rename.
 
-### Needs your input before I can size it
-
-- [ ] **Where does modeless.io live, and how does it consume the design system?** Six backlog items depend on the site, and I have never seen that codebase. Without it I cannot size the rebuild, the component-page generation, or the two site-side QA defects.
-
 ---
 
 ## In Progress
@@ -37,10 +33,6 @@ Ordered by what they unblock. Each names the recommendation where there is one.
 ---
 
 ## Ready To Do
-
-### P0 — unblocks everything else
-
-- [ ] **Rebuild modeless.io against the current library.** It runs a build predating the accessibility fixes. Until it is rebuilt: no fix can be confirmed from the live site, QA keeps re-reporting defects that are already fixed, and the tier labels stay wrong. Six other items sit behind this one.
 
 ### P1 — make the repository genuinely agent-consumable
 
@@ -69,7 +61,9 @@ Nothing reaches `stable` until these move: `docs/component-readiness.md` require
 ### P4 — library debt
 
 - [ ] **Document and consider promoting `ModelessButtonLink`.** The anchor variant of stable `ModelessButton` with an identical API, currently undocumented and `beta`. Blocked on Track A like every promotion.
-- [ ] **QA D5 — motion `off` collapses two sections.** Did not reproduce against the library CSS; points at site-side compositions and `MotionVisualizationGuide`, which is now internal. Needs the site source.
+- [ ] **QA D5 — motion `off` collapses two sections.** Did not reproduce against the library CSS. `MotionVisualizationGuide` now lives in the site repo at `src/components/modeless-internal`, so this is reproducible there.
+- [ ] **QA D8 — muted text contrast.** The failing 3.49:1 combination does not occur in the library; muted text passes AA on every surface a component actually uses. Confirm the offending element is site markup, now that the site source is available.
+- [ ] **Upstream the site's `SectionHeader` and `TagList` changes.** The site restyled two public components: `SectionHeader` gained a `divided` prop, `TagList` a different chip treatment. Both are held locally in the site repo; reconciling them here removes the last of the fork.
 
 ---
 
@@ -95,6 +89,11 @@ Nothing reaches `stable` until these move: `docs/component-readiness.md` require
 - [x] Phase 6 — drift detection for the generated artifacts (#15).
 - [x] Resolved the 16 inferred maturity tiers; six components moved to `internal` and out of the public barrel (#9).
 - [x] Landed the globe and canvas visualization layer (#8).
+
+### The site consumes the package
+
+- [x] **modeless.io migrated off its vendored fork** — the site carried 41 files at `design-system/src` with no dependency on the package, drifted behind on every accessibility fix and ahead by site-specific work. It now consumes `@modeless/design-system` as a git dependency; 47 vendored files removed. Verified live: buttons with `role="listitem"` 22 → 0, `aria-pressed` outside SignalBloom 0 → 43, unexposed `aria-label`s 12 → 0. modelessly/modeless#8.
+- [x] **The internal tier proved itself.** The site's local evolution was concentrated almost entirely in the six components classified `internal` — reasoned from type signatures, confirmed by the codebase. They now live in the site repo, which is what the tier means.
 
 ### Repository as the agent channel
 
