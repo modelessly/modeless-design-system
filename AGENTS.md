@@ -107,7 +107,9 @@ These come from `docs/tokens.md` and `docs/accessibility.md`. Each has been viol
 6. **Icons are decorative unless interactive.** Hide them from assistive technology.
 7. **Motion respects `prefers-reduced-motion`,** and every surface must stay understandable when motion is off. Never let animation be the only carrier of state.
 8. **The 45° `artifact-angle` cut belongs on component surfaces.** Page sections and background grids stay square.
-9. **Reach for the foundation layer** before writing a route-local control. If a text field exists here, use it.
+9. **Never use a line token as a background.** `border`, `input`, `grid-line` and `ring` are edges, not surfaces. Backgrounds come from `background`, `card`, `muted`, `secondary`, `popover`, `terminal` or `artifact` — nothing lighter than graphite. A section is never grey, and muted text on a `border`-coloured fill measures 3.49:1, below AA.
+10. **A `bg-border` hairline grid needs opaque children.** If you inset a `bg-border` container with `p-px` / `gap-px` for 1px seams, every child must paint its own background. A transparent child — one that separates by border alone, or a `bg-grid-*` utility, which is an image with no solid colour — shows the container instead of a seam.
+11. **Reach for the foundation layer** before writing a route-local control. If a text field exists here, use it.
 
 ---
 
