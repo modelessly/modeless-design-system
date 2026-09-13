@@ -24,6 +24,39 @@ The theme exposes standard shadcn roles: `background`, `foreground`, `card`, `po
 
 Custom roles include `signal`, `terminal`, `artifact`, `grid-line`, `scanline`, `noise`, `warning`, `success`, `experimental`, and `archived`.
 
+## Surface Tokens And Line Tokens
+
+Not every colour role is a background. The two groups are not interchangeable, and confusing them is the one way to get a grey slab into a system that has no grey surface.
+
+| Group | Tokens | Use as a background? |
+| --- | --- | --- |
+| Surfaces | `background` (off-black), `card` (panel-black), `muted` / `secondary` / `popover` (graphite), `terminal`, `artifact` | Yes |
+| Lines and edges | `border` (22%), `input` (16%), `grid-line` (18%), `ring` | **No** — borders, dividers, outlines and 1px seams only |
+
+Depth is tonal: surfaces step from off-black through panel black to graphite, and nothing lighter than graphite is a surface. `border` and `input` are lighter than every surface token by design, because they have to be visible *against* one.
+
+Page sections and headers use `background` or a grid utility. A section is never grey.
+
+### The hairline grid requires opaque children
+
+A grid can be separated by 1px seams instead of borders by filling the container with `bg-border` and insetting it with `p-px` / `gap-px`, so the fill shows only in the gaps:
+
+```tsx
+<div className="grid gap-px bg-border md:grid-cols-2">
+  <div className="bg-card p-6">…</div>
+  <div className="bg-card p-6">…</div>
+</div>
+```
+
+**Every child must paint its own opaque background.** A transparent child does not show a seam — it shows the container, and `--border` becomes a full-size grey panel behind that child's content.
+
+Two children are easy to miss:
+
+- Components that deliberately carry no fill and separate by border alone, such as `SectionHeader`.
+- Grid utilities (`bg-grid-animated`, `bg-grid-visualizer`, `bg-grid-isometric`, and the rest). These are background *images* with no solid colour, so a grid tile placed directly in a hairline grid renders the grid pattern over grey instead of over black. Pair the utility with `bg-background`.
+
+This is also an accessibility constraint, not only a visual one. `muted-foreground` measures **3.49:1** on a `border`-coloured surface and **4.35:1** on an `input`-coloured one — both below AA. It passes on every real surface: `background` 5.98:1, `card` 5.71:1, `muted` 5.22:1. Keeping line tokens out of the background is what keeps muted text compliant.
+
 ## Operational State Colors
 
 | State | Semantic role | Use |

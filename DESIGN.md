@@ -150,6 +150,10 @@ Structure is carried by grid surfaces instead: thin, dotted, isometric, ASCII, a
 
 Depth is tonal, not shadowed. Surfaces step from off-black through panel black to graphite, separated by borders and grid lines rather than drop shadows. Scanline and noise overlays sit at low opacity to suggest a screen rather than paper.
 
+Surface tokens and line tokens are not interchangeable. `background`, `card`, `muted`, `secondary`, `popover`, `terminal` and `artifact` are surfaces; `border`, `input`, `grid-line` and `ring` are lines and edges, and are lighter than every surface by design so they stay visible against one. Nothing lighter than graphite is a background. Page sections and headers use `background` or a grid utility — a section is never grey.
+
+A grid may be separated by 1px seams by filling the container with `bg-border` and insetting it with `p-px` / `gap-px`, but every child must then paint its own opaque background. A transparent child shows the container rather than a seam, turning `border` into a full-size grey panel. Components that separate by border alone, and grid utilities — which are background images with no solid colour — both need an explicit `bg-background` or `bg-card` in that position.
+
 ## Shapes
 
 The shape language is a 45-degree corner cut, not a radius. Cards and content sections use `artifact-angle`, which cuts the upper-left and lower-right corners by 18px. Background grids are deliberately exempt and stay square.
@@ -165,6 +169,7 @@ The `rounded` tokens below cover the small radii used by controls and inputs; th
 - Don't use acid lime to indicate completion.
 - Don't rely on color alone to carry state — pair it with text, shape, or structure.
 - Don't apply the angle cut to page sections or background grids; it belongs on component surfaces.
+- Don't use a line token as a background. `border` and `input` are edges; a section filled with one is a grey slab, and muted text on it fails AA.
 - Don't use rapid flicker, strobing, jitter, or autoplay audio.
 
 ## Motion

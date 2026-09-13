@@ -30,7 +30,7 @@ The target runs a build predating PRs #5, #6 and #7, so three reported defects w
 | D5 | Needs reproduction | Likely site-side — see below |
 | D6 | **Fixed here** | Real, and a third instance was found that the report missed |
 | D7 | **Fixed here** | Real, but the cause is one class on the frame, not the grid widths |
-| D8 | **Confirmed, needs a decision** | Ratio reproduced exactly; the fix is a public token change |
+| D8 | **Resolved** | Ratio reproduced exactly. Not a token change — the muted text sits on a `--border` fill created by a site-side composition. See below. |
 
 ## D4 — completion rendered in acid lime
 
@@ -92,6 +92,22 @@ The reported 3.49:1 is muted text on a `--border` surface.
 
 The full handoff file has the offending selectors; they were not available when this triage was written.
 
+### Resolved — 2026-09-13
+
+**The narrower alternative is the right one. `--concrete` should not change.**
+
+The offending elements were located by inspecting the live site. They are the eyebrow and description inside `SectionHeader`, measured at exactly the reported 3.49:1 — `rgb(140, 140, 140)` on `rgb(56, 56, 56)`.
+
+The grey is not a design decision. The site composes its page sections as **hairline grids** — a container filled with `bg-border` and inset with `p-px` / `gap-px`, so the fill shows only as 1px seams between opaque children. The library uses the same technique correctly in `ProductHero`, where every child is `bg-card`.
+
+`SectionHeader` paints no background; it separates by border alone. Placed in that grid it shows the container rather than a seam, so `--border` renders as a full-size grey panel — 1150×274px on Get Started — and the muted text inside it lands on a surface no component was ever meant to put it on.
+
+Measured across the design-system section: five pages carry one slab each (`get-started`, `components`, `foundations`, `distribution`, `patterns`) and `specimens` carries ten. `overview` and the index are clean. On `specimens`, three grid-utility tiles (`bg-grid-animated`, `bg-grid-visualizer`, `bg-grid-isometric`) sit directly in the grid as well; those utilities are background images with no solid colour, so the grid pattern renders over grey instead of black.
+
+So D8 is a composition defect, not a token defect. Muted text passes AA on every surface a component actually uses, and the fix is to keep `--border` out of the background — recorded as a rule in `docs/tokens.md`, `DESIGN.md` and `AGENTS.md`.
+
+The markup fix belongs to the site repository: give the `SectionHeader` cell an opaque `bg-background`, and pair each grid-utility tile with `bg-background`. Whether `SectionHeader` should carry its own `bg-background` in the library is an open question — see `PLANNING.md`, alongside the `divided` prop the site added to the same component.
+
 ## D5 — motion `off` collapses sections
 
 **Not reproduced; likely site-side.**
@@ -104,7 +120,7 @@ Reproducing this needs the site source.
 
 ## Follow-up
 
-1. **D8 decision** — lighten `--concrete`, or fix the specific surfaces. Needs the selectors from the handoff file.
+1. ~~**D8 decision** — lighten `--concrete`, or fix the specific surfaces. Needs the selectors from the handoff file.~~ Resolved 2026-09-13: selectors located, `--concrete` unchanged, markup fix owned by the site repository.
 2. **D5** — reproduce against the site source.
 3. **Rebuild the site against the current library.** Until then the specimens page cannot confirm any of these fixes, and D1–D3 will keep being reported.
 4. **Tier drift** — `modeless.io/design-system/components` advertises Product Primitives as `stable`; five of them are now `internal` and unexported.

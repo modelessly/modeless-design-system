@@ -18,6 +18,8 @@
 - Added drift detection for the generated artifacts, so a stale committed `registry.json` or `DESIGN.md` fails the gate.
 - Added accessibility documentation for the visualization and agentic commerce families, including per-component notes.
 - Added `PLANNING.md` as the tracked backlog, and QA documentation covering the test plan, the runtime brief and the calibration findings.
+- Documented the distinction between surface tokens and line tokens. `background`, `card`, `muted`, `secondary`, `popover`, `terminal` and `artifact` are backgrounds; `border`, `input`, `grid-line` and `ring` are edges and must never fill a surface. Nothing lighter than graphite is a background, and a page section is never grey. Recorded in `docs/tokens.md`, in the generated `DESIGN.md`, and as rules 9 and 10 in `AGENTS.md`.
+- Documented that a `bg-border` hairline grid requires every child to paint its own opaque background. A transparent child — one that separates by border alone, or a `bg-grid-*` utility, which is a background image with no solid colour — shows the container instead of a 1px seam, turning `--border` into a full-size grey panel. This is what QA D8 turned out to be.
 - Documented the agent distribution channel in the README: agents consume this system through the repository, not the package. `registry/`, `registry/component-maturity.json` and `mcp/` are deliberately absent from the tarball, so an installed copy carries the built components and the prose but not the queryable metadata.
 
 ### Changed

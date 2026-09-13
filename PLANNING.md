@@ -4,7 +4,7 @@ Kanban for product planning, release readiness, and idea capture.
 
 **North star:** a design system for AI agents first, humans second. The repository is the agent's distribution channel; modeless.io is the human's, and should be generated from what the repository already produces rather than maintained beside it.
 
-Last brought current: 2026-09-09.
+Last brought current: 2026-09-13.
 
 Updated after every working session, alongside `CHANGELOG.md` and any documentation the work touched.
 
@@ -39,7 +39,7 @@ Ordered by what they unblock. Each names the recommendation where there is one.
 - [ ] **Give agents a usable path into the registry.** 287 KB is too large to read whole and nothing says not to try. Document MCP-first access, emit a smaller index, or both.
 - [ ] **Document a working install path.** `README.md` and `docs/package-usage.md` describe two routes: `npm install @modeless/design-system`, which fails because publication is paused, and packing from a local clone, which requires the source. The `github:` install that actually works — and that modeless.io now uses — is documented nowhere. An external builder following the docs cannot install the package.
 - [ ] **Map `docs/`.** 31 files with no index; neither an agent nor a new human can tell which matter. Ideally generated.
-- [ ] **Document the muted-text contrast constraint.** Muted text passes AA on background, card and muted surfaces and fails on `border` (3.49:1) and `input` (4.35:1). No component composes it that way today, so this is preventative — and cheaper than lightening a core token. Closes the library half of QA D8.
+- [x] **Document the muted-text contrast constraint.** Muted text passes AA on background, card and muted surfaces and fails on `border` (3.49:1) and `input` (4.35:1). Documented as a surface-token / line-token distinction in `docs/tokens.md`, `DESIGN.md` and `AGENTS.md`, together with the rule that a `bg-border` hairline grid requires opaque children. Closes the library half of QA D8.
 
 ### P2 — site restructure
 
@@ -63,8 +63,8 @@ Nothing reaches `stable` until these move: `docs/component-readiness.md` require
 
 - [ ] **Document and consider promoting `ModelessButtonLink`.** The anchor variant of stable `ModelessButton` with an identical API, currently undocumented and `beta`. Blocked on Track A like every promotion.
 - [ ] **QA D5 — motion `off` collapses two sections.** Did not reproduce against the library CSS. `MotionVisualizationGuide` now lives in the site repo at `src/components/modeless-internal`, so this is reproducible there.
-- [ ] **QA D8 — muted text contrast.** The failing 3.49:1 combination does not occur in the library; muted text passes AA on every surface a component actually uses. Confirm the offending element is site markup, now that the site source is available.
-- [ ] **Upstream the site's `SectionHeader` and `TagList` changes.** The site restyled two public components: `SectionHeader` gained a `divided` prop, `TagList` a different chip treatment. Both are held locally in the site repo; reconciling them here removes the last of the fork.
+- [x] **QA D8 — muted text contrast.** Resolved 2026-09-13. The offending element is `SectionHeader`, which paints no background, placed in a site-composed `bg-border` hairline grid — so `--border` renders as a full-size grey panel and the muted text inside it measures exactly the reported 3.49:1. Not a token defect: `--concrete` stays as it is. Five design-system pages carry one slab each and `specimens` carries ten; the markup fix is site-side and is written up in `docs/qa-findings-2026-09-08.md`.
+- [ ] **Upstream the site's `SectionHeader` and `TagList` changes.** The site restyled two public components: `SectionHeader` gained a `divided` prop, `TagList` a different chip treatment. Both are held locally in the site repo; reconciling them here removes the last of the fork. **Take the D8 question with it:** `SectionHeader` ships with no background, which is what let it become a grey slab inside a hairline grid. Giving it `bg-background` would be invisible in every correct usage and would fix the class of defect at the source — but it is a public component's rendering, so it belongs in this reconciliation rather than in a drive-by. Note that it accepts `{ label, title, copy }` only — no `className`, no rest props — so a consumer cannot correct this from outside and has to wrap the component. Taking `className` is probably the smaller and more general fix.
 
 ---
 
