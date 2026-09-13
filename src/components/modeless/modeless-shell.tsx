@@ -93,7 +93,14 @@ export function ModelessShell({
       </header>
       <div className={cn("grid", sidebar && "lg:grid-cols-[17rem_1fr]")}>
         {sidebar && <aside className="hidden border-r border-border p-4 lg:block">{sidebar}</aside>}
-        <main>{children}</main>
+        {/*
+          min-w-0 because a grid item defaults to min-width:auto and so cannot
+          shrink below its content. Without it, any wide child — a visualization
+          inside its own overflow-x-auto scroller, a table — pushes the whole
+          page wide instead of scrolling within its container. Same defect that
+          VisualizationFrame carried before #14.
+        */}
+        <main className="min-w-0">{children}</main>
       </div>
       {footer && <footer className="border-t border-border p-4 text-micro text-muted-foreground">{footer}</footer>}
     </div>
