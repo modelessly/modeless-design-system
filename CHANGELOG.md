@@ -36,3 +36,4 @@
 - Fixed `SignalBloom` items carrying `role="listitem"` on buttons, which discarded the button role and made their `aria-pressed` state invalid.
 - Fixed unexposed value labels on `ProductMaturityMeter` and `ContextWindowHeatmap`, and menu icons left visible to assistive technology in `ModelessShell`.
 - Fixed `VisualizationFrame` being unable to shrink inside a grid, which pushed the page wide at narrow widths instead of scrolling its own content.
+- Fixed `ModelessShell` rendering `<main>` as a grid item with the default `min-width: auto`, so it could not shrink below its content. Any wide child pushed the whole page wide at narrow widths rather than scrolling inside its own container — the same defect `VisualizationFrame` carried, one level further up, and it affected every consumer of the shell.
