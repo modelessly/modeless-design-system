@@ -4,7 +4,7 @@ Kanban for product planning, release readiness, and idea capture.
 
 **North star:** a design system for AI agents first, humans second. The repository is the agent's distribution channel; modeless.io is the human's, and should be generated from what the repository already produces rather than maintained beside it.
 
-Last brought current: 2026-09-13.
+Last brought current: 2026-09-18.
 
 Updated after every working session, alongside `CHANGELOG.md` and any documentation the work touched.
 
@@ -66,6 +66,34 @@ Nothing reaches `stable` until these move: `docs/component-readiness.md` require
 - [x] **QA D8 — muted text contrast.** Resolved 2026-09-13. The offending element is `SectionHeader`, which paints no background, placed in a site-composed `bg-border` hairline grid — so `--border` renders as a full-size grey panel and the muted text inside it measures exactly the reported 3.49:1. Not a token defect: `--concrete` stays as it is. Five design-system pages carry one slab each and `specimens` carries ten; the markup fix is site-side and is written up in `docs/qa-findings-2026-09-08.md`.
 - [ ] **Upstream the site's `SectionHeader` and `TagList` changes.** The site restyled two public components: `SectionHeader` gained a `divided` prop, `TagList` a different chip treatment. Both are held locally in the site repo; reconciling them here removes the last of the fork. **Take the D8 question with it:** `SectionHeader` ships with no background, which is what let it become a grey slab inside a hairline grid. Giving it `bg-background` would be invisible in every correct usage and would fix the class of defect at the source — but it is a public component's rendering, so it belongs in this reconciliation rather than in a drive-by. Note that it accepts `{ label, title, copy }` only — no `className`, no rest props — so a consumer cannot correct this from outside and has to wrap the component. Taking `className` is probably the smaller and more general fix.
 
+### P5 — gaps the experiments hit
+
+Logged 2026-09-18 from [modelessly/modeless#16](https://github.com/modelessly/modeless/pull/16). Craft lab now consumes `@modeless/design-system`. The items below are what it could not close without a one-off, plus inventories of the other experiments that still draw their own chrome. Filling a slider, elevation scale, or radius-aware focus ring is later work — this capture does not implement them. Adopting the package on the other experiment pages is site work, not a restyle to do from this repository.
+
+#### Missing primitives and tokens (Craft lab)
+
+- [ ] **Slider.** No `ModelessSlider`. The lab used a native `<input type="range">` with `accent-color: hsl(var(--primary))` for radius, padding, elevation, focus, and type-measure knobs. Already listed as missing / P1 in `docs/material-3-gap-audit.md`; this is the first real consumer hit. A labeled control with min/max/step, live value, and keyboard support.
+
+- [ ] **Nested border radius.** Package panels are clipped angle frames (`artifact-angle`), not concentric rounded corners. Nested inner radius in the study is `max(0, outer − padding)`. Document nested-radius guidance and/or a tokenized inset-radius helper; do not restyle `ModelessPanel` into rounded corners as a drive-by.
+
+- [ ] **Elevation scale.** No token that turns one height into a stacked multi-layer `box-shadow`. The package has glow/terminal shadows, not an elevation ladder. The study still drives one height into layered shadows.
+
+- [ ] **Interruptible press.** `ModelessButton` has hover-lift, not a press that scales (the study uses 0.97) and cancels when the pointer leaves. The lab uses the package button and overrides transform. Decide whether press-and-cancel belongs on `ModelessButton` or stays a study.
+
+- [ ] **Focus ring follows the control's corner radius.** Package focus is a fixed `ring-2` / `ring-offset-2` on sharp buttons. The study needs radius, offset, and thickness that match the shape. Allow the ring to inherit control radius, or expose offset/thickness tokens. Do not ship a restyle of existing sharp-button focus as the whole answer.
+
+#### Experiment inventories — later work, not restyles now
+
+These experiments still draw local chrome. Recorded so a later session can see them; adopting the package on those pages is site work, not a design-system restyle to do from here.
+
+- [ ] **Trafikmode.** Operational colours are raw hex (`#FFB020`, `#FCCC0A`, `#0060A9`, `#FF6B4A`, `#4CE3FF`, Trafikverket `#00953A` / `#E8192C`). Freshness strip, layer legend, fault inspector, corridor counts, and event log are custom instrument chrome; `ModelessPanel`, `ModelessList`, and `SignalBadge` could own the non-canvas parts. Canvas map has no package primitive.
+
+- [ ] **Visual systems and global systems.** Local framed-media cards (`ExperimentCard`, `GlobeStudyCard`) sit next to `ArtifactCard` / `SpecimenCard`. Canvas and globe bases are local (`CanvasSurface`, `GlobeBase`) instead of package cards and `ModelessGlobe`.
+
+- [ ] **Global signals.** `RailPanel` clones `ModelessPanel`. `LayerToggle` wraps `ModelessSwitch` in custom chrome. Map-detail controls and the globe are local; the package already exports `ModelessGlobe`.
+
+- [ ] **Casio WQV-1 viewer.** Chrome uses a parallel token set (`--ink`, `--panel`, `--line`, `--lcd`) and a hand-built nav instead of `ModelessShell`. The photomosaic canvas is the study; rails, brand, and type should be package chrome.
+
 ---
 
 ## Deferred by decision
@@ -95,6 +123,7 @@ Nothing reaches `stable` until these move: `docs/component-readiness.md` require
 
 - [x] **modeless.io migrated off its vendored fork** — the site carried 41 files at `design-system/src` with no dependency on the package, drifted behind on every accessibility fix and ahead by site-specific work. It now consumes `@modeless/design-system` as a git dependency; 47 vendored files removed. Verified live: buttons with `role="listitem"` 22 → 0, `aria-pressed` outside SignalBloom 0 → 43, unexposed `aria-label`s 12 → 0. modelessly/modeless#8.
 - [x] **The internal tier proved itself.** The site's local evolution was concentrated almost entirely in the six components classified `internal` — reasoned from type signatures, confirmed by the codebase. They now live in the site repo, which is what the tier means.
+- [x] **Craft lab consumes the package** — modelessly/modeless#16 rebuilt the lab on `@modeless/design-system` (shell, panels, buttons, switch, type tokens) and applied the standing rule that missing pieces are gaps to log, not one-offs to draw. The five studies still demonstrate nested radius, interruptible press, stacked elevation, a focus ring that follows the corner, and a live first-line character count. Gaps and the other-experiment inventories are under Ready To Do P5; nothing in this repository was implemented for them.
 
 ### Repository as the agent channel
 
